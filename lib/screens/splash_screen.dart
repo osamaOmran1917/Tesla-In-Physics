@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             width: double.infinity,
           ),
           Image.asset(
-            'assets/images/splash_pic.jpg',
+            'assets/images/logo.png',
             width: width * .7,
           ),
           TypewriterAnimatedTextKit(
