@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:omar_mostafa/screens/widgets/section.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,6 +7,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -15,12 +18,16 @@ class HomeScreen extends StatelessWidget {
                 image: AssetImage('assets/images/background.PNG'))),
         child: Scaffold(
             appBar: AppBar(
+              backgroundColor: Color(0xff39A552),
               shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(35))),
               title: Text(
                 'أ. عُمَرْ مُصْطَفَى',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'MyArabicFont',
+                ),
               ),
               centerTitle: true,
             ),
@@ -46,10 +53,10 @@ class HomeScreen extends StatelessWidget {
   }
 
   List<Section> sections = [
-    Section(Color(0xffc91c22), Icon(CupertinoIcons.doc), 'مواعيد دروس', 1),
-    Section(Color(0xff003E90), Icon(CupertinoIcons.doc_checkmark),
-        'مواعيد امتحانات', 2),
-    Section(Color(0xffED1E79), Icon(CupertinoIcons.bookmark_fill), 'حجز', 3),
-    Section(Color(0xffCF7E48), Icon(CupertinoIcons.info), 'معلومات تواصل', 4)
+    Section(Color(0xffc91c22), 'assets/images/teacher.png', 'مواعيد دروس', 1),
+    Section(Color(0xff003E90), 'assets/images/exam.png', 'مواعيد امتحانات', 2),
+    Section(Color(0xffED1E79), 'assets/images/booking.png', 'حجز', 3),
+    Section(
+        Color(0xffCF7E48), 'assets/images/telephone.png', 'معلومات تواصل', 4)
   ];
 }

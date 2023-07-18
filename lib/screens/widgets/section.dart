@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 class Section extends StatelessWidget {
   Color color;
-  Widget icon;
-  String lable;
+  String image, lable;
   int index;
 
-  Section(this.color, this.icon, this.lable, this.index);
+  Section(this.color, this.image, this.lable, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +28,18 @@ class Section extends StatelessWidget {
                   ? Radius.circular(width * .075)
                   : Radius.circular(0))),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          icon,
+          Image.asset(
+            image,
+            width: width * .3,
+          ),
           Text(
             lable,
             style: TextStyle(
-              fontFamily: 'MyArabicFont',
-            ),
+                fontFamily: 'MyArabicFont',
+                fontSize: width * .05,
+                color: CupertinoColors.white),
           )
         ],
       ),
