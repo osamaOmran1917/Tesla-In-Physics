@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "53921266677-m8d59o6sv726tq35ki973cj27to1jt4s.apps.googleusercontent.com",
+          "client_id": "53921266677-t1fa123fei18jj71mdb4cs2mbes4bl1i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.omar_mostafa",
+            "certificate_hash": "05ba79ef9e7477d0cb446a65ff02ca0360e4670a"
+          }
+        },
+        {
+          "client_id": "53921266677-9vmth3jl1a51vk6l0o96udjc5875b0pc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "53921266677-m8d59o6sv726tq35ki973cj27to1jt4s.apps.googleusercontent.com",
+              "client_id": "53921266677-9vmth3jl1a51vk6l0o96udjc5875b0pc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "53921266677-bblir7l1v37dadc2m7pkhqv2dcr8qb9e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.omarMostafa"
+              }
             }
           ]
         }

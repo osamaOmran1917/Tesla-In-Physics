@@ -69,6 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '53921266677',
     projectId: 'omar-mustafa',
     storageBucket: 'omar-mustafa.appspot.com',
+    androidClientId:
+        '53921266677-t1fa123fei18jj71mdb4cs2mbes4bl1i.apps.googleusercontent.com',
     iosClientId:
         '53921266677-bblir7l1v37dadc2m7pkhqv2dcr8qb9e.apps.googleusercontent.com',
     iosBundleId: 'com.example.omarMostafa',

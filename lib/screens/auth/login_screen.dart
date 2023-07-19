@@ -1,6 +1,12 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:omar_mostafa/screens/widgets/logo.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,6 +24,44 @@ class _LoginScreenState extends State<LoginScreen> {
         _isAnimate = true;
       });
     });
+  }
+
+  _handleGoogleButtonClick() {
+    Dialogs.showProgressBar(context);
+    _signInWithGoogle().then((user) {
+      Navigator.pop(context);
+      if (user != null) {
+        log('\nUser: ${user.user}');
+        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+      }
+    });
+  }
+
+  Future<UserCredential?> _signInWithGoogle() async {
+    try {
+      await InternetAddress.lookup('google.com');
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      log('\n_signInWithGoogle: $e');
+      Dialogs.showSnackbar(context, 'حدث خطأ ما. تأكد من اتصالك بالإنترنت!');
+      return null;
+    }
   }
 
   @override
@@ -71,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         shape: StadiumBorder(),
                         elevation: 1),
                     onPressed: () {
-                      // _handleGoogleBtnClick();
+                      _handleGoogleButtonClick();
                     },
                     icon: Image.asset(
                       'assets/images/google.png',
