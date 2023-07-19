@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/screens/auth/login_screen.dart';
+import 'package:omar_mostafa/screens/widgets/logo.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,24 +27,24 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Scaffold(
-      backgroundColor: Color(0xFF00797D),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SizedBox(
             width: double.infinity,
           ),
-          Image.asset(
-            'assets/images/logo.png',
-            width: width * .7,
-          ),
+          Logo(),
           TypewriterAnimatedTextKit(
             text: ['أ. عُمَرْ مُصْطَفَى'],
             textStyle: TextStyle(
                 fontFamily: 'MyArabicFont',
                 fontSize: width * .099,
-                color: Colors.white),
+                color: Color(0xff39A552)),
             speed: Duration(milliseconds: 150),
             totalRepeatCount: 1,
           ),

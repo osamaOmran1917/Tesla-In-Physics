@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:omar_mostafa/screens/widgets/logo.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
@@ -54,7 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 right: _isAnimate ? width * .25 : width * .5,
                 width: width * .5,
                 duration: Duration(seconds: 1),
-                child: Image.asset('images/icon.png')),
+                child: Image.asset(
+                  'assets/images/logo.jpg',
+                  height: height * .3,
+                )),
             Positioned(
                 bottom: height * .15,
                 left: width * .05,
