@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:omar_mostafa/screens/widgets/section.dart';
+import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/screens/home_side_menu.dart';
+import 'package:omar_mostafa/widgets/section.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Color(0xff39A552),
             shape: RoundedRectangleBorder(
                 borderRadius:
-                BorderRadius.vertical(bottom: Radius.circular(35))),
+                    BorderRadius.vertical(bottom: Radius.circular(35))),
             title: Text(
               'أ. عُمَرْ مُصْطَفَى',
               textAlign: TextAlign.center,
@@ -33,14 +34,16 @@ class HomeScreen extends StatelessWidget {
             ),
             centerTitle: true,
           ),
+          drawer: Drawer(
+            child: HomeSideMenu(),
+          ),
           backgroundColor: Colors.transparent,
           body: Padding(
             padding: EdgeInsets.all(width * .05),
             child: GridView.builder(
+              physics: BouncingScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 22),
+                  crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 22),
               itemBuilder: (_, index) {
                 return InkWell(
                     onTap: () {
@@ -56,7 +59,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 10),
             child: FloatingActionButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+                await APIs.auth.signOut();
                 await GoogleSignIn().signOut();
               },
               child: Icon(Icons.logout),
@@ -70,6 +73,12 @@ class HomeScreen extends StatelessWidget {
     Section(Color(0xff003E90), 'assets/images/exam.png', 'مواعيد امتحانات', 2),
     Section(Color(0xffED1E79), 'assets/images/booking.png', 'حجز', 3),
     Section(
-        Color(0xffCF7E48), 'assets/images/telephone.png', 'معلومات تواصل', 4)
+        Color(0xffCF7E48), 'assets/images/telephone.png', 'معلومات تواصل', 4),
+    Section(
+        Color(0xff4882cf), 'assets/images/strategy.png', 'الخطة التعليمية', 5),
+    Section(Color(0xfff2d352), 'assets/images/schedule.png', 'جدول الحصص', 6),
+    Section(Colors.greenAccent, 'assets/images/complaint.png', 'تقديم شكوى', 7),
+    Section(Colors.purple, 'assets/images/growth.png', 'تقرير شهري', 8),
+    Section(Colors.lightBlueAccent, 'assets/images/feedback.png', 'تعليق', 9),
   ];
 }

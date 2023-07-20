@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/screens/auth/login_screen.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
-import 'package:omar_mostafa/screens/widgets/logo.dart';
+import 'package:omar_mostafa/widgets/logo.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -24,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white));
-      if (FirebaseAuth.instance.currentUser != null) {
-        log('\nUser: ${FirebaseAuth.instance.currentUser}');
+      if (APIs.auth.currentUser != null) {
+        log('\nUser: ${APIs.auth.currentUser}');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => HomeScreen()));
       } else {
