@@ -1,17 +1,25 @@
 class Exam {
-  Exam({
-    required this.date,
-  });
+  static const String collectionName = 'exams';
+  String? id;
+  String? notes;
+  DateTime? dateTime;
+  int? level;
 
-  late final String date;
+  Exam({this.id, this.notes, this.dateTime, this.level});
 
-  Exam.fromJson(Map<String, dynamic> json) {
-    date = json['date'] ?? '';
-  }
+  Exam.fromFirestore(Map<String, dynamic> data)
+      : this(
+            id: data['id'],
+            notes: data['notes'],
+            dateTime: DateTime.fromMillisecondsSinceEpoch(data['dateTime']),
+            level: data['level']);
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['date'] = date;
-    return data;
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'notes': notes,
+      'dateTime': dateTime?.millisecondsSinceEpoch,
+      'level': level
+    };
   }
 }

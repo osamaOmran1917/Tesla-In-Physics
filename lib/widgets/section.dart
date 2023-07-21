@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omar_mostafa/screens/exams_dates.dart';
+import 'package:omar_mostafa/screens/exams/exams_dates.dart';
 
 class Section extends StatelessWidget {
   Color color;

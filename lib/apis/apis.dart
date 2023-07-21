@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/my_user.dart';
 
 class APIs {
@@ -33,20 +34,37 @@ class APIs {
         phone_I: '',
         phone_II: '',
         is_student: true,
-        lessons_num: 0);
+        lessons_num: 0,
+        parent_requests: []);
     return await firestore
         .collection('users')
         .doc(user.uid)
         .set(myUser.toJson());
   }
 
-  /*static Future<void> createExam(String date) async {
-    final exam = Exam(date: date);
-    return await firestore
-        .collection('exams')
-        .doc(exam.)
-        .set(myUser.toJson());
-  }*/
+  static CollectionReference<Exam> getExamsCollection() {
+    return firestore.collection(Exam.collectionName).withConverter<Exam>(
+        fromFirestore: ((snapshot, options) {
+      return Exam.fromFirestore(snapshot.data()!);
+    }), toFirestore: (exam, options) {
+      return exam.toFirestore();
+    });
+  }
+
+  static Future<void> insertExam(Exam exam) {
+    var examsCollection = getExamsCollection();
+    var doc = examsCollection.doc();
+    exam.id = doc.id;
+    return doc.set(exam);
+  }
+
+  static Stream<QuerySnapshot<Exam>> listenForExamsRealTimeUpdates(int level) {
+    // Listen for realtime update
+    return getExamsCollection()
+        .where('level', isEqualTo: level)
+        .orderBy("dateTime", descending: false)
+        .snapshots();
+  }
 
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(

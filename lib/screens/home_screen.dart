@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/screens/home_side_menu.dart';
 import 'package:omar_mostafa/widgets/section.dart';
 
@@ -58,9 +57,8 @@ class HomeScreen extends StatelessWidget {
           floatingActionButton: Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: FloatingActionButton(
-              onPressed: () async {
-                await APIs.auth.signOut();
-                await GoogleSignIn().signOut();
+              onPressed: () {
+                logOut(context);
               },
               child: Icon(Icons.logout),
             ),

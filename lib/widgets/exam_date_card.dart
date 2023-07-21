@@ -1,6 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/models/exam.dart';
 
 class ExamDateCard extends StatefulWidget {
@@ -25,16 +24,9 @@ class _ExamDateCard extends State<ExamDateCard> {
       child: ListTile(
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(height * .3),
-          child: CachedNetworkImage(
-            width: height * .055,
-            height: height * .055,
-            imageUrl: 'widget.user.image',
-            errorWidget: (context, url, error) =>
-                CircleAvatar(child: Icon(CupertinoIcons.person_alt)),
-          ),
+          child: Text(dateOnly(widget.exam.dateTime!).toString() ?? ''),
         ),
-        // title: Text(widget.user.name),
-        // subtitle: Text(widget.user.about),
+        subtitle: Text(widget.exam.notes ?? ''),
         trailing: Container(
           width: 15,
           height: 15,
