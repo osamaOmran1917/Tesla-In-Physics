@@ -8,12 +8,14 @@ class HomeSideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: IconButton(
-          icon: Icon(CupertinoIcons.group_solid),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => MyStudents())),
-        ),
+      body: Column(
+        children: [
+          IconButton(
+            icon: Icon(CupertinoIcons.group_solid),
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => MyStudents())),
+          ),
+        ],
       ),
     );
   }

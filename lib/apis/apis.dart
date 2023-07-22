@@ -34,8 +34,7 @@ class APIs {
         phone_I: '',
         phone_II: '',
         is_student: true,
-        lessons_num: 0,
-        parent_requests: []);
+        lessons_num: 0);
     return await firestore
         .collection('users')
         .doc(user.uid)
@@ -48,6 +47,15 @@ class APIs {
       return Exam.fromFirestore(snapshot.data()!);
     }), toFirestore: (exam, options) {
       return exam.toFirestore();
+    });
+  }
+
+  static CollectionReference<MyUser> getUsersCollection() {
+    return firestore.collection('users').withConverter<MyUser>(
+        fromFirestore: ((snapshot, options) {
+      return MyUser.fromJson(snapshot.data()!);
+    }), toFirestore: (user, options) {
+      return user.toJson();
     });
   }
 
@@ -66,13 +74,9 @@ class APIs {
         .snapshots();
   }
 
-  static CollectionReference<MyUser> getUsersCollection() {
-    return firestore.collection('users').withConverter<MyUser>(
-        fromFirestore: (snapshot, options) {
-      return MyUser.fromJson(snapshot.data()!);
-    }, toFirestore: (myUser, options) {
-      return myUser.toJson();
-    });
+  static Stream<QuerySnapshot<MyUser>> listenForUsersRealTimeUpdates() {
+    // Listen for realtime update
+    return getUsersCollection().snapshots();
   }
 
   static setAsParent(String userId) {

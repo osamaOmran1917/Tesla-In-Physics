@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/validation_utils.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
 
@@ -140,7 +141,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     } else {
                       if (studentChecked)
                         Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => HomeScreen()));
+                                MaterialPageRoute(builder: (_) => HomeScreen()))
+                            .then((value) => Dialogs.showSnackbar(
+                                context, 'رمز حسابك: ${APIs.user.uid}'));
                       else {
                         if (email.isNotEmpty) APIs.setAsParent(APIs.user.uid);
                         Navigator.pushReplacement(context,

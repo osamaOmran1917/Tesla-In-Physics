@@ -14,7 +14,6 @@ class MyUser {
     required this.phone_II,
     required this.is_student,
     required this.lessons_num,
-    required this.parent_requests,
   });
 
   late final String image;
@@ -31,7 +30,6 @@ class MyUser {
   late final String phone_II;
   late final bool is_student;
   late final int lessons_num;
-  late final List<String> parent_requests;
 
   MyUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
@@ -48,7 +46,6 @@ class MyUser {
     phone_II = json['phone_II'] ?? '';
     is_student = json['is_student'] ?? '';
     lessons_num = json['lessons_num'] ?? '';
-    parent_requests = json['parent_requests'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -67,7 +64,6 @@ class MyUser {
     data['phone_II'] = phone_II;
     data['is_student'] = is_student;
     data['lessons_num'] = lessons_num;
-    data['parent_requests'] = parent_requests;
     return data;
   }
 }
