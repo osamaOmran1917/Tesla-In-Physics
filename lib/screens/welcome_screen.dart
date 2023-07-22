@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
-import 'package:omar_mostafa/helpers/validation_utils.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,8 +13,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   var formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   bool studentChecked = false;
+  bool oneChecked = false;
+  bool twoChecked = false;
+  bool threeChecked = false;
   bool parentChecked = false;
-  String email = '';
+  String studentId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +71,82 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Text(
                     'طالب',
                     style: TextStyle(
-                        fontFamily: 'MyArabicFont', fontSize: width * .05),
+                        fontFamily: 'MyArabicFont', fontSize: width * .07),
                   )
                 ],
               ),
+              if (studentChecked)
+                Text(
+                  'اختر الصف',
+                  style: TextStyle(
+                      fontFamily: 'MyArabicFont', fontSize: width * .065),
+                ),
+              if (studentChecked)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Checkbox(
+                      value: oneChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          oneChecked = true;
+                          twoChecked = false;
+                          threeChecked = false;
+                        });
+                      },
+                      activeColor: Color(0xff39A552),
+                    ),
+                    Text(
+                      'الأول',
+                      style: TextStyle(
+                          fontFamily: 'MyArabicFont', fontSize: width * .05),
+                    )
+                  ],
+                ),
+              if (studentChecked)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Checkbox(
+                      value: twoChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          twoChecked = true;
+                          oneChecked = false;
+                          threeChecked = false;
+                        });
+                      },
+                      activeColor: Color(0xff39A552),
+                    ),
+                    Text(
+                      'الثاني',
+                      style: TextStyle(
+                          fontFamily: 'MyArabicFont', fontSize: width * .05),
+                    )
+                  ],
+                ),
+              if (studentChecked)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Checkbox(
+                      value: threeChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          threeChecked = true;
+                          oneChecked = false;
+                          twoChecked = false;
+                        });
+                      },
+                      activeColor: Color(0xff39A552),
+                    ),
+                    Text(
+                      'الثالث',
+                      style: TextStyle(
+                          fontFamily: 'MyArabicFont', fontSize: width * .05),
+                    )
+                  ],
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -82,6 +156,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       setState(() {
                         studentChecked = false;
                         parentChecked = true;
+                        oneChecked = false;
+                        twoChecked = false;
+                        threeChecked = false;
                       });
                     },
                     shape: CircleBorder(),
@@ -90,7 +167,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Text(
                     'ولي أمر',
                     style: TextStyle(
-                        fontFamily: 'MyArabicFont', fontSize: width * .05),
+                        fontFamily: 'MyArabicFont', fontSize: width * .07),
                   )
                 ],
               ),
@@ -105,17 +182,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     controller: emailController,
                     validator: (text) {
                       if (text == null || text.trim().isEmpty) {
-                        return 'بجب إدخال إيميل';
-                      }
-                      if (!ValidationUtils.isValidEmail(text)) {
-                        return 'من فضلك أدخل إيميل صحيح';
+                        return 'بجب إدخال رمز';
                       }
                       return null;
                     },
                     maxLines: null,
-                    onChanged: (value) => email = value,
+                    onChanged: (value) => studentId = value,
                     decoration: InputDecoration(
-                        hintText: 'إيميل الطالب/الطالبة',
+                        label: Text('أدخل رمز الطالب/الطالبة'),
+                        hintText: 'رمز الطالب/الطالبة',
                         prefixIcon: Icon(
                           CupertinoIcons.mail_solid,
                           color: Colors.green,
@@ -139,15 +214,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     if (formKey.currentState?.validate() == false) {
                       return;
                     } else {
-                      if (studentChecked)
-                        Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (_) => HomeScreen()))
-                            .then((value) => Dialogs.showSnackbar(
-                                context, 'رمز حسابك: ${APIs.user.uid}'));
-                      else {
-                        if (email.isNotEmpty) APIs.setAsParent(APIs.user.uid);
+                      if (studentChecked) {
+                        if (oneChecked) APIs.updateLevel(APIs.user.uid, 1);
+                        if (twoChecked) APIs.updateLevel(APIs.user.uid, 2);
+                        if (threeChecked) APIs.updateLevel(APIs.user.uid, 3);
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (_) => HomeScreen()));
+                      } else {
+                        if (studentId.isNotEmpty) {
+                          APIs.setAsParent(APIs.user.uid);
+                          await APIs.setStudentAsSon(studentId).then((value) {
+                            if (!value) {
+                              Dialogs.showSnackbar(context,
+                                  'There is no users with this e-mail');
+                              return;
+                            } else {
+                              APIs.updateStudentId(APIs.user.uid, studentId);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => HomeScreen()));
+                            }
+                          });
+                        }
                       }
                     }
                   },

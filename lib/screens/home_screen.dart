@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
+import 'package:omar_mostafa/models/my_user.dart';
 import 'package:omar_mostafa/screens/home_side_menu.dart';
 import 'package:omar_mostafa/widgets/section.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<MyUser> list = [];
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
@@ -78,5 +86,6 @@ class HomeScreen extends StatelessWidget {
     Section(Colors.greenAccent, 'assets/images/complaint.png', 'تقديم شكوى', 7),
     Section(Colors.purple, 'assets/images/growth.png', 'تقرير شهري', 8),
     Section(Colors.lightBlueAccent, 'assets/images/feedback.png', 'تعليق', 9),
+    Section(Colors.deepOrange, 'assets/images/post.png', 'تنويهات أ. عمر', 10),
   ];
 }

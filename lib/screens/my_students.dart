@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/models/my_user.dart';
+import 'package:omar_mostafa/screens/profile_screen.dart';
 import 'package:omar_mostafa/widgets/user_card.dart';
 
 class MyStudents extends StatefulWidget {
@@ -18,6 +20,19 @@ class _MyStudentsState extends State<MyStudents> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        title: IconButton(
+          icon: Icon(CupertinoIcons.person_alt),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => ProfileScreen(
+                          user: list[0],
+                        )));
+          },
+        ),
+      ),
       body: StreamBuilder(
         stream: APIs.firestore.collection('users').snapshots(),
         builder: (context, snapshot) {
@@ -42,9 +57,9 @@ class _MyStudentsState extends State<MyStudents> {
               } else {
                 return Center(
                     child: Text(
-                  'لا يوجد طلبة',
-                  style: TextStyle(fontFamily: 'MyArabicFont', fontSize: 20),
-                ));
+                      'لا يوجد طلبة',
+                      style: TextStyle(fontFamily: 'MyArabicFont', fontSize: 20),
+                    ));
               }
           }
         },

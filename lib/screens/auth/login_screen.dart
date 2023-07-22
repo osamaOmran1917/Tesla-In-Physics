@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
 import 'package:omar_mostafa/screens/welcome_screen.dart';
 
@@ -38,8 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
         if ((await APIs.userExists())) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+          SharedData.user = retrievedUser;
         } else {
-          await APIs.createUser().then((value) {
+          await APIs.createUser().then((value) async {
+            var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+            SharedData.user = retrievedUser;
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (_) => WelcomeScreen()));
           });

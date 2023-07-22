@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/exams/exams_dates.dart';
+import 'package:omar_mostafa/screens/exams/level_exams_dates.dart';
+import 'package:omar_mostafa/screens/schedule/lessons_schedule.dart';
+import 'package:omar_mostafa/screens/schedule/level_schedule.dart';
 
 class Section extends StatelessWidget {
   Color color;
@@ -14,10 +19,52 @@ class Section extends StatelessWidget {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return InkWell(
-      onTap: () {
-        if (index == 2)
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => ExamsDates()));
+      onTap: () async {
+        if (index == 2) {
+          if (omar) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => ExamsDates()));
+          } else {
+            if (SharedData.user!.is_student) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) =>
+                          LevelExamsDate(SharedData.user?.level ?? 0)));
+            } else {
+              var retrievedUser = await APIs.getFutureOfUserById(
+                  SharedData.user?.student_id ?? '');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => LevelExamsDate(retrievedUser!.level)));
+            }
+          }
+          ;
+        }
+
+        if (index == 6) {
+          if (omar) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => LessonsSchedule()));
+          } else {
+            if (SharedData.user!.is_student) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) =>
+                          LevelSchedule(SharedData.user?.level ?? 0)));
+            } else {
+              var retrievedUser = await APIs.getFutureOfUserById(
+                  SharedData.user?.student_id ?? '');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => LevelSchedule(retrievedUser!.level)));
+            }
+          }
+          ;
+        }
       },
       child: Container(
         decoration: BoxDecoration(
