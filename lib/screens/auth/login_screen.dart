@@ -9,8 +9,8 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
-import 'package:omar_mostafa/screens/welcome_screen_i.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -46,8 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
           await APIs.createUser().then((value) async {
             var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
             SharedData.user = retrievedUser;
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => CompleteUserData(_isStudent)));
           });
         }
       }
@@ -74,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return await APIs.auth.signInWithCredential(credential);
     } catch (e) {
       log('\n_signInWithGoogle: $e');
-      Dialogs.showSnackbar(context, 'حدث خطأ ما. تأكد من اتصالك بالإنترنت!');
+      Dialogs.showSnackbar(context, 'حدث خطأ ما!');
       return null;
     }
   }
@@ -242,6 +244,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               )),
+          SizedBox(height: height * .11),
+          InkWell(
+            onTap: () {
+              _handleGoogleButtonClick();
+            },
+            child: Container(
+              height: height * .05,
+              width: width * .85,
+              decoration: BoxDecoration(
+                color: lightGreen,
+                borderRadius: BorderRadius.circular(width * .039),
+                boxShadow: [
+                  BoxShadow(
+                    color: lightGreen.withOpacity(0.17),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Center(
+                  child: Text('متابعة التسجيل',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))),
+            ),
+          ),
         ])
         /*Stack(
           children: [
