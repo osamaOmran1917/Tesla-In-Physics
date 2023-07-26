@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:omar_mostafa/screens/auth/login_screen.dart';
 
 class WelcomeScreenII extends StatefulWidget {
   @override
@@ -29,14 +30,15 @@ class _WelcomeScreenIIState extends State<WelcomeScreenII> {
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images/background.PNG'))),
+              image: AssetImage('assets/images/wallpaper_ii.jpg'))),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          onPressed: () {},
-          child: Image.asset('assets/images/floating.png.png'),
+          onPressed: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => LoginScreen())),
+          child: Image.asset('assets/images/floating.png'),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         /*appBar: AppBar(

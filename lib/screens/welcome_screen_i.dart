@@ -30,7 +30,7 @@ class _WelcomeScreenIState extends State<WelcomeScreenI> {
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images/background.PNG'))),
+              image: AssetImage('assets/images/wallpaper_i.jpg'))),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(

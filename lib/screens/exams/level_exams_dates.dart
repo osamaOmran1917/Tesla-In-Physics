@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
-import 'package:omar_mostafa/main.dart';
 import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/screens/exams/add_exam_bottom_sheet.dart';
 import 'package:omar_mostafa/widgets/exam_date_card.dart';
@@ -73,25 +72,6 @@ class _LevelExamsDateState extends State<LevelExamsDate> {
 
   DateTime selectedDate = DateTime.now();
 
-  void showDateDialoge() async {
-    DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365 * 10 + 3)),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: myTheme,
-          child: child ?? SizedBox.shrink(),
-        );
-      },
-    );
-    if (date != null) {
-      selectedDate = date;
-      setState(() {});
-      print(selectedDate.toString());
-    }
-  }
 }
 
 late List<Exam> all;

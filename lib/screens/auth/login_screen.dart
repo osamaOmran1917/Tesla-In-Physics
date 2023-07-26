@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
@@ -78,6 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  bool _isStudent = false;
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
@@ -91,9 +94,9 @@ class _LoginScreenState extends State<LoginScreen> {
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images/background.PNG'))),
+              image: AssetImage('assets/images/designed_background.jpg'))),
       child: Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           backgroundColor: Color(0xff39A552),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
@@ -105,9 +108,142 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           centerTitle: true,
-        ),
+        ),*/
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: Column(children: [
+          SizedBox(width: double.infinity, height: height * .11),
+          Image.asset('assets/images/logo.png'),
+          SizedBox(height: height * .11),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: width * .021),
+            height: height * .07,
+            width: width * .85,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(width * .039),
+              boxShadow: [
+                BoxShadow(
+                  color: lightGreen.withOpacity(0.17),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isStudent = false;
+                    });
+                  },
+                  child: Container(
+                    width: width * .39,
+                    height: height * .05,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(width * .039),
+                        color: _isStudent ? Colors.white : darkGreen),
+                    child: Center(
+                        child: Text('ولي أمر',
+                            style: TextStyle(
+                                color: _isStudent ? textGrey : Colors.white,
+                                fontFamily: 'cairo'))),
+                  ),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isStudent = true;
+                    });
+                  },
+                  child: Container(
+                    width: width * .39,
+                    height: height * .05,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(width * .039),
+                        color: _isStudent ? darkGreen : Colors.white),
+                    child: Center(
+                      child: Text(
+                        'طالب',
+                        style: TextStyle(
+                            color: _isStudent ? Colors.white : textGrey,
+                            fontFamily: 'cairo'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+              visible: !_isStudent,
+              child: Column(
+                children: [
+                  SizedBox(height: height * .11),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: width * .05),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: lightGreen.withOpacity(0.1),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'الخاصة بنا',
+                          style: TextStyle(
+                              fontFamily: 'cairo', fontSize: width * .027),
+                        ),
+                        SizedBox(
+                          width: width * .01,
+                        ),
+                        Text(
+                          'شروط الخدمات و سياسة الخصوصية',
+                          style: TextStyle(
+                              fontFamily: 'cairo',
+                              color: lightGreen,
+                              fontSize: width * .027),
+                        ),
+                        SizedBox(
+                          width: width * .01,
+                        ),
+                        Text(
+                          'موافق على',
+                          style: TextStyle(
+                              fontFamily: 'cairo', fontSize: width * .027),
+                        ),
+                        SizedBox(
+                          width: width * .03,
+                        ),
+                        Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(width),
+                              color: lightGreen,
+                            ),
+                            child: Image.asset(
+                              'assets/images/Check.png',
+                              width: width * .075,
+                            )),
+                        SizedBox(
+                          width: width * .03,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+        ])
+        /*Stack(
           children: [
             AnimatedPositioned(
                 top: height * .15,
@@ -153,7 +289,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ]),
                     )))
           ],
-        ),
+        )*/
+        ,
       ),
     );
   }

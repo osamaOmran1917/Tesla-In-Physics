@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
-import 'package:omar_mostafa/main.dart';
 import 'package:omar_mostafa/models/exam.dart';
 
 class AddExamBottomSheet extends StatefulWidget {
@@ -45,7 +44,6 @@ class _AddTaskBottomSheetState extends State<AddExamBottomSheet> {
           ),
           InkWell(
             onTap: () {
-              showDateDialoge();
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -70,25 +68,6 @@ class _AddTaskBottomSheetState extends State<AddExamBottomSheet> {
 
   DateTime selectedDate = DateTime.now();
 
-  void showDateDialoge() async {
-    DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365 * 10 + 3)),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: myTheme,
-          child: child ?? SizedBox.shrink(),
-        );
-      },
-    );
-    if (date != null) {
-      selectedDate = date;
-      setState(() {});
-      print(selectedDate.toString());
-    }
-  }
 
   void addExam() {
     String notes = notesController.text;

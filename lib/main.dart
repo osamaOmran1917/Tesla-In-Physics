@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: myTheme,
       home: SplashScreen(),
     );
   }
@@ -33,8 +32,3 @@ class MyApp extends StatelessWidget {
 _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
-
-final ThemeData myTheme = ThemeData(
-  primarySwatch: Colors.green, // Replace with your desired color
-  // Add other theme properties as needed
-);

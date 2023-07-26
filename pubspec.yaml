@@ -81,14 +81,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: MyArabicFont
+    - family: cairo
       fonts:
-        - asset: assets/fonts/QWxuYXNlZWItUmVndWxhci5vdGYxNjU2NDg4NDM5ODI3.otf
+        - asset: assets/fonts/Cairo.ttf
     #       - asset: fonts/Schyler-Italic.ttf
     #         style: italic
-    - family: Austere
-      fonts:
-        - asset: assets/fonts/Austere.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
