@@ -9,7 +9,7 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
-import 'package:omar_mostafa/screens/welcome_screen.dart';
+import 'package:omar_mostafa/screens/welcome_screen_i.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
             SharedData.user = retrievedUser;
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => WelcomeScreen()));
+                context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
           });
         }
       }

@@ -1,12 +1,11 @@
 import 'dart:developer';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
-import 'package:omar_mostafa/screens/auth/login_screen.dart';
+import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/screens/home_screen.dart';
-import 'package:omar_mostafa/widgets/logo.dart';
+import 'package:omar_mostafa/screens/welcome_screen_i.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(Duration(seconds: 3), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(statusBarColor: Colors.transparent));
@@ -30,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             context, MaterialPageRoute(builder: (_) => HomeScreen()));
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => LoginScreen()));
+            context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
       }
     });
   }
@@ -43,24 +42,43 @@ class _SplashScreenState extends State<SplashScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SizedBox(
-            width: double.infinity,
-          ),
-          Logo(),
-          TypewriterAnimatedTextKit(
-            text: ['أ. عُمَرْ مُصْطَفَى'],
-            textStyle: TextStyle(
-                fontFamily: 'MyArabicFont',
-                fontSize: width * .099,
-                color: Color(0xff39A552)),
-            speed: Duration(milliseconds: 150),
-            totalRepeatCount: 1,
-          ),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+          color: darkGreen,
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/splash_wallpaper.png'))),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: height * .855,
+            ),
+            Image.asset('assets/images/splash_cycle.png')
+          ],
+        )
+        // body: Image.asset('assets/images/Splash.png', width: width, height: height,)
+        /*Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              width: double.infinity,
+            ),
+            Logo(),
+            TypewriterAnimatedTextKit(
+              text: ['أ. عُمَرْ مُصْطَفَى'],
+              textStyle: TextStyle(
+                  fontFamily: 'MyArabicFont',
+                  fontSize: width * .099,
+                  color: Color(0xff39A552)),
+              speed: Duration(milliseconds: 150),
+              totalRepeatCount: 1,
+            ),
+          ],
+        )*/
+        ,
       ),
     );
   }
