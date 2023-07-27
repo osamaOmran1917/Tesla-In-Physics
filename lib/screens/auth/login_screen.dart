@@ -10,7 +10,7 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
-import 'package:omar_mostafa/screens/home_screen.dart';
+import 'package:omar_mostafa/screens/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

@@ -33,12 +33,12 @@ class APIs {
         isOnline: false,
         email: user.email.toString(),
         pushToken: '',
-        phone_I: '',
-        phone_II: '',
+        phone: '',
         is_student: true,
         lessons_num: 0,
         student_id: '',
-        level: 0);
+        level: 0,
+        male: true);
     return await firestore
         .collection('users')
         .doc(user.uid)
@@ -97,6 +97,21 @@ class APIs {
     omarMustafaRef.doc(userId).update({'level': level});
   }
 
+  static updateName(String userId, String name) {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'name': name});
+  }
+
+  static updatePhone(String userId, String phone) {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'phone': phone});
+  }
+
+  static updateGender(String userId, bool male) {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'male': male});
+  }
+
   static Future<bool> setStudentAsSon(String studentId) async {
     final data = await firestore
         .collection('users')
@@ -122,5 +137,24 @@ class APIs {
     var docRef = collection.doc(uid);
     var res = await docRef.get();
     return res.data();
+  }
+
+  static Future<void> deleteUser() async {
+    await firestore.collection('users').doc(user.uid).delete();
+    // deleteMissingPersonPicture(missingPersonId);
+  }
+
+  static Future<bool> checkStudentExistence(String studentId) async {
+    final data = await firestore
+        .collection('users')
+        .where('id', isEqualTo: studentId)
+        .get();
+    log('data: ${data.docs}');
+    if (data.docs.isNotEmpty && data.docs.first.id != user.uid) {
+      log('user exists: ${data.docs.first.data()}');
+      return true;
+    } else {
+      return false;
+    }
   }
 }

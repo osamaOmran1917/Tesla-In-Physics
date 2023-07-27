@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
-import 'package:omar_mostafa/screens/home_screen.dart';
+import 'package:omar_mostafa/screens/home/home_screen.dart';
 
 class CompleteUserData extends StatefulWidget {
   bool is_student;
@@ -29,6 +30,9 @@ class _CompleteUserDataState extends State<CompleteUserData> {
     }
   }
 
+  int? level;
+  bool? male;
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
@@ -37,8 +41,6 @@ class _CompleteUserDataState extends State<CompleteUserData> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    int? level;
-    bool? male;
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -57,7 +59,14 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                   children: [
                     Row(
                       children: [
-                        Image.asset('assets/images/back.png'),
+                        InkWell(
+                            onTap: () async {
+                              APIs.deleteUser();
+                              await APIs.auth.signOut();
+                              await GoogleSignIn().signOut();
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset('assets/images/back.png')),
                       ],
                     ),
                     Text(
@@ -105,12 +114,18 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                             ),
                             child: PopupMenuButton(
                                 onSelected: (value) {
-                                  if (value == '1') {
-                                    level = 1;
-                                  } else if (value == '2') {
-                                    level = 2;
+                                  if (value == 1) {
+                                    setState(() {
+                                      level = 1;
+                                    });
+                                  } else if (value == 2) {
+                                    setState(() {
+                                      level = 2;
+                                    });
                                   } else {
-                                    level = 3;
+                                    setState(() {
+                                      level = 3;
+                                    });
                                   }
                                 },
                                 icon: Row(
@@ -119,7 +134,9 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                         AssetImage('assets/images/down.png')),
                                     Expanded(child: Container()),
                                     Text(
-                                      'اختر مرحلة دراسية',
+                                      level == null
+                                          ? 'اختر مرحلة دراسية'
+                                          : level.toString(),
                                       style: TextStyle(
                                           fontFamily: 'Cairo',
                                           color: Colors.grey),
@@ -263,6 +280,8 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        maxLength: 11,
                         controller: phoneController,
                         validator: (text) {
                           if (text == null || text.trim().isEmpty) {
@@ -284,20 +303,23 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                     SizedBox(
                       height: height * .03,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          widget.is_student ? 'النوع' : 'المرحلة الدراسية',
-                          style: TextStyle(fontFamily: 'Cairo'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: height * .013,
-                    ),
-                    widget.is_student
-                        ? Container(
+                    Visibility(
+                      visible: widget.is_student,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'النوع',
+                                style: TextStyle(fontFamily: 'Cairo'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: height * .013,
+                          ),
+                          Container(
                             height: height * .07,
                             width: width * .85,
                             decoration: BoxDecoration(
@@ -316,9 +338,13 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                             child: PopupMenuButton(
                                 onSelected: (value) {
                                   if (value == true) {
-                                    male = true;
+                                    setState(() {
+                                      male = true;
+                                    });
                                   } else {
-                                    male = false;
+                                    setState(() {
+                                      male = false;
+                                    });
                                   }
                                 },
                                 icon: Row(
@@ -327,7 +353,11 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                         AssetImage('assets/images/down.png')),
                                     Expanded(child: Container()),
                                     Text(
-                                      'اختر النوع',
+                                      male == null
+                                          ? 'اختر النوع'
+                                          : male == true
+                                              ? 'ذكر'
+                                              : 'أنثى',
                                       style: TextStyle(
                                           fontFamily: 'Cairo',
                                           color: Colors.grey),
@@ -347,73 +377,50 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                       )
                                     ]),
                           )
-                        : Container(
-                            height: height * .07,
-                            width: width * .85,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(width * .039),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: lightGreen.withOpacity(0.17),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: PopupMenuButton(
-                                onSelected: (value) {
-                                  if (value == '1') {
-                                    level = 1;
-                                  } else if (value == '2') {
-                                    level = 2;
-                                  } else {
-                                    level = 3;
-                                  }
-                                },
-                                icon: Row(
-                                  children: [
-                                    ImageIcon(
-                                        AssetImage('assets/images/down.png')),
-                                    Expanded(child: Container()),
-                                    Text(
-                                      'اختر مرحلة دراسية',
-                                      style: TextStyle(
-                                          fontFamily: 'Cairo',
-                                          color: Colors.grey),
-                                    )
-                                  ],
-                                ),
-                                shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                itemBuilder: (context) => [
-                                      PopupMenuItem(
-                                        child: Text('1'),
-                                        value: 1,
-                                      ),
-                                      PopupMenuItem(
-                                        child: Text('2'),
-                                        value: 2,
-                                      ),
-                                      PopupMenuItem(
-                                        child: Text('3'),
-                                        value: 3,
-                                      ),
-                                    ]),
-                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: height * .09,
                     ),
                     InkWell(
-                      onTap: () {
-                        if (formKey.currentState?.validate() == false ||
-                            level == null ||
-                            male == null) {
+                      onTap: () async {
+                        if ((formKey.currentState?.validate() == false ||
+                                level == null ||
+                                male == null) &&
+                            widget.is_student == true) {
                           Dialogs.showSnackbar(
                               context, 'يجب ملأ جميع البيانات');
                           return;
+                        }
+                        if ((formKey.currentState?.validate() == false) &&
+                            widget.is_student == false) {
+                          Dialogs.showSnackbar(
+                              context, 'يجب ملأ جميع البيانات');
+                          return;
+                        }
+                        if (widget.is_student == true) {
+                          APIs.updateLevel(APIs.user.uid, level!);
+                          APIs.updateName(
+                              APIs.user.uid, nameController.text.toString());
+                          APIs.updatePhone(
+                              APIs.user.uid, phoneController.text.toString());
+                          APIs.updateGender(APIs.user.uid, male!);
+                        } else {
+                          if (await APIs.checkStudentExistence(
+                                  idController.text.toString()) ==
+                              true) {
+                            APIs.updateName(
+                                APIs.user.uid, nameController.text.toString());
+                            APIs.updatePhone(
+                                APIs.user.uid, phoneController.text.toString());
+                            APIs.updateStudentId(
+                                APIs.user.uid, idController.text.toString());
+                          } else {
+                            Dialogs.showSnackbar(
+                                context, 'لا يوجد طالب بهذا الرمز');
+                            return;
+                          }
                         }
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (_) => HomeScreen()));
