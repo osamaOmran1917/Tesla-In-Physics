@@ -97,9 +97,11 @@ import 'package:flutter/services.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/screens/home/dates_tab.dart';
 import 'package:omar_mostafa/screens/home/main_tab.dart';
+import 'package:omar_mostafa/screens/home/profile_tab.dart';
+import 'package:omar_mostafa/screens/home/strategy_tab.dart';
 
 class HomeScreen extends StatefulWidget {
-  static int selectedIndex = 0;
+  static int selectedIndex = 3;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -107,8 +109,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
-    MainTab(),
+    ProfileTab(),
+    StrategyTab(),
     DatesTab(),
+    MainTab(),
   ];
 
   @override
@@ -134,25 +138,42 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() => HomeScreen.selectedIndex = index),
           items: [
             BottomNavyBarItem(
-              icon: Container(),
-              title: Row(
-                children: [
-                  Text(
-                    'البروفايل',
-                    style: TextStyle(fontFamily: 'Cairo'),
-                  ),
-                  Image.asset('assets/images/profile_icon.png')
-                ],
-              ),
-              activeColor: lightGreen,
-              textAlign: TextAlign.center,
-            ),
+                icon: Icon(CupertinoIcons.person),
+                title: Text(
+                  'البروفايل',
+                  style: TextStyle(fontFamily: 'Cairo'),
+                ),
+                activeColor: lightGreen,
+                textAlign: TextAlign.center,
+                inactiveColor: Colors.grey),
             BottomNavyBarItem(
-              icon: Icon(CupertinoIcons.airplane),
-              title: Text('Plane'),
-              activeColor: Colors.black,
-              textAlign: TextAlign.center,
-            ),
+                icon: ImageIcon(AssetImage('assets/images/Document.png')),
+                title: Text(
+                  'الخطة التعليمية',
+                  style:
+                      TextStyle(fontFamily: 'Cairo', fontSize: width * .0281),
+                ),
+                activeColor: lightGreen,
+                textAlign: TextAlign.center,
+                inactiveColor: Colors.grey),
+            BottomNavyBarItem(
+                icon: ImageIcon(AssetImage('assets/images/dates.png')),
+                title: Text(
+                  'المواعيد',
+                  style: TextStyle(fontFamily: 'Cairo'),
+                ),
+                activeColor: lightGreen,
+                textAlign: TextAlign.center,
+                inactiveColor: Colors.grey),
+            BottomNavyBarItem(
+                icon: ImageIcon(AssetImage('assets/images/Home.png')),
+                title: Text(
+                  'الرئيسية',
+                  style: TextStyle(fontFamily: 'Cairo'),
+                ),
+                activeColor: lightGreen,
+                textAlign: TextAlign.center,
+                inactiveColor: Colors.grey),
           ],
         ),
       ),
