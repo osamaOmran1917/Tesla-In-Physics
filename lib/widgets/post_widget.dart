@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
-import 'package:omar_mostafa/models/lessons.dart';
+import 'package:omar_mostafa/models/post.dart';
 
-class LessonWidget extends StatelessWidget {
-  Lesson lesson;
+class PostWidget extends StatelessWidget {
+  Post post;
 
-  LessonWidget(this.lesson);
+  PostWidget(this.post);
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return Container(
+      height: height * .1,
       padding: EdgeInsets.all(width * .019),
       margin: EdgeInsets.only(bottom: height * .019),
       decoration: BoxDecoration(
@@ -29,14 +30,14 @@ class LessonWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(top: height * .05),
-            padding: EdgeInsets.all(width * .019),
+            padding: EdgeInsets.symmetric(
+                horizontal: width * .03, vertical: height * .005),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width * .03),
-                color: lightGreen),
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
+                borderRadius: BorderRadius.circular(width * .025),
+                color: Color(0xffebf6ed)),
+            child: Text(
+              post.date_time ?? '',
+              style: TextStyle(fontFamily: 'Cairo', color: lightGreen),
             ),
           ),
           Expanded(child: Container()),
@@ -44,30 +45,29 @@ class LessonWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                lesson.number ?? "",
+                post.title ?? '',
                 style:
                     TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
               ),
               Text(
-                lesson.name ?? '',
+                post.details ?? '',
                 style: TextStyle(
                     fontFamily: 'Cairo',
                     color: Colors.grey,
                     fontSize: width * .025),
-              ),
-              Text(
-                '200',
-                style: TextStyle(
-                    fontFamily: 'Cairo',
-                    color: lightGreen,
-                    fontWeight: FontWeight.bold),
-              ),
+              )
             ],
           ),
           SizedBox(
             width: width * .05,
           ),
-          Image.asset('assets/images/lesson_image.png')
+          CircleAvatar(
+            backgroundColor: Color(0xffebf6ed),
+            child: Icon(
+              Icons.notifications_none,
+              color: lightGreen,
+            ),
+          )
         ],
       ),
     );

@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:omar_mostafa/models/exam.dart';
+import 'package:omar_mostafa/models/lessons.dart';
 import 'package:omar_mostafa/models/my_user.dart';
+import 'package:omar_mostafa/models/post.dart';
 
 class APIs {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -156,5 +158,53 @@ class APIs {
     } else {
       return false;
     }
+  }
+
+  static CollectionReference<Lesson> getLessonsCollection() {
+    return FirebaseFirestore.instance
+        .collection(Lesson.collectionName)
+        .withConverter<Lesson>(fromFirestore: (snapshot, options) {
+      return Lesson.fromFirestore(snapshot.data()!);
+    }, toFirestore: (lesson, options) {
+      return lesson.toFirestore();
+    });
+  }
+
+  static Stream<QuerySnapshot<Lesson>> ListenForLessonsRealTimeUpdates() {
+    // Listen for realtime update
+    return getLessonsCollection()
+        .orderBy("index", descending: true)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Lesson>> getFirstTwoLessons() {
+    // Listen for realtime update
+    return getLessonsCollection()
+        .where('index', isLessThan: 2)
+        .orderBy("index", descending: true)
+        .snapshots();
+  }
+
+  static CollectionReference<Post> getPostsCollection() {
+    return FirebaseFirestore.instance
+        .collection(Post.collectionName)
+        .withConverter<Post>(fromFirestore: (snapshot, options) {
+      return Post.fromFirestore(snapshot.data()!);
+    }, toFirestore: (post, options) {
+      return post.toFirestore();
+    });
+  }
+
+  static Stream<QuerySnapshot<Post>> ListenForPostsRealTimeUpdates() {
+    // Listen for realtime update
+    return getPostsCollection().orderBy("index", descending: true).snapshots();
+  }
+
+  static Stream<QuerySnapshot<Post>> getFirstTwoPosts() {
+    // Listen for realtime update
+    return getPostsCollection()
+        .where('index', isLessThan: 2)
+        .orderBy("index", descending: true)
+        .snapshots();
   }
 }

@@ -6,7 +6,9 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/models/lessons.dart';
+import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
+import 'package:omar_mostafa/widgets/post_widget.dart';
 
 class MainTab extends StatefulWidget {
   @override
@@ -42,6 +44,7 @@ class _MainTabState extends State<MainTab> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * .05),
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             SizedBox(
@@ -89,8 +92,8 @@ class _MainTabState extends State<MainTab> {
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
-                            const CircleAvatar(
-                                child: Icon(CupertinoIcons.person_alt)),
+                        const CircleAvatar(
+                            child: Icon(CupertinoIcons.person_alt)),
                       ),
                     ))
               ],
@@ -157,43 +160,108 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            StreamBuilder<QuerySnapshot<Lesson>>(
-              builder: (buildContext, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('خطأ في تحميل البيانات حاول لاحقا'),
-                  );
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(color: lightGreen),
-                  );
-                }
-                var data = snapshot.data?.docs.map((e) => e.data()).toList();
-                return ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (buildContext, index) {
-                    return data.isEmpty
-                        ? Center(
-                            child: Text('لا يوجد دروس حتى الآن'),
-                          )
-                        : InkWell(
-                            onTap: () {
-                              /*SharedData.missingPerson = data[index];
-                            Navigator.push(
-                              context,
-                              ScalePageRoute(page: PostDetails()),
-                            );
-                            print(data[index].id);*/
-                            },
-                            child: LessonWidget(data[index]));
+            Container(
+              height: height * .3,
+              child: Expanded(
+                child: StreamBuilder<QuerySnapshot<Lesson>>(
+                  builder: (buildContext, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('خطأ في تحميل البيانات حاول لاحقا'),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(color: lightGreen),
+                      );
+                    }
+                    var data =
+                        snapshot.data?.docs.map((e) => e.data()).toList();
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (buildContext, index) {
+                        return data.isEmpty
+                            ? Center(
+                                child: Text('لا يوجد دروس حتى الآن'),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  /*SharedData.missingPerson = data[index];
+                                Navigator.push(
+                                  context,
+                                  ScalePageRoute(page: PostDetails()),
+                                );
+                                print(data[index].id);*/
+                                },
+                                child: LessonWidget(data[index]));
+                      },
+                      itemCount: data!.length,
+                    );
                   },
-                  itemCount: data!.length,
-                );
-              },
-              // future: MyDataBase.getAllMissingPersons(),
-              // stream: MyDataBase.listenForMissingPersonsRealTimeUpdates(),
-            )
+                  // future: MyDataBase.getAllMissingPersons(),
+                  stream: APIs.getFirstTwoLessons(),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Text(
+                  'عرض الكل',
+                  style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                ),
+                Expanded(child: Container()),
+                Text(
+                  'أحدث التغيرات',
+                  style: TextStyle(
+                      fontFamily: 'Cairo',
+                      fontWeight: FontWeight.bold,
+                      fontSize: width * .05),
+                )
+              ],
+            ),
+            Container(
+              height: height * .3,
+              child: Expanded(
+                child: StreamBuilder<QuerySnapshot<Post>>(
+                  builder: (buildContext, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('خطأ في تحميل البيانات حاول لاحقا'),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(color: lightGreen),
+                      );
+                    }
+                    var data =
+                        snapshot.data?.docs.map((e) => e.data()).toList();
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (buildContext, index) {
+                        return data.isEmpty
+                            ? Center(
+                                child: Text('لا يوجد تغيرات'),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  /*SharedData.missingPerson = data[index];
+                                Navigator.push(
+                                  context,
+                                  ScalePageRoute(page: PostDetails()),
+                                );
+                                print(data[index].id);*/
+                                },
+                                child: PostWidget(data[index]));
+                      },
+                      itemCount: data!.length,
+                    );
+                  },
+                  // future: MyDataBase.getAllMissingPersons(),
+                  stream: APIs.getFirstTwoPosts(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
