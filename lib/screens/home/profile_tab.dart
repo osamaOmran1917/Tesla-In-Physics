@@ -1,18 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
-import 'package:omar_mostafa/models/my_user.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
 
-  static MyUser? user;
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  String name = '';
+  String image = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getFieldValue();
+  }
+
+  Future<void> _getFieldValue() async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(APIs.user.uid)
+        .get();
+    var data = documentSnapshot.data();
+    setState(() {
+      name = data!['name'];
+      image = data['image'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
-    setUser();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * .07),
       child: Column(
@@ -51,15 +74,11 @@ class ProfileTab extends StatelessWidget {
                 ),
                 Expanded(child: Container()),
                 Column(
-                  children: [Text(user?.name ?? '')],
+                  children: [Text(name ?? '')],
                 )
               ]))
         ],
       ),
     );
-  }
-
-  Future<void> setUser() async {
-    user = await APIs.getFutureOfUserById(APIs.user.uid);
   }
 }

@@ -3,14 +3,10 @@ import 'package:omar_mostafa/helpers/colors.dart';
 
 class Cell extends StatelessWidget {
   String text;
-  Color color, textColor = Colors.grey;
+  Color color, textColor;
   double cellWidth;
 
-  Cell(
-    this.text,
-    this.color,
-    this.cellWidth,
-  );
+  Cell(this.text, this.color, this.cellWidth, {this.textColor = Colors.grey});
 
   @override
   Widget build(BuildContext context) {

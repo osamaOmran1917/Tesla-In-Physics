@@ -181,69 +181,67 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-          Visibility(
-              visible: !_isStudent,
-              child: Column(
-                children: [
-                  SizedBox(height: height * .11),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: width * .05),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: lightGreen.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
+          Column(
+            children: [
+              SizedBox(height: height * .11),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: width * .05),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: lightGreen.withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'الخاصة بنا',
-                          style: TextStyle(
-                              fontFamily: 'cairo', fontSize: width * .027),
-                        ),
-                        SizedBox(
-                          width: width * .01,
-                        ),
-                        Text(
-                          'شروط الخدمات و سياسة الخصوصية',
-                          style: TextStyle(
-                              fontFamily: 'cairo',
-                              color: lightGreen,
-                              fontSize: width * .027),
-                        ),
-                        SizedBox(
-                          width: width * .01,
-                        ),
-                        Text(
-                          'موافق على',
-                          style: TextStyle(
-                              fontFamily: 'cairo', fontSize: width * .027),
-                        ),
-                        SizedBox(
-                          width: width * .03,
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(width),
-                              color: lightGreen,
-                            ),
-                            child: Image.asset(
-                              'assets/images/Check.png',
-                              width: width * .075,
-                            )),
-                        SizedBox(
-                          width: width * .03,
-                        ),
-                      ],
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'الخاصة بنا',
+                      style: TextStyle(
+                          fontFamily: 'cairo', fontSize: width * .027),
                     ),
-                  ),
-                ],
-              )),
+                    SizedBox(
+                      width: width * .01,
+                    ),
+                    Text(
+                      'شروط الخدمات و سياسة الخصوصية',
+                      style: TextStyle(
+                          fontFamily: 'cairo',
+                          color: lightGreen,
+                          fontSize: width * .027),
+                    ),
+                    SizedBox(
+                      width: width * .01,
+                    ),
+                    Text(
+                      'موافق على',
+                      style: TextStyle(
+                          fontFamily: 'cairo', fontSize: width * .027),
+                    ),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(width),
+                          color: lightGreen,
+                        ),
+                        child: Image.asset(
+                          'assets/images/Check.png',
+                          width: width * .075,
+                        )),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: height * .11),
           InkWell(
             onTap: () {
