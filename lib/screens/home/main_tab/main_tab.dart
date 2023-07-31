@@ -167,49 +167,10 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            Container(
-              height: height * .3,
-              child: Expanded(
-                child: StreamBuilder<QuerySnapshot<Lesson>>(
-                  builder: (buildContext, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('خطأ في تحميل البيانات حاول لاحقا'),
-                      );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(color: lightGreen),
-                      );
-                    }
-                    var data =
-                        snapshot.data?.docs.map((e) => e.data()).toList();
-                    return ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (buildContext, index) {
-                        return data.isEmpty
-                            ? Center(
-                                child: Text('لا يوجد دروس حتى الآن'),
-                              )
-                            : InkWell(
-                                onTap: () {
-                                  /*SharedData.missingPerson = data[index];
-                                Navigator.push(
-                                  context,
-                                  ScalePageRoute(page: PostDetails()),
-                                );
-                                print(data[index].id);*/
-                                },
-                                child: LessonWidget(data[index]));
-                      },
-                      itemCount: data!.length,
-                    );
-                  },
-                  // future: MyDataBase.getAllMissingPersons(),
-                  stream: APIs.getFirstTwoLessons(),
-                ),
-              ),
-            ),
+            LessonWidget(
+                Lesson(number: 'الدرس الأول', name: 'الفيزياء الكهربية')),
+            LessonWidget(
+                Lesson(number: 'الدرس الثاني', name: 'الفيزياء الحديثة')),
             Row(
               children: [
                 TextButton(
@@ -232,36 +193,33 @@ class _MainTabState extends State<MainTab> {
             ),
             Container(
               height: height * .3,
-              child: Expanded(
-                child: StreamBuilder<QuerySnapshot<Post>>(
-                  builder: (buildContext, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('خطأ في تحميل البيانات حاول لاحقا'),
-                      );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(color: lightGreen),
-                      );
-                    }
-                    var data =
-                        snapshot.data?.docs.map((e) => e.data()).toList();
-                    return ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (buildContext, index) {
-                        return data.isEmpty
-                            ? Center(
-                                child: Text('لا يوجد تغيرات'),
-                              )
-                            : PostWidget(data[index]);
-                      },
-                      itemCount: data!.length,
+              child: StreamBuilder<QuerySnapshot<Post>>(
+                builder: (buildContext, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                     );
-                  },
-                  // future: MyDataBase.getAllMissingPersons(),
-                  stream: APIs.getFirstTwoPosts(),
-                ),
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(color: lightGreen),
+                    );
+                  }
+                  var data = snapshot.data?.docs.map((e) => e.data()).toList();
+                  return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (buildContext, index) {
+                      return data.isEmpty
+                          ? Center(
+                              child: Text('لا يوجد تغيرات'),
+                            )
+                          : PostWidget(data[index]);
+                    },
+                    itemCount: data!.length,
+                  );
+                },
+                // future: MyDataBase.getAllMissingPersons(),
+                stream: APIs.getFirstTwoPosts(),
               ),
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/post.dart';
@@ -36,7 +37,9 @@ class PostWidget extends StatelessWidget {
                 motion: DrawerMotion(),
                 children: [
                   SlidableAction(
-                    onPressed: (_) {},
+                    onPressed: (_) {
+                      APIs.deletePost(id: post.id!);
+                    },
                     icon: CupertinoIcons.delete,
                     backgroundColor: Colors.red,
                     label: 'حذف',
@@ -56,7 +59,7 @@ class PostWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(width * .025),
                   color: Color(0xffebf6ed)),
               child: Text(
-                post.date_time ?? '',
+                post.textDate ?? '',
                 style: TextStyle(fontFamily: 'Cairo', color: lightGreen),
               ),
             ),

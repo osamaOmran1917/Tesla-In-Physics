@@ -9,6 +9,10 @@ import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
 
 class LatestChanges extends StatelessWidget {
+  var titleController = TextEditingController();
+  var detailsController = TextEditingController();
+  var dateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
@@ -67,24 +71,16 @@ class LatestChanges extends StatelessWidget {
                       );
                     }
                     var data =
-                        snapshot.data?.docs.map((e) => e.data()).toList();
+                    snapshot.data?.docs.map((e) => e.data()).toList();
                     return ListView.builder(
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (buildContext, index) {
                         return data.isEmpty
                             ? Center(
-                                child: Text('لا يوجد تغييرات'),
-                              )
+                          child: Text('لا يوجد تغييرات'),
+                        )
                             : InkWell(
-                                onTap: () {
-                                  /*SharedData.missingPerson = data[index];
-                                Navigator.push(
-                                  context,
-                                  ScalePageRoute(page: PostDetails()),
-                                );
-                                print(data[index].id);*/
-                                },
-                                child: PostWidget(data[index]));
+                            onTap: () {}, child: PostWidget(data[index]));
                       },
                       itemCount: data!.length,
                     );
@@ -98,19 +94,91 @@ class LatestChanges extends StatelessWidget {
         ),
         floatingActionButton: omar
             ? FloatingActionButton(
-                backgroundColor: lightGreen,
-                onPressed: () {
-                  showModalBottomSheet(
+          backgroundColor: lightGreen,
+          onPressed: () {
+            showModalBottomSheet(
+                      isScrollControlled: true,
                       context: context,
                       builder: (_) {
-                        return Column();
-                      });
+                        return Padding(
+                          padding: EdgeInsets.all(width * .05),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: height * .05,
+                              ),
+                              TextField(
+                                controller: titleController,
+                                decoration: InputDecoration(
+                                  labelText: 'العنوان',
+                                  labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(width * .05),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * .05,
+                              ),
+                              TextField(
+                                controller: detailsController,
+                                decoration: InputDecoration(
+                                  labelText: 'التفاصيل',
+                                  labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(width * .05),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * .05,
+                              ),
+                              TextField(
+                                controller: dateController,
+                                decoration: InputDecoration(
+                                  labelText: 'يمكنك إضافة موعد',
+                                  labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(width * .05),
+                                  ),
+                                ),
+                              ),
+                              Expanded(child: Container()),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Post post = new Post(
+                                        title: titleController.text.toString(),
+                                        details:
+                                            detailsController.text.toString(),
+                                        textDate:
+                                            dateController.text.toString());
+                                    APIs.addPost(post);
+                                    Navigator.pop(context);
+                                    print(dateController.text.toString());
+                                  },
+                                  child: Text(
+                                    'نشر',
+                                    style: TextStyle(
+                                        fontFamily: 'Cairo',
+                                        fontSize: width * .05),
+                                  ))
+                            ],
+                          ),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(width * .1),
+                              topLeft: Radius.circular(width * .1))));
                 },
-                child: Icon(
-                  CupertinoIcons.add,
-                  color: Colors.white,
-                ),
-              )
+          child: Icon(
+            CupertinoIcons.add,
+            color: Colors.white,
+          ),
+        )
             : null,
       ),
     );

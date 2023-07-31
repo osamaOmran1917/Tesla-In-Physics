@@ -177,14 +177,6 @@ class APIs {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot<Lesson>> getFirstTwoLessons() {
-    // Listen for realtime update
-    return getLessonsCollection()
-        .where('index', isLessThan: 2)
-        .orderBy("index", descending: true)
-        .snapshots();
-  }
-
   static CollectionReference<Post> getPostsCollection() {
     return FirebaseFirestore.instance
         .collection(Post.collectionName)
@@ -197,18 +189,28 @@ class APIs {
 
   static Stream<QuerySnapshot<Post>> ListenForPostsRealTimeUpdates() {
     // Listen for realtime update
-    return getPostsCollection().orderBy("index", descending: false).snapshots();
+    return getPostsCollection()
+        .orderBy("date_time", descending: false)
+        .snapshots();
   }
 
   static Stream<QuerySnapshot<Post>> getFirstTwoPosts() {
     // Listen for realtime update
     return getPostsCollection()
-        .where('index', isLessThan: 2)
-        .orderBy("index", descending: false)
+        .orderBy("date_time", descending: false)
+        .limit(2)
         .snapshots();
   }
 
   static Future<void> deletePost({required String id}) async {
     await firestore.collection('posts').doc(id).delete();
+  }
+
+  static Future<void> addPost(Post post) {
+    var postsCollection = getPostsCollection();
+    var doc = postsCollection.doc(); //create new doc
+    post.id = doc.id;
+    post.date_time = DateTime.now();
+    return doc.set(post); // get doc -> then set //update
   }
 }
