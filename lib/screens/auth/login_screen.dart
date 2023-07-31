@@ -98,19 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
               fit: BoxFit.cover,
               image: AssetImage('assets/images/designed_background.jpg'))),
       child: Scaffold(
-        /*appBar: AppBar(
-          backgroundColor: Color(0xff39A552),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
-          title: Text(
-            'أ. عُمَرْ مُصْطَفَى',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'MyArabicFont',
-            ),
-          ),
-          centerTitle: true,
-        ),*/
         backgroundColor: Colors.transparent,
         body: Column(children: [
           SizedBox(width: double.infinity, height: height * .11),

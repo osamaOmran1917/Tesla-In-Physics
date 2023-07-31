@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/post.dart';
 
 class PostWidget extends StatelessWidget {
@@ -27,48 +30,66 @@ class PostWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: width * .03, vertical: height * .005),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width * .025),
-                color: Color(0xffebf6ed)),
-            child: Text(
-              post.date_time ?? '',
-              style: TextStyle(fontFamily: 'Cairo', color: lightGreen),
-            ),
-          ),
-          Expanded(child: Container()),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                post.title ?? '',
-                style:
-                    TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
-              ),
-              Text(
-                post.details ?? '',
-                style: TextStyle(
-                    fontFamily: 'Cairo',
-                    color: Colors.grey,
-                    fontSize: width * .025),
+      child: Slidable(
+        startActionPane: omar
+            ? ActionPane(
+                motion: DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: (_) {},
+                    icon: CupertinoIcons.delete,
+                    backgroundColor: Colors.red,
+                    label: 'حذف',
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12)),
+                  ),
+                ],
               )
-            ],
-          ),
-          SizedBox(
-            width: width * .05,
-          ),
-          CircleAvatar(
-            backgroundColor: Color(0xffebf6ed),
-            child: Icon(
-              Icons.notifications_none,
-              color: lightGreen,
+            : null,
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: width * .03, vertical: height * .005),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(width * .025),
+                  color: Color(0xffebf6ed)),
+              child: Text(
+                post.date_time ?? '',
+                style: TextStyle(fontFamily: 'Cairo', color: lightGreen),
+              ),
             ),
-          )
-        ],
+            Expanded(child: Container()),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  post.title ?? '',
+                  style: TextStyle(
+                      fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  post.details ?? '',
+                  style: TextStyle(
+                      fontFamily: 'Cairo',
+                      color: Colors.grey,
+                      fontSize: width * .025),
+                )
+              ],
+            ),
+            SizedBox(
+              width: width * .05,
+            ),
+            CircleAvatar(
+              backgroundColor: Color(0xffebf6ed),
+              child: Icon(
+                Icons.notifications_none,
+                color: lightGreen,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

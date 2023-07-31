@@ -197,14 +197,18 @@ class APIs {
 
   static Stream<QuerySnapshot<Post>> ListenForPostsRealTimeUpdates() {
     // Listen for realtime update
-    return getPostsCollection().orderBy("index", descending: true).snapshots();
+    return getPostsCollection().orderBy("index", descending: false).snapshots();
   }
 
   static Stream<QuerySnapshot<Post>> getFirstTwoPosts() {
     // Listen for realtime update
     return getPostsCollection()
         .where('index', isLessThan: 2)
-        .orderBy("index", descending: true)
+        .orderBy("index", descending: false)
         .snapshots();
+  }
+
+  static Future<void> deletePost({required String id}) async {
+    await firestore.collection('posts').doc(id).delete();
   }
 }

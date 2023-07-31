@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
-import 'package:omar_mostafa/helpers/log_out.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lessons.dart';
 import 'package:omar_mostafa/models/post.dart';
+import 'package:omar_mostafa/screens/home/main_tab/latest_changes.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
 
@@ -73,7 +74,9 @@ class _MainTabState extends State<MainTab> {
                           fontWeight: FontWeight.bold, fontFamily: 'Cairo'),
                     ),
                     Text(
-                      '🤝🏻 !لنبدأ رحلة التعلم',
+                      omar
+                          ? 'تحكم في كل شيء يخص تطبيقك'
+                          : '🤝🏻 !لنبدأ رحلة التعلم',
                       style: TextStyle(fontFamily: 'Cairo'),
                     )
                   ],
@@ -81,21 +84,17 @@ class _MainTabState extends State<MainTab> {
                 SizedBox(
                   width: width * .05,
                 ),
-                InkWell(
-                    onTap: () => logOut(context),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(height * .015),
-                      child: CachedNetworkImage(
-                        width: height * .055,
-                        height: height * .055,
-                        imageUrl: image ?? '',
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                        const CircleAvatar(
-                            child: Icon(CupertinoIcons.person_alt)),
-                      ),
-                    ))
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(height * .015),
+                  child: CachedNetworkImage(
+                    width: height * .055,
+                    height: height * .055,
+                    imageUrl: image ?? '',
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const CircleAvatar(
+                        child: Icon(CupertinoIcons.person_alt)),
+                  ),
+                )
               ],
             ),
             Stack(
@@ -107,18 +106,26 @@ class _MainTabState extends State<MainTab> {
                 Positioned(
                     top: height * .081,
                     right: width * .07,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'أفضل عرض لك',
-                          style: TextStyle(
-                              fontFamily: 'Cairo',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          width: width * .5,
+                    child: omar
+                        ? Text(
+                            'تحكم في العروض',
+                            style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'أفضل عرض لك',
+                                style: TextStyle(
+                                    fontFamily: 'Cairo',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Container(
+                                width: width * .5,
                           child: Text(
                             'عرض خاص على الدورات الجديدة بنصف الثمن',
                             style: TextStyle(
@@ -205,9 +212,13 @@ class _MainTabState extends State<MainTab> {
             ),
             Row(
               children: [
-                Text(
-                  'عرض الكل',
-                  style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                TextButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => LatestChanges())),
+                  child: Text(
+                    'عرض الكل',
+                    style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                  ),
                 ),
                 Expanded(child: Container()),
                 Text(
@@ -243,16 +254,7 @@ class _MainTabState extends State<MainTab> {
                             ? Center(
                                 child: Text('لا يوجد تغيرات'),
                               )
-                            : InkWell(
-                                onTap: () {
-                                  /*SharedData.missingPerson = data[index];
-                                Navigator.push(
-                                  context,
-                                  ScalePageRoute(page: PostDetails()),
-                                );
-                                print(data[index].id);*/
-                                },
-                                child: PostWidget(data[index]));
+                            : PostWidget(data[index]);
                       },
                       itemCount: data!.length,
                     );
