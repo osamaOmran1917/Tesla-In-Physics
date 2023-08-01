@@ -97,7 +97,7 @@ import 'package:flutter/services.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/screens/home/dates_tab.dart';
 import 'package:omar_mostafa/screens/home/main_tab/main_tab.dart';
-import 'package:omar_mostafa/screens/home/profile_tab.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/profile_tab.dart';
 import 'package:omar_mostafa/screens/home/strategy_tab.dart';
 
 class HomeScreen extends StatefulWidget {

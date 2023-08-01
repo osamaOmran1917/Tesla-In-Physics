@@ -18,16 +18,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isAnimate = false;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
-      setState(() {
-        _isAnimate = true;
-      });
-    });
   }
 
   _handleGoogleButtonClick() {

@@ -6,6 +6,8 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/user_profile_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);
@@ -57,58 +59,62 @@ class _ProfileTabState extends State<ProfileTab> {
               ),
             ]),
             SizedBox(height: height * .05),
-            Container(
-                padding: EdgeInsets.all(width * .023),
-                height: height * .083,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(width * .059),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: lightGreen.withOpacity(0.17),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Row(children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    color: Colors.grey,
-                  ),
-                  Expanded(child: Container()),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        name ?? '',
-                        style: TextStyle(
-                            fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+            InkWell(
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => UsereProfileScreen())),
+              child: Container(
+                  padding: EdgeInsets.all(width * .023),
+                  height: height * .083,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width * .059),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: lightGreen.withOpacity(0.17),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                      Text('تعديل البيانات الشخصية',
-                          style: TextStyle(
-                              fontFamily: 'Cairo',
-                              color: Colors.grey,
-                              fontSize: width * .0265))
                     ],
                   ),
-                  SizedBox(
-                    width: width * .03,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(height * .3),
-                    child: CachedNetworkImage(
-                      width: height * .055,
-                      height: height * .055,
-                      imageUrl: image,
-                      errorWidget: (context, url, error) =>
-                          CircleAvatar(child: Icon(CupertinoIcons.person_alt)),
+                  child: Row(children: [
+                    Icon(
+                      Icons.keyboard_arrow_left_rounded,
+                      color: Colors.grey,
                     ),
-                  )
-                ])),
+                    Expanded(child: Container()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          name ?? '',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        ),
+                        Text('تعديل البيانات الشخصية',
+                            style: TextStyle(
+                                fontFamily: 'Cairo',
+                                color: Colors.grey,
+                                fontSize: width * .0265))
+                      ],
+                    ),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(height * .3),
+                      child: CachedNetworkImage(
+                        width: height * .055,
+                        height: height * .055,
+                        imageUrl: image,
+                        errorWidget: (context, url, error) => CircleAvatar(
+                            child: Icon(CupertinoIcons.person_alt)),
+                      ),
+                    )
+                  ])),
+            ),
             SizedBox(
               height: height * .03,
             ),
@@ -213,54 +219,60 @@ class _ProfileTabState extends State<ProfileTab> {
             SizedBox(
               height: height * .03,
             ),
-            Container(
-                padding: EdgeInsets.all(width * .023),
-                height: height * .083,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(width * .059),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: lightGreen.withOpacity(0.17),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Row(children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    color: Colors.grey,
-                  ),
-                  Expanded(child: Container()),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        omar ? 'التواصل' : 'تواصل معنا',
-                        style: TextStyle(
-                            fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+            InkWell(
+              onTap: () {
+                // launchUrl(whatsApp);
+                sendWhatsApp();
+              },
+              child: Container(
+                  padding: EdgeInsets.all(width * .023),
+                  height: height * .083,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width * .059),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: lightGreen.withOpacity(0.17),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: width * .03,
-                  ),
-                  Container(
-                    width: height * .055,
-                    height: height * .055,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height * .3),
-                        color: lightGreen),
-                    child: Icon(
-                      CupertinoIcons.checkmark_shield,
-                      color: Colors.white,
+                  child: Row(children: [
+                    Icon(
+                      Icons.keyboard_arrow_left_rounded,
+                      color: Colors.grey,
                     ),
-                  )
-                ])),
+                    Expanded(child: Container()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          omar ? 'التواصل' : 'تواصل معنا',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                    Container(
+                      width: height * .055,
+                      height: height * .055,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height * .3),
+                          color: lightGreen),
+                      child: Icon(
+                        CupertinoIcons.checkmark_shield,
+                        color: Colors.white,
+                      ),
+                    )
+                  ])),
+            ),
             SizedBox(
               height: height * .03,
             ),
@@ -368,5 +380,10 @@ class _ProfileTabState extends State<ProfileTab> {
         ),
       ),
     );
+  }
+
+  void sendWhatsApp() {
+    String url = "https://wa.me/+201020481857";
+    launchUrl(Uri.parse(url));
   }
 }
