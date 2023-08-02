@@ -19,6 +19,7 @@ class MainTab extends StatefulWidget {
 class _MainTabState extends State<MainTab> {
   String name = '';
   String image = '';
+  int userLevel = 0;
 
   @override
   void initState() {
@@ -32,10 +33,22 @@ class _MainTabState extends State<MainTab> {
         .doc(APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    setState(() {
-      name = data!['name'];
-      image = data['image'];
-    });
+    name = data!['name'];
+    image = data['image'];
+    if (data['is_student'] == true)
+      setState(() {
+        userLevel = data['level'];
+      });
+    else {
+      var documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(data['student_id'])
+          .get();
+      var newData = documentSnapshot.data();
+      setState(() {
+        userLevel = newData!['level'];
+      });
+    }
   }
 
   @override
@@ -221,7 +234,7 @@ class _MainTabState extends State<MainTab> {
                 // future: MyDataBase.getAllMissingPersons(),
                 stream: omar
                     ? APIs.getFirstTwoPostsForOmar()
-                    : APIs.getFirstTwoPosts(2),
+                    : APIs.getFirstTwoPosts(userLevel),
               ),
             ),
           ],
