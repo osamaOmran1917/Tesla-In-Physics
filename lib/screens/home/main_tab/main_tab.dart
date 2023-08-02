@@ -219,7 +219,9 @@ class _MainTabState extends State<MainTab> {
                   );
                 },
                 // future: MyDataBase.getAllMissingPersons(),
-                stream: APIs.getFirstTwoPosts(),
+                stream: omar
+                    ? APIs.getFirstTwoPostsForOmar()
+                    : APIs.getFirstTwoPosts(2),
               ),
             ),
           ],

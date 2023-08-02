@@ -194,7 +194,21 @@ class APIs {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot<Post>> getFirstTwoPosts() {
+  static Stream<QuerySnapshot<Post>> ListenForLevelPostsRealTimeUpdates(
+      int level) {
+    // Listen for realtime update
+    return getPostsCollection().where('level', isEqualTo: level).snapshots();
+  }
+
+  static Stream<QuerySnapshot<Post>> getFirstTwoPosts(int level) {
+    // Listen for realtime update
+    return getPostsCollection()
+        .where('level', isEqualTo: level)
+        .limit(2)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Post>> getFirstTwoPostsForOmar() {
     // Listen for realtime update
     return getPostsCollection()
         .orderBy("date_time", descending: false)
