@@ -8,7 +8,7 @@ class StrategyTab extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.blue,
+      color: Colors.pinkAccent,
     );
   }
 }

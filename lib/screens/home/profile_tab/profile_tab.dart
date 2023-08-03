@@ -221,8 +221,8 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
             InkWell(
               onTap: () {
-                // launchUrl(whatsApp);
-                sendWhatsApp();
+                _launchInBrowser(Uri.parse(
+                    'whatsapp://send?phone=+201128122882&text=السلام عليكم، مستر عمر. لدي تعليق..'));
               },
               child: Container(
                   padding: EdgeInsets.all(width * .023),
@@ -382,8 +382,12 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
-  void sendWhatsApp() {
-    String url = "https://wa.me/+201020481857";
-    launchUrl(Uri.parse(url));
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
