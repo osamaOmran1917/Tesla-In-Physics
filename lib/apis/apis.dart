@@ -1,6 +1,7 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/lessons.dart';
@@ -12,13 +13,15 @@ class APIs {
 
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  static FirebaseStorage storage = FirebaseStorage.instance;
+
   static User get user => auth.currentUser!;
 
   static Future<bool> userExists() async {
     return (await firestore
-        .collection('users')
-        .doc(auth.currentUser!.uid)
-        .get())
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .get())
         .exists;
   }
 
@@ -50,8 +53,8 @@ class APIs {
   static CollectionReference<Exam> getExamsCollection() {
     return firestore.collection(Exam.collectionName).withConverter<Exam>(
         fromFirestore: ((snapshot, options) {
-          return Exam.fromFirestore(snapshot.data()!);
-        }), toFirestore: (exam, options) {
+      return Exam.fromFirestore(snapshot.data()!);
+    }), toFirestore: (exam, options) {
       return exam.toFirestore();
     });
   }
@@ -59,8 +62,8 @@ class APIs {
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
         fromFirestore: ((snapshot, options) {
-          return MyUser.fromJson(snapshot.data()!);
-        }), toFirestore: (user, options) {
+      return MyUser.fromJson(snapshot.data()!);
+    }), toFirestore: (user, options) {
       return user.toJson();
     });
   }
@@ -74,9 +77,7 @@ class APIs {
 
   static Stream<QuerySnapshot<Exam>> listenForExamsRealTimeUpdates(int level) {
     // Listen for realtime update
-    return getExamsCollection()
-        .where('level', isEqualTo: level)
-        .snapshots();
+    return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<MyUser>> listenForUsersRealTimeUpdates() {
@@ -226,5 +227,18 @@ class APIs {
     post.id = doc.id;
     post.date_time = DateTime.now();
     return doc.set(post); // get doc -> then set //update
+  }
+
+  static Future<void> updateProfilePicture(File file) async {
+    final ext = file.path.split('.').last;
+    log('Extensions: $ext');
+    final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+        .then((p0) {
+      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+    });
+    String image = await ref.getDownloadURL();
+    await firestore.collection('users').doc(user.uid).update({'image': image});
   }
 }

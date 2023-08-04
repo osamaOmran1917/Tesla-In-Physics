@@ -1,8 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
@@ -21,6 +24,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   bool? male;
+  String? _picked_image;
 
   @override
   void initState() {
@@ -105,17 +109,28 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   ),
                   Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(height * .1),
-                        child: CachedNetworkImage(
-                          width: height * .15,
-                          height: height * .15,
-                          imageUrl: image,
-                          fit: BoxFit.fill,
-                          errorWidget: (context, url, error) => CircleAvatar(
-                            child: Icon(CupertinoIcons.person_alt),
-                          ),
-                        ),
+                      _picked_image != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(height * .1),
+                              child: Image.file(
+                                File(_picked_image!),
+                                width: height * .15,
+                                height: height * .15,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(height * .1),
+                              child: CachedNetworkImage(
+                                width: height * .15,
+                                height: height * .15,
+                                imageUrl: image,
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) =>
+                                    CircleAvatar(
+                                  child: Icon(CupertinoIcons.person_alt),
+                                ),
+                              ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -129,7 +144,9 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(width * .03),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _showBottomSheet(context);
+                          },
                           child: Icon(
                             CupertinoIcons.pen,
                             color: Colors.white,
@@ -214,19 +231,19 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                           itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text('1'),
-                                  value: 1,
-                                ),
-                                PopupMenuItem(
-                                  child: Text('2'),
-                                  value: 2,
-                                ),
-                                PopupMenuItem(
-                                  child: Text('3'),
-                                  value: 3,
-                                ),
-                              ]),
+                            PopupMenuItem(
+                              child: Text('1'),
+                              value: 1,
+                            ),
+                            PopupMenuItem(
+                              child: Text('2'),
+                              value: 2,
+                            ),
+                            PopupMenuItem(
+                              child: Text('3'),
+                              value: 3,
+                            ),
+                          ]),
                     ),
                   ),
                   Row(
@@ -270,7 +287,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         border: InputBorder.none,
                         hintText: 'اكتب اسمك كامل',
                         hintStyle:
-                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                        TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -321,7 +338,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         border: InputBorder.none,
                         hintText: 'اكتب رقم هاتفك',
                         hintStyle:
-                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                        TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -358,7 +375,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset:
-                                    Offset(0, 3), // changes position of shadow
+                                Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -383,8 +400,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                     male == null
                                         ? 'اختر النوع'
                                         : male == true
-                                            ? 'ذكر'
-                                            : 'أنثى',
+                                        ? 'ذكر'
+                                        : 'أنثى',
                                     style: TextStyle(
                                         fontFamily: 'Cairo',
                                         color: Colors.grey),
@@ -394,15 +411,15 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                               shape: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      child: Text('ذكر'),
-                                      value: true,
-                                    ),
-                                    PopupMenuItem(
-                                      child: Text('أنثى'),
-                                      value: false,
-                                    )
-                                  ]),
+                                PopupMenuItem(
+                                  child: Text('ذكر'),
+                                  value: true,
+                                ),
+                                PopupMenuItem(
+                                  child: Text('أنثى'),
+                                  value: false,
+                                )
+                              ]),
                         )
                       ],
                     ),
@@ -453,5 +470,75 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    var width = MediaQuery.of(context).size.width,
+        height = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(width * .05),
+                topRight: Radius.circular(width * .05))),
+        context: context,
+        builder: (_) {
+          return ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: height * .03, bottom: height * .05),
+            children: [
+              Text(
+                'اختر صورة شخصية',
+                style: TextStyle(fontFamily: 'Cairo'),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: height * .02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: CircleBorder(),
+                          fixedSize: Size(width * .3, height * .15)),
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image = await picker.pickImage(
+                            source: ImageSource.gallery, imageQuality: 80);
+                        if (image != null) {
+                          log('Image Path: ${image.path} -- MimeType: ${image.mimeType}');
+                          setState(() {
+                            _picked_image = image.path;
+                          });
+                          APIs.updateProfilePicture(File(_picked_image!));
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Image.asset('assets/images/gallery.png')),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: CircleBorder(),
+                          fixedSize: Size(width * .3, height * .15)),
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image = await picker.pickImage(
+                            source: ImageSource.camera, imageQuality: 80);
+                        if (image != null) {
+                          log('Image Path: ${image.path}');
+                          setState(() {
+                            _picked_image = image.path;
+                          });
+                          APIs.updateProfilePicture(File(_picked_image!));
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Image.asset('assets/images/camera.png'))
+                ],
+              )
+            ],
+          );
+        });
   }
 }
