@@ -180,18 +180,10 @@ class _LatestChangesState extends State<LatestChanges> {
                                 height: height * .07,
                                 width: width * .85,
                                 decoration: BoxDecoration(
+                                  border: Border.all(width: width * .001),
                                   color: Colors.white,
                                   borderRadius:
-                                      BorderRadius.circular(width * .039),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: lightGreen.withOpacity(0.17),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                      BorderRadius.circular(width * .043),
                                 ),
                                 child: PopupMenuButton(
                                     onSelected: (value) {

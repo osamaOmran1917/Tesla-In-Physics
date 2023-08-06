@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/lessons.dart';
 import 'package:omar_mostafa/models/my_user.dart';
 import 'package:omar_mostafa/models/post.dart';
+import 'package:omar_mostafa/models/strategy_post.dart';
 
 class APIs {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -188,6 +190,16 @@ class APIs {
     });
   }
 
+  static CollectionReference<StrategyPost> getStrategyPostsCollection() {
+    return FirebaseFirestore.instance
+        .collection(StrategyPost.collectionName)
+        .withConverter<StrategyPost>(fromFirestore: (snapshot, options) {
+      return StrategyPost.fromFirestore(snapshot.data()!);
+    }, toFirestore: (strategyPost, options) {
+      return strategyPost.toFirestore();
+    });
+  }
+
   static Stream<QuerySnapshot<Post>> ListenForPostsRealTimeUpdates() {
     // Listen for realtime update
     return getPostsCollection()
@@ -199,6 +211,14 @@ class APIs {
       int level) {
     // Listen for realtime update
     return getPostsCollection().where('level', isEqualTo: level).snapshots();
+  }
+
+  static Stream<QuerySnapshot<StrategyPost>>
+      ListenForLevelStrategyPostsRealTimeUpdates(int level) {
+    // Listen for realtime update
+    return getStrategyPostsCollection()
+        .where('level', isEqualTo: level)
+        .snapshots();
   }
 
   static Stream<QuerySnapshot<Post>> getFirstTwoPosts(int level) {
@@ -240,5 +260,13 @@ class APIs {
     });
     String image = await ref.getDownloadURL();
     await firestore.collection('users').doc(user.uid).update({'image': image});
+  }
+
+  static Future<void> addStrategyPost(StrategyPost strategyPost) {
+    var strategyPostsCollection = getStrategyPostsCollection();
+    var doc = strategyPostsCollection.doc(); //create new doc
+    strategyPost.id = doc.id;
+    strategyPost.date_time = DateTime.now();
+    return doc.set(strategyPost); // get doc -> then set //update
   }
 }
