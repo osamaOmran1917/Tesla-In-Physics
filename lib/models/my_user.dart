@@ -15,6 +15,8 @@ class MyUser {
     required this.lessons_num,
     required this.student_id,
     required this.level,
+    required this.attendance,
+    required this.absence,
     required this.male,
   });
 
@@ -33,6 +35,8 @@ class MyUser {
   late final int lessons_num;
   late final String student_id;
   late final int level;
+  late final int attendance;
+  late final int absence;
   late final bool male;
 
   MyUser.fromJson(Map<String, dynamic> json) {
@@ -51,6 +55,8 @@ class MyUser {
     lessons_num = json['lessons_num'] ?? '';
     student_id = json['student_id'] ?? '';
     level = json['level'] ?? '';
+    attendance = json['attendance'] ?? '';
+    absence = json['absence'] ?? '';
     male = json['male'] ?? '';
   }
 
@@ -71,6 +77,8 @@ class MyUser {
     data['lessons_num'] = lessons_num;
     data['student_id'] = student_id;
     data['level'] = level;
+    data['attendance'] = attendance;
+    data['absence'] = absence;
     data['male'] = male;
     return data;
   }

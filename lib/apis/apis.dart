@@ -45,6 +45,8 @@ class APIs {
         lessons_num: 0,
         student_id: '',
         level: 0,
+        attendance: 0,
+        absence: 0,
         male: true);
     return await firestore
         .collection('users')
@@ -267,6 +269,7 @@ class APIs {
     var doc = strategyPostsCollection.doc(); //create new doc
     strategyPost.id = doc.id;
     strategyPost.date_time = DateTime.now();
+    strategyPost.time = DateTime.now().millisecondsSinceEpoch.toString();
     return doc.set(strategyPost); // get doc -> then set //update
   }
 }

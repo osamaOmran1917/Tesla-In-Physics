@@ -83,14 +83,13 @@ class _StrategyTabState extends State<StrategyTab> {
                         ? Center(
                             child: Text('لا يوجد خطط حتى الآن'),
                           )
-                        : InkWell(
+                        : GestureDetector(
                             onTap: () {},
                             child: StrategyPostWidget(data[index]));
                   },
                   itemCount: data!.length,
                 );
               },
-              // future: MyDataBase.getAllMissingPersons(),
               stream:
                   APIs.ListenForLevelStrategyPostsRealTimeUpdates(userLevel),
             ),

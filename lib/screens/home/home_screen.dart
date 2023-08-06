@@ -7,7 +7,7 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
-import 'package:omar_mostafa/screens/home/dates_tab.dart';
+import 'package:omar_mostafa/screens/home/attendance_tab/attendance_tab.dart';
 import 'package:omar_mostafa/screens/home/main_tab/main_tab.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/profile_tab.dart';
 import 'package:omar_mostafa/screens/home/strategy_tab.dart';
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
     ProfileTab(),
     StrategyTab(),
-    DatesTab(),
+    AttendanceTab(),
     MainTab(),
   ];
 
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavyBarItem(
                 icon: ImageIcon(AssetImage('assets/images/dates.png')),
                 title: Text(
-                  'المواعيد',
+                  'الحضور',
                   style: TextStyle(fontFamily: 'Cairo'),
                 ),
                 activeColor: lightGreen,

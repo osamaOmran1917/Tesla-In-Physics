@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
 
 class StrategyPostWidget extends StatelessWidget {
@@ -13,6 +14,7 @@ class StrategyPostWidget extends StatelessWidget {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return Container(
+      margin: EdgeInsets.only(bottom: height * .05),
       padding: EdgeInsets.only(
           top: height * .021, right: width * .05, left: width * .05),
       width: width * .9,
@@ -42,13 +44,13 @@ class StrategyPostWidget extends StatelessWidget {
                 child: Text(
                   'جديد',
                   style:
-                      TextStyle(fontFamily: 'Cairo', color: Color(0xff79c6b3)),
+                  TextStyle(fontFamily: 'Cairo', color: Color(0xff79c6b3)),
                 ),
               ),
               Text(
                 strategy_post.title ?? '',
                 style:
-                    TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -81,7 +83,7 @@ class StrategyPostWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '2:00 AM',
+                getFormattedTime(context: context, time: strategy_post.time!),
                 style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
               ),
               SizedBox(
