@@ -35,19 +35,18 @@ class APIs {
         name: user.displayName.toString(),
         about: 'مرحبا. أنا طالب لدى أ. عمر',
         createdAt: time,
-        lastActive: time,
-        id: user.uid,
-        isOnline: false,
-        email: user.email.toString(),
-        pushToken: '',
-        phone: '',
-        is_student: true,
-        lessons_num: 0,
-        student_id: '',
-        level: 0,
-        attendance: 0,
-        absence: 0,
-        male: true);
+      lastActive: time,
+      id: user.uid,
+      isOnline: false,
+      email: user.email.toString(),
+      pushToken: '',
+      phone: '',
+      is_student: true,
+      lessons_num: 0,
+      student_id: '',
+      level: 0,
+      male: true,
+    );
     return await firestore
         .collection('users')
         .doc(user.uid)

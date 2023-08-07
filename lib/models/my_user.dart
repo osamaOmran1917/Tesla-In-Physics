@@ -15,8 +15,6 @@ class MyUser {
     required this.lessons_num,
     required this.student_id,
     required this.level,
-    required this.attendance,
-    required this.absence,
     required this.male,
   });
 
@@ -35,9 +33,19 @@ class MyUser {
   late final int lessons_num;
   late final String student_id;
   late final int level;
-  late final int attendance;
-  late final int absence;
   late final bool male;
+  int? jan_1;
+  int? jan_2;
+  int? jan_3;
+  int? jan_4;
+  int? jan_5;
+  int? jan_6;
+  int? jan_7;
+  int? jan_8;
+  int? jan_9;
+  int? jan_10;
+  int? jan_11;
+  int? jan_12;
 
   MyUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
@@ -55,9 +63,19 @@ class MyUser {
     lessons_num = json['lessons_num'] ?? '';
     student_id = json['student_id'] ?? '';
     level = json['level'] ?? '';
-    attendance = json['attendance'] ?? '';
-    absence = json['absence'] ?? '';
     male = json['male'] ?? '';
+    jan_1 = json['jan_1'];
+    jan_2 = json['jan_2'];
+    jan_3 = json['jan_3'];
+    jan_4 = json['jan_4'];
+    jan_5 = json['jan_5'];
+    jan_6 = json['jan_6'];
+    jan_7 = json['jan_7'];
+    jan_8 = json['jan_8'];
+    jan_9 = json['jan_9'];
+    jan_10 = json['jan_10'];
+    jan_11 = json['jan_11'];
+    jan_12 = json['jan_12'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,9 +95,19 @@ class MyUser {
     data['lessons_num'] = lessons_num;
     data['student_id'] = student_id;
     data['level'] = level;
-    data['attendance'] = attendance;
-    data['absence'] = absence;
     data['male'] = male;
+    data['jan_1'] = jan_1;
+    data['jan_2'] = jan_2;
+    data['jan_3'] = jan_3;
+    data['jan_4'] = jan_4;
+    data['jan_5'] = jan_5;
+    data['jan_6'] = jan_6;
+    data['jan_7'] = jan_7;
+    data['jan_8'] = jan_8;
+    data['jan_9'] = jan_9;
+    data['jan_10'] = jan_10;
+    data['jan_11'] = jan_11;
+    data['jan_12'] = jan_12;
     return data;
   }
 }
