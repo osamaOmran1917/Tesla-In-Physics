@@ -272,4 +272,49 @@ class APIs {
     strategyPost.time = DateTime.now().millisecondsSinceEpoch.toString();
     return doc.set(strategyPost); // get doc -> then set //update
   }
+
+  static Stream<QuerySnapshot<MyUser>>
+      ListenForStudentsRealTimeUpdatesDependingOnLevel(int level) {
+    // Listen for realtime update
+    return getUsersCollection()
+        .where('level', isEqualTo: level)
+        .where('is_student', isEqualTo: true)
+        .snapshots();
+  }
+
+  static Future<dynamic> getFieldValue(
+      String documentId, String fieldName) async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(documentId)
+          .get();
+
+      if (snapshot.exists) {
+        dynamic fieldValue = snapshot.get(fieldName);
+        return fieldValue;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error getting field value: $e');
+      return null;
+    }
+  }
+
+  static updateAttendance(String userId, int att) async {
+    String documentId = userId;
+    String fieldName = 'attendance';
+
+    dynamic fieldValue = await getFieldValue(documentId, fieldName);
+
+    if (fieldValue != null) {
+      // Do something with the field value
+      print('Field value: $fieldValue');
+    } else {
+      print('Document not found or field value is null');
+    }
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'attendance': fieldValue + att});
+  }
 }

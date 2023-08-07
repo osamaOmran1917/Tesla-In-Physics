@@ -1,12 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:omar_mostafa/apis/apis.dart';
+import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/models/my_user.dart';
 
 class UserCard extends StatefulWidget {
-  final MyUser user;
+  MyUser user;
+  Color color = Colors.white;
 
-  const UserCard({super.key, required this.user});
+  UserCard(this.user);
 
   @override
   State<UserCard> createState() => _UserCardState();
@@ -17,30 +18,53 @@ class _UserCardState extends State<UserCard> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
-    return Card(
-      color: Color.fromARGB(255, 219, 255, 178),
-      elevation: .5,
-      margin: EdgeInsets.symmetric(horizontal: width * .04, vertical: 4),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(height * .3),
-          child: CachedNetworkImage(
-            width: height * .055,
-            height: height * .055,
-            imageUrl: widget.user.image,
-            errorWidget: (context, url, error) =>
-                CircleAvatar(child: Icon(CupertinoIcons.person_alt)),
-          ),
+    return InkWell(
+      onTap: () {
+        if (widget.color == Colors.white) {
+          setState(() {
+            widget.color = lightGreen;
+            APIs.updateAttendance(widget.user.id, 1);
+          });
+        } else {
+          setState(() {
+            widget.color = Colors.white;
+            APIs.updateAttendance(widget.user.id, -1);
+          });
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(width * .05),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(width * .05),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: lightGreen.withOpacity(0.1),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        title: Text(widget.user.name),
-        subtitle: Text(widget.user.about),
-        trailing: Container(
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(
-              color: Colors.redAccent.shade400,
-              borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: width * .055,
+              height: width * .055,
+              decoration: BoxDecoration(
+                  color: widget.color,
+                  borderRadius: BorderRadius.circular(width),
+                  border: Border.all(color: Colors.grey, width: width * .003)),
+            ),
+            Text(
+              widget.user.name,
+              style: TextStyle(
+                  fontFamily: 'cairo',
+                  fontWeight: FontWeight.bold,
+                  fontSize: width * .039),
+            )
+          ],
         ),
       ),
     );

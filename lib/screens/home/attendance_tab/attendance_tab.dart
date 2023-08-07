@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/screens/home/attendance_tab/months_screen.dart';
 
 class AttendanceTab extends StatefulWidget {
   @override
@@ -65,7 +66,10 @@ class _AttendanceTabState extends State<AttendanceTab> {
                   height: height * .05,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => MonthsScreen(1)));
+                  },
                   child: Container(
                     padding: EdgeInsets.all(width * .07),
                     decoration: BoxDecoration(
@@ -98,63 +102,75 @@ class _AttendanceTabState extends State<AttendanceTab> {
                 SizedBox(
                   height: height * .045,
                 ),
-                Container(
-                  padding: EdgeInsets.all(width * .07),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => MonthsScreen(2)));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(width * .07),
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(width * .05)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.keyboard_arrow_left_outlined,
+                          color: Colors.grey,
                         ),
+                        Text(
+                          'الصف الثاني',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        )
                       ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'الصف الثاني',
-                        style: TextStyle(
-                            fontFamily: 'Cairo', fontWeight: FontWeight.bold),
-                      )
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: height * .045,
                 ),
-                Container(
-                  padding: EdgeInsets.all(width * .07),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => MonthsScreen(3)));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(width * .07),
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(width * .05)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.keyboard_arrow_left_outlined,
+                          color: Colors.grey,
                         ),
+                        Text(
+                          'الصف الثالث',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        )
                       ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'الصف الثالث',
-                        style: TextStyle(
-                            fontFamily: 'Cairo', fontWeight: FontWeight.bold),
-                      )
-                    ],
+                    ),
                   ),
                 )
               ],
