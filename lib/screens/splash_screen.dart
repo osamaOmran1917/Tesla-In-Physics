@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
-import 'package:omar_mostafa/screens/welcome_screen_i.dart';
+import 'package:omar_mostafa/screens/welcome/welcome_screen_i.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

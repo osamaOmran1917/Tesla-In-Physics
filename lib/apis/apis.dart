@@ -30,11 +30,11 @@ class APIs {
   static Future<void> createUser() async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     final myUser = MyUser(
-        image: user.photoURL.toString(),
-        address: '',
-        name: user.displayName.toString(),
-        about: 'مرحبا. أنا طالب لدى أ. عمر',
-        createdAt: time,
+      image: user.photoURL.toString(),
+      address: '',
+      name: user.displayName.toString(),
+      about: 'مرحبا. أنا طالب لدى أ. عمر',
+      createdAt: time,
       lastActive: time,
       id: user.uid,
       isOnline: false,
@@ -46,6 +46,42 @@ class APIs {
       student_id: '',
       level: 0,
       male: true,
+      jan_1: 0,
+      jan_2: 0,
+      jan_3: 0,
+      jan_4: 0,
+      jan_5: 0,
+      jan_6: 0,
+      jan_7: 0,
+      jan_8: 0,
+      jan_9: 0,
+      jan_10: 0,
+      jan_11: 0,
+      jan_12: 0,
+      feb_1: 0,
+      feb_2: 0,
+      feb_3: 0,
+      feb_4: 0,
+      feb_5: 0,
+      feb_6: 0,
+      feb_7: 0,
+      feb_8: 0,
+      feb_9: 0,
+      feb_10: 0,
+      feb_11: 0,
+      feb_12: 0,
+      aug_1: 0,
+      aug_2: 0,
+      aug_3: 0,
+      aug_4: 0,
+      aug_5: 0,
+      aug_6: 0,
+      aug_7: 0,
+      aug_8: 0,
+      aug_9: 0,
+      aug_10: 0,
+      aug_11: 0,
+      aug_12: 0,
     );
     return await firestore
         .collection('users')
@@ -53,14 +89,6 @@ class APIs {
         .set(myUser.toJson());
   }
 
-  static CollectionReference<Exam> getExamsCollection() {
-    return firestore.collection(Exam.collectionName).withConverter<Exam>(
-        fromFirestore: ((snapshot, options) {
-      return Exam.fromFirestore(snapshot.data()!);
-    }), toFirestore: (exam, options) {
-      return exam.toFirestore();
-    });
-  }
 
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
@@ -69,18 +97,6 @@ class APIs {
     }), toFirestore: (user, options) {
       return user.toJson();
     });
-  }
-
-  static Future<void> insertExam(Exam exam) {
-    var examsCollection = getExamsCollection();
-    var doc = examsCollection.doc();
-    exam.id = doc.id;
-    return doc.set(exam);
-  }
-
-  static Stream<QuerySnapshot<Exam>> listenForExamsRealTimeUpdates(int level) {
-    // Listen for realtime update
-    return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<MyUser>> listenForUsersRealTimeUpdates() {
@@ -191,6 +207,16 @@ class APIs {
     });
   }
 
+  static CollectionReference<Exam> getExamsCollection() {
+    return FirebaseFirestore.instance
+        .collection(Exam.collectionName)
+        .withConverter<Exam>(fromFirestore: (snapshot, options) {
+      return Exam.fromFirestore(snapshot.data()!);
+    }, toFirestore: (exam, options) {
+      return exam.toFirestore();
+    });
+  }
+
   static CollectionReference<StrategyPost> getStrategyPostsCollection() {
     return FirebaseFirestore.instance
         .collection(StrategyPost.collectionName)
@@ -250,6 +276,13 @@ class APIs {
     return doc.set(post); // get doc -> then set //update
   }
 
+  static Future<void> addExam(Exam exam) {
+    var examsCollection = getExamsCollection();
+    var doc = examsCollection.doc(); //create new doc
+    exam.id = doc.id;
+    return doc.set(exam); // get doc -> then set //update
+  }
+
   static Future<void> updateProfilePicture(File file) async {
     final ext = file.path.split('.').last;
     log('Extensions: $ext');
@@ -281,7 +314,7 @@ class APIs {
         .snapshots();
   }
 
-  static Future<dynamic> getFieldValue(
+  /*static Future<dynamic> getFieldValue(
       String documentId, String fieldName) async {
     try {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
@@ -299,21 +332,10 @@ class APIs {
       print('Error getting field value: $e');
       return null;
     }
-  }
+  }*/
 
-  static updateAttendance(String userId, int att) async {
-    String documentId = userId;
-    String fieldName = 'attendance';
-
-    dynamic fieldValue = await getFieldValue(documentId, fieldName);
-
-    if (fieldValue != null) {
-      // Do something with the field value
-      print('Field value: $fieldValue');
-    } else {
-      print('Document not found or field value is null');
-    }
+  static updateAttendance(String userId, int att, String lec) async {
     CollectionReference omarMustafaRef = getUsersCollection();
-    omarMustafaRef.doc(userId).update({'attendance': fieldValue + att});
+    omarMustafaRef.doc(userId).update({lec: att});
   }
 }

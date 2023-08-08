@@ -16,6 +16,42 @@ class MyUser {
     required this.student_id,
     required this.level,
     required this.male,
+    required this.jan_1,
+    required this.jan_2,
+    required this.jan_3,
+    required this.jan_4,
+    required this.jan_5,
+    required this.jan_6,
+    required this.jan_7,
+    required this.jan_8,
+    required this.jan_9,
+    required this.jan_10,
+    required this.jan_11,
+    required this.jan_12,
+    required this.feb_1,
+    required this.feb_2,
+    required this.feb_3,
+    required this.feb_4,
+    required this.feb_5,
+    required this.feb_6,
+    required this.feb_7,
+    required this.feb_8,
+    required this.feb_9,
+    required this.feb_10,
+    required this.feb_11,
+    required this.feb_12,
+    required this.aug_1,
+    required this.aug_2,
+    required this.aug_3,
+    required this.aug_4,
+    required this.aug_5,
+    required this.aug_6,
+    required this.aug_7,
+    required this.aug_8,
+    required this.aug_9,
+    required this.aug_10,
+    required this.aug_11,
+    required this.aug_12,
   });
 
   late final String image;
@@ -34,18 +70,42 @@ class MyUser {
   late final String student_id;
   late final int level;
   late final bool male;
-  int? jan_1;
-  int? jan_2;
-  int? jan_3;
-  int? jan_4;
-  int? jan_5;
-  int? jan_6;
-  int? jan_7;
-  int? jan_8;
-  int? jan_9;
-  int? jan_10;
-  int? jan_11;
-  int? jan_12;
+  late final jan_1;
+  late final jan_2;
+  late final jan_3;
+  late final jan_4;
+  late final jan_5;
+  late final jan_6;
+  late final jan_7;
+  late final jan_8;
+  late final jan_9;
+  late final jan_10;
+  late final jan_11;
+  late final jan_12;
+  late final feb_1;
+  late final feb_2;
+  late final feb_3;
+  late final feb_4;
+  late final feb_5;
+  late final feb_6;
+  late final feb_7;
+  late final feb_8;
+  late final feb_9;
+  late final feb_10;
+  late final feb_11;
+  late final feb_12;
+  late final aug_1;
+  late final aug_2;
+  late final aug_3;
+  late final aug_4;
+  late final aug_5;
+  late final aug_6;
+  late final aug_7;
+  late final aug_8;
+  late final aug_9;
+  late final aug_10;
+  late final aug_11;
+  late final aug_12;
 
   MyUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
@@ -76,6 +136,30 @@ class MyUser {
     jan_10 = json['jan_10'];
     jan_11 = json['jan_11'];
     jan_12 = json['jan_12'];
+    feb_1 = json['feb_1'];
+    feb_2 = json['feb_2'];
+    feb_3 = json['feb_3'];
+    feb_4 = json['feb_4'];
+    feb_5 = json['feb_5'];
+    feb_6 = json['feb_6'];
+    feb_7 = json['feb_7'];
+    feb_8 = json['feb_8'];
+    feb_9 = json['feb_9'];
+    feb_10 = json['feb_10'];
+    feb_11 = json['feb_11'];
+    feb_12 = json['feb_12'];
+    aug_1 = json['aug_1'];
+    aug_2 = json['aug_2'];
+    aug_3 = json['aug_3'];
+    aug_4 = json['aug_4'];
+    aug_5 = json['aug_5'];
+    aug_6 = json['aug_6'];
+    aug_7 = json['aug_7'];
+    aug_8 = json['aug_8'];
+    aug_9 = json['aug_9'];
+    aug_10 = json['aug_10'];
+    aug_11 = json['aug_11'];
+    aug_12 = json['aug_12'];
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +192,30 @@ class MyUser {
     data['jan_10'] = jan_10;
     data['jan_11'] = jan_11;
     data['jan_12'] = jan_12;
+    data['feb_1'] = feb_1;
+    data['feb_2'] = feb_2;
+    data['feb_3'] = feb_3;
+    data['feb_4'] = feb_4;
+    data['feb_5'] = feb_5;
+    data['feb_6'] = feb_6;
+    data['feb_7'] = feb_7;
+    data['feb_8'] = feb_8;
+    data['feb_9'] = feb_9;
+    data['feb_10'] = feb_10;
+    data['feb_11'] = feb_11;
+    data['feb_12'] = feb_12;
+    data['aug_1'] = aug_1;
+    data['aug_2'] = aug_2;
+    data['aug_3'] = aug_3;
+    data['aug_4'] = aug_4;
+    data['aug_5'] = aug_5;
+    data['aug_6'] = aug_6;
+    data['aug_7'] = aug_7;
+    data['aug_8'] = aug_8;
+    data['aug_9'] = aug_9;
+    data['aug_10'] = aug_10;
+    data['aug_11'] = aug_11;
+    data['aug_12'] = aug_12;
     return data;
   }
 }

@@ -91,7 +91,7 @@ class _SetAttendanceState extends State<SetAttendance> {
                               ? Center(
                                   child: Text('لا يوجد تغييرات'),
                                 )
-                              : UserCard(data[index]);
+                              : UserCard(data[index], widget.lec, widget.month);
                         },
                         itemCount: data!.length,
                       );

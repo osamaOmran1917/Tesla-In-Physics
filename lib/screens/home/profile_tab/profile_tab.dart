@@ -6,6 +6,7 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/exams_screen.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/user_profile_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -276,53 +277,59 @@ class _ProfileTabState extends State<ProfileTab> {
             SizedBox(
               height: height * .03,
             ),
-            Container(
-                padding: EdgeInsets.all(width * .023),
-                height: height * .083,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(width * .059),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: lightGreen.withOpacity(0.17),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Row(children: [
-                  Icon(
-                    Icons.keyboard_arrow_left_rounded,
-                    color: Colors.grey,
-                  ),
-                  Expanded(child: Container()),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'الاختبارات',
-                        style: TextStyle(
-                            fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => ExamsScreen()));
+              },
+              child: Container(
+                  padding: EdgeInsets.all(width * .023),
+                  height: height * .083,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width * .059),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: lightGreen.withOpacity(0.17),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: width * .03,
-                  ),
-                  Container(
-                    width: height * .055,
-                    height: height * .055,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(height * .3),
-                        color: lightGreen),
-                    child: Image.asset(
-                      'assets/images/exams.png',
+                  child: Row(children: [
+                    Icon(
+                      Icons.keyboard_arrow_left_rounded,
+                      color: Colors.grey,
                     ),
-                  )
-                ])),
+                    Expanded(child: Container()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'الاختبارات',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                    Container(
+                      width: height * .055,
+                      height: height * .055,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height * .3),
+                          color: lightGreen),
+                      child: Image.asset(
+                        'assets/images/exams.png',
+                      ),
+                    )
+                  ])),
+            ),
             SizedBox(
               height: height * .03,
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:omar_mostafa/screens/welcome_screen_ii.dart';
+import 'package:omar_mostafa/screens/welcome/welcome_screen_ii.dart';
 
 class WelcomeScreenI extends StatefulWidget {
   @override
