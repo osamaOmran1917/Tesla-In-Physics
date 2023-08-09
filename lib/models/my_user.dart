@@ -40,6 +40,18 @@ class MyUser {
     required this.feb_10,
     required this.feb_11,
     required this.feb_12,
+    required this.mar_1,
+    required this.mar_2,
+    required this.mar_3,
+    required this.mar_4,
+    required this.mar_5,
+    required this.mar_6,
+    required this.mar_7,
+    required this.mar_8,
+    required this.mar_9,
+    required this.mar_10,
+    required this.mar_11,
+    required this.mar_12,
     required this.aug_1,
     required this.aug_2,
     required this.aug_3,
@@ -94,6 +106,18 @@ class MyUser {
   late final feb_10;
   late final feb_11;
   late final feb_12;
+  late final mar_1;
+  late final mar_2;
+  late final mar_3;
+  late final mar_4;
+  late final mar_5;
+  late final mar_6;
+  late final mar_7;
+  late final mar_8;
+  late final mar_9;
+  late final mar_10;
+  late final mar_11;
+  late final mar_12;
   late final aug_1;
   late final aug_2;
   late final aug_3;
@@ -148,6 +172,18 @@ class MyUser {
     feb_10 = json['feb_10'];
     feb_11 = json['feb_11'];
     feb_12 = json['feb_12'];
+    mar_1 = json['mar_1'];
+    mar_2 = json['mar_2'];
+    mar_3 = json['mar_3'];
+    mar_4 = json['mar_4'];
+    mar_5 = json['mar_5'];
+    mar_6 = json['mar_6'];
+    mar_7 = json['mar_7'];
+    mar_8 = json['mar_8'];
+    mar_9 = json['mar_9'];
+    mar_10 = json['mar_10'];
+    mar_11 = json['mar_11'];
+    mar_12 = json['mar_12'];
     aug_1 = json['aug_1'];
     aug_2 = json['aug_2'];
     aug_3 = json['aug_3'];
@@ -204,6 +240,18 @@ class MyUser {
     data['feb_10'] = feb_10;
     data['feb_11'] = feb_11;
     data['feb_12'] = feb_12;
+    data['mar_1'] = mar_1;
+    data['mar_2'] = mar_2;
+    data['mar_3'] = mar_3;
+    data['mar_4'] = mar_4;
+    data['mar_5'] = mar_5;
+    data['mar_6'] = mar_6;
+    data['mar_7'] = mar_7;
+    data['mar_8'] = mar_8;
+    data['mar_9'] = mar_9;
+    data['mar_10'] = mar_10;
+    data['mar_11'] = mar_11;
+    data['mar_12'] = mar_12;
     data['aug_1'] = aug_1;
     data['aug_2'] = aug_2;
     data['aug_3'] = aug_3;

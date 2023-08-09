@@ -70,6 +70,18 @@ class APIs {
       feb_10: 0,
       feb_11: 0,
       feb_12: 0,
+      mar_1: 0,
+      mar_2: 0,
+      mar_3: 0,
+      mar_4: 0,
+      mar_5: 0,
+      mar_6: 0,
+      mar_7: 0,
+      mar_8: 0,
+      mar_9: 0,
+      mar_10: 0,
+      mar_11: 0,
+      mar_12: 0,
       aug_1: 0,
       aug_2: 0,
       aug_3: 0,
@@ -268,6 +280,10 @@ class APIs {
     await firestore.collection('posts').doc(id).delete();
   }
 
+  static Future<void> deleteStrategyPost({required String id}) async {
+    await firestore.collection('strategy_posts').doc(id).delete();
+  }
+
   static Future<void> addPost(Post post) {
     var postsCollection = getPostsCollection();
     var doc = postsCollection.doc(); //create new doc
@@ -313,26 +329,6 @@ class APIs {
         .where('is_student', isEqualTo: true)
         .snapshots();
   }
-
-  /*static Future<dynamic> getFieldValue(
-      String documentId, String fieldName) async {
-    try {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(documentId)
-          .get();
-
-      if (snapshot.exists) {
-        dynamic fieldValue = snapshot.get(fieldName);
-        return fieldValue;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print('Error getting field value: $e');
-      return null;
-    }
-  }*/
 
   static updateAttendance(String userId, int att, String lec) async {
     CollectionReference omarMustafaRef = getUsersCollection();

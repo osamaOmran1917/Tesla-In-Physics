@@ -118,6 +118,54 @@ class _UserCardState extends State<UserCard> {
       att = widget.user.feb_12;
       lecture = 'feb_12';
     }
+    if (widget.month == 3 && widget.lec == 1) {
+      att = widget.user.mar_1;
+      lecture = 'mar_1';
+    }
+    if (widget.month == 3 && widget.lec == 2) {
+      att = widget.user.mar_2;
+      lecture = 'mar_2';
+    }
+    if (widget.month == 3 && widget.lec == 3) {
+      att = widget.user.mar_3;
+      lecture = 'mar_3';
+    }
+    if (widget.month == 3 && widget.lec == 4) {
+      att = widget.user.mar_4;
+      lecture = 'mar_4';
+    }
+    if (widget.month == 3 && widget.lec == 5) {
+      att = widget.user.mar_5;
+      lecture = 'mar_5';
+    }
+    if (widget.month == 3 && widget.lec == 6) {
+      att = widget.user.mar_6;
+      lecture = 'mar_6';
+    }
+    if (widget.month == 3 && widget.lec == 7) {
+      att = widget.user.mar_7;
+      lecture = 'mar_7';
+    }
+    if (widget.month == 3 && widget.lec == 8) {
+      att = widget.user.mar_8;
+      lecture = 'mar_8';
+    }
+    if (widget.month == 3 && widget.lec == 9) {
+      att = widget.user.mar_9;
+      lecture = 'mar_9';
+    }
+    if (widget.month == 3 && widget.lec == 10) {
+      att = widget.user.mar_10;
+      lecture = 'mar_10';
+    }
+    if (widget.month == 3 && widget.lec == 11) {
+      att = widget.user.mar_11;
+      lecture = 'mar_11';
+    }
+    if (widget.month == 3 && widget.lec == 12) {
+      att = widget.user.mar_12;
+      lecture = 'mar_12';
+    }
     if (widget.month == 8 && widget.lec == 1) {
       att = widget.user.aug_1;
       lecture = 'aug_1';
