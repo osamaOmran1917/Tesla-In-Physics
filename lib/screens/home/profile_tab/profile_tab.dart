@@ -6,7 +6,7 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
-import 'package:omar_mostafa/screens/home/profile_tab/exams_screen.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/exams/exams_screen.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/user_profile_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
