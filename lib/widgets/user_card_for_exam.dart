@@ -1,5 +1,12 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/my_user.dart';
 
 class UserCardForExam extends StatelessWidget {
@@ -74,18 +81,18 @@ class UserCardForExam extends StatelessWidget {
                           shape: CircleBorder(),
                           fixedSize: Size(width * .3, height * .15)),
                       onPressed: () async {
-                        /*
                         final ImagePicker picker = ImagePicker();
                         final XFile? image = await picker.pickImage(
                             source: ImageSource.gallery, imageQuality: 80);
                         if (image != null) {
                           log('Image Path: ${image.path} -- MimeType: ${image.mimeType}');
-                          setState(() {
-                            _picked_image = image.path;
-                          });
-                          APIs.updateProfilePicture(File(_picked_image!));
+                          Exam exam =
+                              Exam(level: usre.level, student_id: usre.id);
+                          APIs.addExam(exam, File(image.path));
                           Navigator.pop(context);
-                        }*/
+                          Dialogs.showSnackbar(
+                              context, 'تم إدراج درجة الامتحان بنجاح ✔');
+                        }
                       },
                       child: Image.asset('assets/images/gallery.png')),
                   ElevatedButton(

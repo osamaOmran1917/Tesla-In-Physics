@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
-import 'package:omar_mostafa/screens/home/profile_tab/exams/add_exams_marks.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/exams/show_exams_marks.dart';
 
 class ExamsScreen extends StatelessWidget {
   @override
@@ -62,7 +62,7 @@ class ExamsScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => AddExamsMarks(1)));
+                                builder: (_) => ShowExamsMarks(1)));
                       },
                       child: Container(
                         padding: EdgeInsets.all(width * .07),
@@ -103,7 +103,7 @@ class ExamsScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => AddExamsMarks(2)));
+                                builder: (_) => ShowExamsMarks(2)));
                       },
                       child: Container(
                         padding: EdgeInsets.all(width * .07),
@@ -144,7 +144,7 @@ class ExamsScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => AddExamsMarks(3)));
+                                builder: (_) => ShowExamsMarks(3)));
                       },
                       child: Container(
                         padding: EdgeInsets.all(width * .07),

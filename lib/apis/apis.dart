@@ -292,10 +292,23 @@ class APIs {
     return doc.set(post); // get doc -> then set //update
   }
 
-  static Future<void> addExam(Exam exam) {
+  static Future<void> addExam(Exam exam, File file) async {
     var examsCollection = getExamsCollection();
     var doc = examsCollection.doc(); //create new doc
     exam.id = doc.id;
+
+    //add exam image
+    final ext = file.path.split('.').last;
+    log('Extensions: $ext');
+    final ref = storage.ref().child('exams_pictures/${exam.id}.$ext');
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+        .then((p0) {
+      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+    });
+    String image = await ref.getDownloadURL();
+    await firestore.collection('exams').doc(exam.id).update({'image': image});
+
     return doc.set(exam); // get doc -> then set //update
   }
 
@@ -328,6 +341,12 @@ class APIs {
         .where('level', isEqualTo: level)
         .where('is_student', isEqualTo: true)
         .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Exam>>
+      ListenForExamsRealTimeUpdatesDependingOnLevel(int level) {
+    // Listen for realtime update
+    return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static updateAttendance(String userId, int att, String lec) async {
