@@ -8,7 +8,42 @@ import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/exams/show_exams_marks.dart';
 import 'package:omar_mostafa/widgets/exam_widget.dart';
 
-class ExamsScreen extends StatelessWidget {
+class ExamsScreen extends StatefulWidget {
+  @override
+  State<ExamsScreen> createState() => _ExamsScreenState();
+}
+
+class _ExamsScreenState extends State<ExamsScreen> {
+  String _id = '0';
+
+  @override
+  void initState() {
+    super.initState();
+    _getFieldValue();
+  }
+
+  Future<void> _getFieldValue() async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(APIs.user.uid)
+        .get();
+    var data = documentSnapshot.data();
+    if (data!['is_student'] == true)
+      setState(() {
+        _id = data['id'];
+      });
+    else {
+      var documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(data['student_id'])
+          .get();
+      var newData = documentSnapshot.data();
+      setState(() {
+        _id = newData!['id'];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
@@ -27,165 +62,165 @@ class ExamsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: omar
             ? Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * .07),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height * .067,
-              ),
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                  padding: EdgeInsets.all(width * .039),
-                  decoration: BoxDecoration(
-                      color: lightGreen,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Icon(
-                    Icons.keyboard_arrow_left_sharp,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'الاختبارات',
-                    style: TextStyle(
-                        fontFamily: 'cairo',
-                        fontSize: width * .05,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * .045,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ShowExamsMarks(1)));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(width * .07),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                          Offset(0, 3), // changes position of shadow
+                padding: EdgeInsets.symmetric(horizontal: width * .07),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: height * .067,
+                    ),
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: EdgeInsets.all(width * .039),
+                        decoration: BoxDecoration(
+                            color: lightGreen,
+                            borderRadius: BorderRadius.circular(width * .05)),
+                        child: Icon(
+                          Icons.keyboard_arrow_left_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'الاختبارات',
+                          style: TextStyle(
+                              fontFamily: 'cairo',
+                              fontSize: width * .05,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'الصف الأول',
-                        style: TextStyle(
-                            fontFamily: 'Cairo',
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * .045,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ShowExamsMarks(2)));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(width * .07),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                          Offset(0, 3), // changes position of shadow
+                    ),
+                    SizedBox(
+                      height: height * .045,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ShowExamsMarks(1)));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(width * .07),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(width * .05)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.keyboard_arrow_left_outlined,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'الصف الأول',
+                              style: TextStyle(
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        color: Colors.grey,
                       ),
-                      Text(
-                        'الصف الثاني',
-                        style: TextStyle(
-                            fontFamily: 'Cairo',
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * .045,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ShowExamsMarks(3)));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(width * .07),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                          Offset(0, 3), // changes position of shadow
+                    ),
+                    SizedBox(
+                      height: height * .045,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ShowExamsMarks(2)));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(width * .07),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(width * .05)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.keyboard_arrow_left_outlined,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'الصف الثاني',
+                              style: TextStyle(
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        color: Colors.grey,
                       ),
-                      Text(
-                        'الصف الثالث',
-                        style: TextStyle(
-                            fontFamily: 'Cairo',
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: height * .045,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ShowExamsMarks(3)));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(width * .07),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(width * .05)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.keyboard_arrow_left_outlined,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'الصف الثالث',
+                              style: TextStyle(
+                                  fontFamily: 'Cairo',
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               )
-            ],
-          ),
-        )
             : Padding(
-          padding: EdgeInsets.only(
+                padding: EdgeInsets.only(
                     top: height * .07, left: width * .07, right: width * .07),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +283,7 @@ class ExamsScreen extends StatelessWidget {
                         },
                         stream: APIs
                             .ListenForExamsRealTimeUpdatesDependingOnStudent(
-                                APIs.user.uid),
+                                _id),
                       ),
                     )
                   ],

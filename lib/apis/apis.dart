@@ -349,6 +349,14 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<StrategyPost>>
+      ListenForStrategyPostsRealTimeUpdates() {
+    // Listen for realtime update
+    return getStrategyPostsCollection()
+        .orderBy("date_time", descending: true)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<StrategyPost>>
       ListenForLevelStrategyPostsRealTimeUpdates(int level) {
     // Listen for realtime update
     return getStrategyPostsCollection()

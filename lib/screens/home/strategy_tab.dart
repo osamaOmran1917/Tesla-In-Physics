@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
 import 'package:omar_mostafa/widgets/strategy_post_widget.dart';
 
@@ -90,8 +91,9 @@ class _StrategyTabState extends State<StrategyTab> {
                   itemCount: data!.length,
                 );
               },
-              stream:
-                  APIs.ListenForLevelStrategyPostsRealTimeUpdates(userLevel),
+              stream: omar
+                  ? APIs.ListenForStrategyPostsRealTimeUpdates()
+                  : APIs.ListenForLevelStrategyPostsRealTimeUpdates(userLevel),
             ),
           ),
         ],
