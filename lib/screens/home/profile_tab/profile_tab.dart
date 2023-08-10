@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/exams/exams_screen.dart';
@@ -20,6 +22,7 @@ class ProfileTab extends StatefulWidget {
 class _ProfileTabState extends State<ProfileTab> {
   String name = '';
   String image = '';
+  bool student = true;
 
   @override
   void initState() {
@@ -36,6 +39,7 @@ class _ProfileTabState extends State<ProfileTab> {
     setState(() {
       name = data!['name'];
       image = data['image'];
+      student = data['is_student'];
     });
   }
 
@@ -43,10 +47,10 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * .07),
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: width * .07),
         child: Column(
           children: [
             SizedBox(height: height * .119, width: double.infinity),
@@ -117,7 +121,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   ])),
             ),
             SizedBox(
-              height: height * .03,
+              height: height * .025,
             ),
             Container(
                 padding: EdgeInsets.all(width * .023),
@@ -167,7 +171,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   )
                 ])),
             SizedBox(
-              height: height * .03,
+              height: height * .025,
             ),
             Container(
                 padding: EdgeInsets.all(width * .023),
@@ -218,7 +222,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   )
                 ])),
             SizedBox(
-              height: height * .03,
+              height: height * .025,
             ),
             InkWell(
               onTap: () {
@@ -275,7 +279,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   ])),
             ),
             SizedBox(
-              height: height * .03,
+              height: height * .025,
             ),
             GestureDetector(
               onTap: () {
@@ -331,7 +335,124 @@ class _ProfileTabState extends State<ProfileTab> {
                   ])),
             ),
             SizedBox(
-              height: height * .03,
+              height: height * .025,
+            ),
+            Visibility(
+              visible: (!omar && student == true),
+              child: InkWell(
+                onTap: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(width * .07)),
+                        title: Text(
+                          ':رمز حسابك هو',
+                          style: TextStyle(fontFamily: 'cairo'),
+                          textAlign: TextAlign.center,
+                        ),
+                        content: Container(
+                          height: height * .13,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                APIs.user.uid,
+                                style: TextStyle(
+                                    fontFamily: 'cairo',
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'أرسله لولي أمرك ولا تطلع عليه أشخاصاً غير موثوقين',
+                                style: TextStyle(fontFamily: 'cairo'),
+                                textAlign: TextAlign.center,
+                              )
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'نسخ الرمز',
+                              style: TextStyle(
+                                  fontFamily: 'cairo', color: lightGreen),
+                            ),
+                            onPressed: () async {
+                              await Clipboard.setData(
+                                  ClipboardData(text: APIs.user.uid));
+                              Navigator.of(dialogContext).pop();
+                              Dialogs.showSnackbar(context, '✔ تم نسخ الرمز');
+                            },
+                          ),
+                          TextButton(
+                            child: Text('رجوع',
+                                style: TextStyle(
+                                    fontFamily: 'cairo', color: lightGreen)),
+                            onPressed: () {
+                              Navigator.of(dialogContext)
+                                  .pop(); // Dismiss alert dialog
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                    padding: EdgeInsets.all(width * .023),
+                    height: height * .083,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width * .059),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: lightGreen.withOpacity(0.17),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(children: [
+                      Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        color: Colors.grey,
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'الرمز',
+                            style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: width * .03,
+                      ),
+                      Container(
+                        width: height * .055,
+                        height: height * .055,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(height * .3),
+                            color: lightGreen),
+                        child: Icon(
+                          Icons.key,
+                          color: Colors.white,
+                        ),
+                      )
+                    ])),
+              ),
+            ),
+            SizedBox(
+              height: height * .025,
             ),
             InkWell(
               onTap: () => logOut(context),
@@ -356,7 +477,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       Icons.keyboard_arrow_left_rounded,
                       color: Colors.grey,
                     ),
-                    Expanded(child: Container()),
+                    Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,

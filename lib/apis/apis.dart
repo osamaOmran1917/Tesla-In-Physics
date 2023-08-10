@@ -82,6 +82,54 @@ class APIs {
       mar_10: 0,
       mar_11: 0,
       mar_12: 0,
+      apr_1: 0,
+      apr_2: 0,
+      apr_3: 0,
+      apr_4: 0,
+      apr_5: 0,
+      apr_6: 0,
+      apr_7: 0,
+      apr_8: 0,
+      apr_9: 0,
+      apr_10: 0,
+      apr_11: 0,
+      apr_12: 0,
+      may_1: 0,
+      may_2: 0,
+      may_3: 0,
+      may_4: 0,
+      may_5: 0,
+      may_6: 0,
+      may_7: 0,
+      may_8: 0,
+      may_9: 0,
+      may_10: 0,
+      may_11: 0,
+      may_12: 0,
+      jun_1: 0,
+      jun_2: 0,
+      jun_3: 0,
+      jun_4: 0,
+      jun_5: 0,
+      jun_6: 0,
+      jun_7: 0,
+      jun_8: 0,
+      jun_9: 0,
+      jun_10: 0,
+      jun_11: 0,
+      jun_12: 0,
+      jul_1: 0,
+      jul_2: 0,
+      jul_3: 0,
+      jul_4: 0,
+      jul_5: 0,
+      jul_6: 0,
+      jul_7: 0,
+      jul_8: 0,
+      jul_9: 0,
+      jul_10: 0,
+      jul_11: 0,
+      jul_12: 0,
       aug_1: 0,
       aug_2: 0,
       aug_3: 0,
@@ -94,13 +142,61 @@ class APIs {
       aug_10: 0,
       aug_11: 0,
       aug_12: 0,
+      sep_1: 0,
+      sep_2: 0,
+      sep_3: 0,
+      sep_4: 0,
+      sep_5: 0,
+      sep_6: 0,
+      sep_7: 0,
+      sep_8: 0,
+      sep_9: 0,
+      sep_10: 0,
+      sep_11: 0,
+      sep_12: 0,
+      oct_1: 0,
+      oct_2: 0,
+      oct_3: 0,
+      oct_4: 0,
+      oct_5: 0,
+      oct_6: 0,
+      oct_7: 0,
+      oct_8: 0,
+      oct_9: 0,
+      oct_10: 0,
+      oct_11: 0,
+      oct_12: 0,
+      nov_1: 0,
+      nov_2: 0,
+      nov_3: 0,
+      nov_4: 0,
+      nov_5: 0,
+      nov_6: 0,
+      nov_7: 0,
+      nov_8: 0,
+      nov_9: 0,
+      nov_10: 0,
+      nov_11: 0,
+      nov_12: 0,
+      dec_1: 0,
+      dec_2: 0,
+      dec_3: 0,
+      dec_4: 0,
+      dec_5: 0,
+      dec_6: 0,
+      dec_7: 0,
+      dec_8: 0,
+      dec_9: 0,
+      dec_10: 0,
+      dec_11: 0,
+      dec_12: 0,
+      likes: [],
     );
     return await firestore
         .collection('users')
         .doc(user.uid)
         .set(myUser.toJson());
   }
-
 
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
@@ -292,12 +388,14 @@ class APIs {
     return doc.set(post); // get doc -> then set //update
   }
 
-  static Future<void> addExam(Exam exam, File file) async {
+  static Future<void> addExam(Exam exam) async {
     var examsCollection = getExamsCollection();
     var doc = examsCollection.doc(); //create new doc
     exam.id = doc.id;
+    return doc.set(exam); // get doc -> then set //update
+  }
 
-    //add exam image
+  static Future<void> addExamImage(Exam exam, File file) async {
     final ext = file.path.split('.').last;
     log('Extensions: $ext');
     final ref = storage.ref().child('exams_pictures/${exam.id}.$ext');
@@ -308,8 +406,6 @@ class APIs {
     });
     String image = await ref.getDownloadURL();
     await firestore.collection('exams').doc(exam.id).update({'image': image});
-
-    return doc.set(exam); // get doc -> then set //update
   }
 
   static Future<void> updateProfilePicture(File file) async {
@@ -349,8 +445,29 @@ class APIs {
     return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
+  static Stream<QuerySnapshot<Exam>>
+      ListenForExamsRealTimeUpdatesDependingOnStudent(String studentId) {
+    // Listen for realtime update
+    return getExamsCollection()
+        .where('student_id', isEqualTo: studentId)
+        .snapshots();
+  }
+
   static updateAttendance(String userId, int att, String lec) async {
     CollectionReference omarMustafaRef = getUsersCollection();
     omarMustafaRef.doc(userId).update({lec: att});
+  }
+
+  static Future<void> deleteExam(Exam exam) async {
+    await firestore.collection('exams').doc(exam.id).delete();
+  }
+
+  static Future<void> deleteExamImage(Exam exam) async {
+    await storage.refFromURL(exam.image!).delete();
+  }
+
+  static updateLikes(String userId, List likes) async {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'likes': likes});
   }
 }

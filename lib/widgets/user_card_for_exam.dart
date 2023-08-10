@@ -19,7 +19,7 @@ class UserCardForExam extends StatelessWidget {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return Visibility(
-      // visible: usre.id != '6kfQ8I3Q2ATNqFia04aQnELDX123',
+      visible: usre.id != '6kfQ8I3Q2ATNqFia04aQnELDX123',
       child: InkWell(
         onTap: () => _showBottomSheet(context),
         child: Container(
@@ -88,7 +88,8 @@ class UserCardForExam extends StatelessWidget {
                           log('Image Path: ${image.path} -- MimeType: ${image.mimeType}');
                           Exam exam =
                               Exam(level: usre.level, student_id: usre.id);
-                          APIs.addExam(exam, File(image.path));
+                          APIs.addExam(exam);
+                          APIs.addExamImage(exam, File(image.path));
                           Navigator.pop(context);
                           Dialogs.showSnackbar(
                               context, 'تم إدراج درجة الامتحان بنجاح ✔');

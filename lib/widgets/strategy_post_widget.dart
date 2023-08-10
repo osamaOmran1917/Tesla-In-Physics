@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -7,10 +8,34 @@ import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
 
-class StrategyPostWidget extends StatelessWidget {
+class StrategyPostWidget extends StatefulWidget {
   StrategyPost strategy_post;
 
   StrategyPostWidget(this.strategy_post);
+
+  @override
+  State<StrategyPostWidget> createState() => _StrategyPostWidgetState();
+}
+
+class _StrategyPostWidgetState extends State<StrategyPostWidget> {
+  List likes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getFieldValue();
+  }
+
+  Future<void> _getFieldValue() async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(APIs.user.uid)
+        .get();
+    var data = documentSnapshot.data();
+    setState(() {
+      likes = data!['likes'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +62,21 @@ class StrategyPostWidget extends StatelessWidget {
       child: Slidable(
         startActionPane: omar
             ? ActionPane(
-                motion: DrawerMotion(),
-                children: [
-                  SlidableAction(
-                    onPressed: (_) {
-                      APIs.deleteStrategyPost(id: strategy_post.id!);
+          motion: DrawerMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (_) {
+                APIs.deleteStrategyPost(id: widget.strategy_post.id!);
                     },
-                    icon: CupertinoIcons.delete,
-                    backgroundColor: Colors.red,
-                    label: 'حذف',
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        bottomLeft: Radius.circular(12)),
-                  ),
-                ],
-              )
+              icon: CupertinoIcons.delete,
+              backgroundColor: Colors.red,
+              label: 'حذف',
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12)),
+            ),
+          ],
+        )
             : null,
         child: Column(
           children: [
@@ -70,7 +95,7 @@ class StrategyPostWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  strategy_post.title ?? '',
+                  widget.strategy_post.title ?? '',
                   style: TextStyle(
                       fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                 )
@@ -80,7 +105,7 @@ class StrategyPostWidget extends StatelessWidget {
               height: height * .013,
             ),
             Text(
-              strategy_post.details ?? '',
+              widget.strategy_post.details ?? '',
               maxLines: 2,
               style: TextStyle(
                   fontFamily: 'Cairo',
@@ -94,7 +119,7 @@ class StrategyPostWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                    '${strategy_post.date_time?.year.toString()}/${strategy_post.date_time?.month.toString()}/${strategy_post.date_time?.day.toString()}',
+                    '${widget.strategy_post.date_time?.year.toString()}/${widget.strategy_post.date_time?.month.toString()}/${widget.strategy_post.date_time?.day.toString()}',
                     style: TextStyle(fontFamily: 'Cairo', color: Colors.grey)),
                 SizedBox(
                   width: width * .021,
@@ -105,7 +130,8 @@ class StrategyPostWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  getFormattedTime(context: context, time: strategy_post.time!),
+                  getFormattedTime(
+                      context: context, time: widget.strategy_post.time!),
                   style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                 ),
                 SizedBox(
@@ -120,7 +146,26 @@ class StrategyPostWidget extends StatelessWidget {
             SizedBox(
               height: height * .005,
             ),
-            Icon(CupertinoIcons.heart)
+            InkWell(
+                onTap: () {
+                  setState(() {
+                    if (likes.contains(widget.strategy_post.id)) {
+                      likes.remove(widget.strategy_post.id);
+                      APIs.updateLikes(APIs.user.uid, likes);
+                    } else {
+                      likes.add(widget.strategy_post.id);
+                      APIs.updateLikes(APIs.user.uid, likes);
+                    }
+                  });
+                },
+                child: likes.contains(widget.strategy_post.id)
+                    ? Icon(
+                        CupertinoIcons.heart_fill,
+                        color: lightGreen,
+                      )
+                    : Icon(
+                        CupertinoIcons.heart,
+                      ))
           ],
           crossAxisAlignment: CrossAxisAlignment.start,
         ),

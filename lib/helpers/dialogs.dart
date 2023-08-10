@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:omar_mostafa/helpers/colors.dart';
 
 class Dialogs {
   static void showSnackbar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         msg,
-        style: TextStyle(fontFamily: 'MyArabicFont', color: Colors.black),
+        style: TextStyle(fontFamily: 'cairo', color: Colors.black),
         textAlign: TextAlign.center,
       ),
-      backgroundColor: Color.fromARGB(255, 219, 255, 178),
+      backgroundColor: omarYellow,
       behavior: SnackBarBehavior.floating,
     ));
   }

@@ -166,6 +166,198 @@ class _UserCardState extends State<UserCard> {
       att = widget.user.mar_12;
       lecture = 'mar_12';
     }
+    if (widget.month == 4 && widget.lec == 1) {
+      att = widget.user.apr_1;
+      lecture = 'apr_1';
+    }
+    if (widget.month == 4 && widget.lec == 2) {
+      att = widget.user.apr_2;
+      lecture = 'apr_2';
+    }
+    if (widget.month == 4 && widget.lec == 3) {
+      att = widget.user.apr_3;
+      lecture = 'apr_3';
+    }
+    if (widget.month == 4 && widget.lec == 4) {
+      att = widget.user.apr_4;
+      lecture = 'apr_4';
+    }
+    if (widget.month == 4 && widget.lec == 5) {
+      att = widget.user.apr_5;
+      lecture = 'apr_5';
+    }
+    if (widget.month == 4 && widget.lec == 6) {
+      att = widget.user.apr_6;
+      lecture = 'apr_6';
+    }
+    if (widget.month == 4 && widget.lec == 7) {
+      att = widget.user.apr_7;
+      lecture = 'apr_7';
+    }
+    if (widget.month == 4 && widget.lec == 8) {
+      att = widget.user.apr_8;
+      lecture = 'apr_8';
+    }
+    if (widget.month == 4 && widget.lec == 9) {
+      att = widget.user.apr_9;
+      lecture = 'apr_9';
+    }
+    if (widget.month == 4 && widget.lec == 10) {
+      att = widget.user.apr_10;
+      lecture = 'apr_10';
+    }
+    if (widget.month == 4 && widget.lec == 11) {
+      att = widget.user.apr_11;
+      lecture = 'apr_11';
+    }
+    if (widget.month == 4 && widget.lec == 12) {
+      att = widget.user.apr_12;
+      lecture = 'apr_12';
+    }
+    if (widget.month == 5 && widget.lec == 1) {
+      att = widget.user.may_1;
+      lecture = 'may_1';
+    }
+    if (widget.month == 5 && widget.lec == 2) {
+      att = widget.user.may_2;
+      lecture = 'may_2';
+    }
+    if (widget.month == 5 && widget.lec == 3) {
+      att = widget.user.may_3;
+      lecture = 'may_3';
+    }
+    if (widget.month == 5 && widget.lec == 4) {
+      att = widget.user.may_4;
+      lecture = 'may_4';
+    }
+    if (widget.month == 5 && widget.lec == 5) {
+      att = widget.user.may_5;
+      lecture = 'may_5';
+    }
+    if (widget.month == 5 && widget.lec == 6) {
+      att = widget.user.may_6;
+      lecture = 'may_6';
+    }
+    if (widget.month == 5 && widget.lec == 7) {
+      att = widget.user.may_7;
+      lecture = 'may_7';
+    }
+    if (widget.month == 5 && widget.lec == 8) {
+      att = widget.user.may_8;
+      lecture = 'may_8';
+    }
+    if (widget.month == 5 && widget.lec == 9) {
+      att = widget.user.may_9;
+      lecture = 'may_9';
+    }
+    if (widget.month == 5 && widget.lec == 10) {
+      att = widget.user.may_10;
+      lecture = 'may_10';
+    }
+    if (widget.month == 5 && widget.lec == 11) {
+      att = widget.user.may_11;
+      lecture = 'may_11';
+    }
+    if (widget.month == 5 && widget.lec == 12) {
+      att = widget.user.may_12;
+      lecture = 'may_12';
+    }
+    if (widget.month == 6 && widget.lec == 1) {
+      att = widget.user.jun_1;
+      lecture = 'jun_1';
+    }
+    if (widget.month == 6 && widget.lec == 2) {
+      att = widget.user.jun_2;
+      lecture = 'jun_2';
+    }
+    if (widget.month == 6 && widget.lec == 3) {
+      att = widget.user.jun_3;
+      lecture = 'jun_3';
+    }
+    if (widget.month == 6 && widget.lec == 4) {
+      att = widget.user.jun_4;
+      lecture = 'jun_4';
+    }
+    if (widget.month == 6 && widget.lec == 5) {
+      att = widget.user.jun_5;
+      lecture = 'jun_5';
+    }
+    if (widget.month == 6 && widget.lec == 6) {
+      att = widget.user.jun_6;
+      lecture = 'jun_6';
+    }
+    if (widget.month == 6 && widget.lec == 7) {
+      att = widget.user.jun_7;
+      lecture = 'jun_7';
+    }
+    if (widget.month == 6 && widget.lec == 8) {
+      att = widget.user.jun_8;
+      lecture = 'jun_8';
+    }
+    if (widget.month == 6 && widget.lec == 9) {
+      att = widget.user.jun_9;
+      lecture = 'jun_9';
+    }
+    if (widget.month == 6 && widget.lec == 10) {
+      att = widget.user.jun_10;
+      lecture = 'jun_10';
+    }
+    if (widget.month == 6 && widget.lec == 11) {
+      att = widget.user.jun_11;
+      lecture = 'jun_11';
+    }
+    if (widget.month == 6 && widget.lec == 12) {
+      att = widget.user.jun_12;
+      lecture = 'jun_12';
+    }
+    if (widget.month == 7 && widget.lec == 1) {
+      att = widget.user.jul_1;
+      lecture = 'jul_1';
+    }
+    if (widget.month == 7 && widget.lec == 2) {
+      att = widget.user.jul_2;
+      lecture = 'jul_2';
+    }
+    if (widget.month == 7 && widget.lec == 3) {
+      att = widget.user.jul_3;
+      lecture = 'jul_3';
+    }
+    if (widget.month == 7 && widget.lec == 4) {
+      att = widget.user.jul_4;
+      lecture = 'jul_4';
+    }
+    if (widget.month == 7 && widget.lec == 5) {
+      att = widget.user.jul_5;
+      lecture = 'jul_5';
+    }
+    if (widget.month == 7 && widget.lec == 6) {
+      att = widget.user.jul_6;
+      lecture = 'jul_6';
+    }
+    if (widget.month == 7 && widget.lec == 7) {
+      att = widget.user.jul_7;
+      lecture = 'jul_7';
+    }
+    if (widget.month == 7 && widget.lec == 8) {
+      att = widget.user.jul_8;
+      lecture = 'jul_8';
+    }
+    if (widget.month == 7 && widget.lec == 9) {
+      att = widget.user.jul_9;
+      lecture = 'jul_9';
+    }
+    if (widget.month == 7 && widget.lec == 10) {
+      att = widget.user.jul_10;
+      lecture = 'jul_10';
+    }
+    if (widget.month == 7 && widget.lec == 11) {
+      att = widget.user.jul_11;
+      lecture = 'jul_11';
+    }
+    if (widget.month == 7 && widget.lec == 12) {
+      att = widget.user.jul_12;
+      lecture = 'jul_12';
+    }
     if (widget.month == 8 && widget.lec == 1) {
       att = widget.user.aug_1;
       lecture = 'aug_1';
@@ -213,6 +405,198 @@ class _UserCardState extends State<UserCard> {
     if (widget.month == 8 && widget.lec == 12) {
       att = widget.user.aug_12;
       lecture = 'aug_12';
+    }
+    if (widget.month == 9 && widget.lec == 1) {
+      att = widget.user.sep_1;
+      lecture = 'sep_1';
+    }
+    if (widget.month == 9 && widget.lec == 2) {
+      att = widget.user.sep_2;
+      lecture = 'sep_2';
+    }
+    if (widget.month == 9 && widget.lec == 3) {
+      att = widget.user.sep_3;
+      lecture = 'sep_3';
+    }
+    if (widget.month == 9 && widget.lec == 4) {
+      att = widget.user.sep_4;
+      lecture = 'sep_4';
+    }
+    if (widget.month == 9 && widget.lec == 5) {
+      att = widget.user.sep_5;
+      lecture = 'sep_5';
+    }
+    if (widget.month == 9 && widget.lec == 6) {
+      att = widget.user.sep_6;
+      lecture = 'sep_6';
+    }
+    if (widget.month == 9 && widget.lec == 7) {
+      att = widget.user.sep_7;
+      lecture = 'sep_7';
+    }
+    if (widget.month == 9 && widget.lec == 8) {
+      att = widget.user.sep_8;
+      lecture = 'sep_8';
+    }
+    if (widget.month == 9 && widget.lec == 9) {
+      att = widget.user.sep_9;
+      lecture = 'sep_9';
+    }
+    if (widget.month == 9 && widget.lec == 10) {
+      att = widget.user.sep_10;
+      lecture = 'sep_10';
+    }
+    if (widget.month == 9 && widget.lec == 11) {
+      att = widget.user.sep_11;
+      lecture = 'sep_11';
+    }
+    if (widget.month == 9 && widget.lec == 12) {
+      att = widget.user.sep_12;
+      lecture = 'sep_12';
+    }
+    if (widget.month == 10 && widget.lec == 1) {
+      att = widget.user.oct_1;
+      lecture = 'oct_1';
+    }
+    if (widget.month == 10 && widget.lec == 2) {
+      att = widget.user.oct_2;
+      lecture = 'oct_2';
+    }
+    if (widget.month == 10 && widget.lec == 3) {
+      att = widget.user.oct_3;
+      lecture = 'oct_3';
+    }
+    if (widget.month == 10 && widget.lec == 4) {
+      att = widget.user.oct_4;
+      lecture = 'oct_4';
+    }
+    if (widget.month == 10 && widget.lec == 5) {
+      att = widget.user.oct_5;
+      lecture = 'oct_5';
+    }
+    if (widget.month == 10 && widget.lec == 6) {
+      att = widget.user.oct_6;
+      lecture = 'oct_6';
+    }
+    if (widget.month == 10 && widget.lec == 7) {
+      att = widget.user.oct_7;
+      lecture = 'oct_7';
+    }
+    if (widget.month == 10 && widget.lec == 8) {
+      att = widget.user.oct_8;
+      lecture = 'oct_8';
+    }
+    if (widget.month == 10 && widget.lec == 9) {
+      att = widget.user.oct_9;
+      lecture = 'oct_9';
+    }
+    if (widget.month == 10 && widget.lec == 10) {
+      att = widget.user.oct_10;
+      lecture = 'oct_10';
+    }
+    if (widget.month == 10 && widget.lec == 11) {
+      att = widget.user.oct_11;
+      lecture = 'oct_11';
+    }
+    if (widget.month == 10 && widget.lec == 12) {
+      att = widget.user.oct_12;
+      lecture = 'oct_12';
+    }
+    if (widget.month == 11 && widget.lec == 1) {
+      att = widget.user.nov_1;
+      lecture = 'nov_1';
+    }
+    if (widget.month == 11 && widget.lec == 2) {
+      att = widget.user.nov_2;
+      lecture = 'nov_2';
+    }
+    if (widget.month == 11 && widget.lec == 3) {
+      att = widget.user.nov_3;
+      lecture = 'nov_3';
+    }
+    if (widget.month == 11 && widget.lec == 4) {
+      att = widget.user.nov_4;
+      lecture = 'nov_4';
+    }
+    if (widget.month == 11 && widget.lec == 5) {
+      att = widget.user.nov_5;
+      lecture = 'nov_5';
+    }
+    if (widget.month == 11 && widget.lec == 6) {
+      att = widget.user.nov_6;
+      lecture = 'nov_6';
+    }
+    if (widget.month == 11 && widget.lec == 7) {
+      att = widget.user.nov_7;
+      lecture = 'nov_7';
+    }
+    if (widget.month == 11 && widget.lec == 8) {
+      att = widget.user.nov_8;
+      lecture = 'nov_8';
+    }
+    if (widget.month == 11 && widget.lec == 9) {
+      att = widget.user.nov_9;
+      lecture = 'nov_9';
+    }
+    if (widget.month == 11 && widget.lec == 10) {
+      att = widget.user.nov_10;
+      lecture = 'nov_10';
+    }
+    if (widget.month == 11 && widget.lec == 11) {
+      att = widget.user.nov_11;
+      lecture = 'nov_11';
+    }
+    if (widget.month == 11 && widget.lec == 12) {
+      att = widget.user.nov_12;
+      lecture = 'nov_12';
+    }
+    if (widget.month == 12 && widget.lec == 1) {
+      att = widget.user.dec_1;
+      lecture = 'dec_1';
+    }
+    if (widget.month == 12 && widget.lec == 2) {
+      att = widget.user.dec_2;
+      lecture = 'dec_2';
+    }
+    if (widget.month == 12 && widget.lec == 3) {
+      att = widget.user.dec_3;
+      lecture = 'dec_3';
+    }
+    if (widget.month == 12 && widget.lec == 4) {
+      att = widget.user.dec_4;
+      lecture = 'dec_4';
+    }
+    if (widget.month == 12 && widget.lec == 5) {
+      att = widget.user.dec_5;
+      lecture = 'dec_5';
+    }
+    if (widget.month == 12 && widget.lec == 6) {
+      att = widget.user.dec_6;
+      lecture = 'dec_6';
+    }
+    if (widget.month == 12 && widget.lec == 7) {
+      att = widget.user.dec_7;
+      lecture = 'dec_7';
+    }
+    if (widget.month == 12 && widget.lec == 8) {
+      att = widget.user.dec_8;
+      lecture = 'dec_8';
+    }
+    if (widget.month == 12 && widget.lec == 9) {
+      att = widget.user.dec_9;
+      lecture = 'dec_9';
+    }
+    if (widget.month == 12 && widget.lec == 10) {
+      att = widget.user.dec_10;
+      lecture = 'dec_10';
+    }
+    if (widget.month == 12 && widget.lec == 11) {
+      att = widget.user.dec_11;
+      lecture = 'dec_11';
+    }
+    if (widget.month == 12 && widget.lec == 12) {
+      att = widget.user.dec_12;
+      lecture = 'dec_12';
     }
     widget.color = att == 1 ? lightGreen : Colors.white;
     return Visibility(
