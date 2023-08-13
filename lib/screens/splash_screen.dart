@@ -58,27 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Image.asset('assets/images/splash_cycle.png')
           ],
-        )
-        // body: Image.asset('assets/images/Splash.png', width: width, height: height,)
-        /*Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: double.infinity,
-            ),
-            Logo(),
-            TypewriterAnimatedTextKit(
-              text: ['أ. عُمَرْ مُصْطَفَى'],
-              textStyle: TextStyle(
-                  fontFamily: 'MyArabicFont',
-                  fontSize: width * .099,
-                  color: Color(0xff39A552)),
-              speed: Duration(milliseconds: 150),
-              totalRepeatCount: 1,
-            ),
-          ],
-        )*/
-        ,
+        ),
       ),
     );
   }
