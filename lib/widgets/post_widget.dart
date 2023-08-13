@@ -86,9 +86,11 @@ class PostWidget extends StatelessWidget {
             ),
             CircleAvatar(
               backgroundColor: Color(0xffebf6ed),
-              child: Icon(
-                Icons.notifications_none,
+              child: Image.asset(
+                'assets/images/Notification.png',
                 color: lightGreen,
+                width: width * .061,
+                height: width * .061,
               ),
             )
           ],

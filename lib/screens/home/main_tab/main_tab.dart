@@ -71,11 +71,9 @@ class _MainTabState extends State<MainTab> {
                   decoration: BoxDecoration(
                       color: lightGreen,
                       borderRadius: BorderRadius.circular(width * .05)),
-                  child: Icon(
-                    Icons.notifications_none,
-                    color: Colors.white,
-                    size: width * .065,
-                  ),
+                  child: Image.asset(
+                    'assets/images/Notification.png', width: width * .061,
+                    height: width * .061,),
                 ),
                 Expanded(child: Container()),
                 Column(

@@ -44,6 +44,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
     return WillPopScope(
       onWillPop: () async {
         APIs.deleteUser();
+        await GoogleSignIn().disconnect();
         await APIs.auth.signOut();
         await GoogleSignIn().signOut();
         return true;
@@ -69,6 +70,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                           InkWell(
                               onTap: () async {
                                 APIs.deleteUser();
+                                await GoogleSignIn().disconnect();
                                 await APIs.auth.signOut();
                                 await GoogleSignIn().signOut();
                                 Navigator.pop(context);

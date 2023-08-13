@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() => HomeScreen.selectedIndex = index),
           items: [
             BottomNavyBarItem(
-                icon: Icon(CupertinoIcons.person),
+                icon: ImageIcon(AssetImage('assets/images/Profile.png')),
                 title: Text(
                   'البروفايل',
                   style: TextStyle(fontFamily: 'Cairo'),
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.grey),
             BottomNavyBarItem(
-                icon: ImageIcon(AssetImage('assets/images/dates.png')),
+                icon: ImageIcon(AssetImage('assets/images/attendance.png')),
                 title: Text(
                   'الحضور',
                   style: TextStyle(fontFamily: 'Cairo'),

@@ -215,10 +215,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(height * .3),
                         color: lightGreen),
-                    child: Icon(
-                      CupertinoIcons.person_badge_plus,
-                      color: Colors.white,
-                    ),
+                    child: Image.asset('assets/images/add_user.png'),
                   )
                 ])),
             SizedBox(
@@ -271,10 +268,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(height * .3),
                           color: lightGreen),
-                      child: Icon(
-                        CupertinoIcons.checkmark_shield,
-                        color: Colors.white,
-                      ),
+                      child: Image.asset('assets/images/done.png'),
                     )
                   ])),
             ),
@@ -504,6 +498,59 @@ class _ProfileTabState extends State<ProfileTab> {
                     )
                   ])),
             ),
+            SizedBox(
+              height: height * .025,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                  padding: EdgeInsets.all(width * .023),
+                  height: height * .083,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width * .059),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: lightGreen.withOpacity(0.17),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(children: [
+                    Icon(
+                      Icons.keyboard_arrow_left_rounded,
+                      color: Colors.grey,
+                    ),
+                    Spacer(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'حذف الحساب',
+                          style: TextStyle(
+                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: width * .03,
+                    ),
+                    Container(
+                      width: height * .055,
+                      height: height * .055,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(height * .3),
+                          color: lightGreen),
+                      child: Icon(
+                        Icons.delete_forever_outlined, color: Colors.white,
+                        size: width * .079,),
+                    )
+                  ])),
+            )
           ],
         ),
       ),
