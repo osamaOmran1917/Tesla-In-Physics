@@ -250,7 +250,7 @@ class _LatestChangesState extends State<LatestChanges> {
                               ),
                               Expanded(child: Container()),
                               ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     Post post = new Post(
                                         title: titleController.text.toString(),
                                         details:
@@ -259,6 +259,10 @@ class _LatestChangesState extends State<LatestChanges> {
                                             dateController.text.toString(),
                                         level: level);
                                     APIs.addPost(post);
+                                    /*List<dynamic> values = await APIs.getFieldValues();
+                                    for(int i = 0; i <values.length; i ++) {
+                                      APIs.sendPushNotification(myUser, msg)
+                                    }*/
                                     Navigator.pop(context);
                                     print(dateController.text.toString());
                                   },

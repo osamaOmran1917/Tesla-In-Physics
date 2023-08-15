@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -5,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart';
 import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/lessons.dart';
 import 'package:omar_mostafa/models/my_user.dart';
@@ -30,6 +32,40 @@ class APIs {
         log('Push Token: $t\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
       }
     });
+  }
+
+  static Future<void> sendPushNotification(MyUser myUser, String msg) async {
+    try {
+      final body = {
+        "to": myUser.pushToken,
+        "notification": {"title": myUser.name, "body": msg}
+      };
+      var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader:
+                'key=AAAADI31O_U:APA91bG70ZBnTlhYBr7pTdZDC8RunV-fcA3IkLsnSd72bzUZyPn-_W8gVu7ieVXs0-xP6IDGH--s0nnJ0s-f6VmClPV_ReGrz_5lkWH4IhbetXJIkAgPFuRKs5Hy9I9vSpcpqmHGxGeM'
+          },
+          body: jsonEncode(body));
+      log('Response status: ${res.statusCode}');
+      log('Response body: ${res.body}');
+    } catch (e) {
+      log('\nsendPushNotificationE: $e');
+    }
+  }
+
+  static Future<List<dynamic>> getFieldValues() async {
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+
+    List<dynamic> fieldValues = [];
+    for (QueryDocumentSnapshot document in snapshot.docs) {
+      dynamic fieldValue = document.get('push_token');
+
+      fieldValues.add(fieldValue);
+    }
+
+    return fieldValues;
   }
 
   static Future<bool> userExists() async {
@@ -214,8 +250,8 @@ class APIs {
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
         fromFirestore: ((snapshot, options) {
-      return MyUser.fromJson(snapshot.data()!);
-    }), toFirestore: (user, options) {
+          return MyUser.fromJson(snapshot.data()!);
+        }), toFirestore: (user, options) {
       return user.toJson();
     });
   }
@@ -355,14 +391,13 @@ class APIs {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot<Post>> ListenForLevelPostsRealTimeUpdates(
-      int level) {
+  static Stream<QuerySnapshot<Post>> ListenForLevelPostsRealTimeUpdates(int level) {
     // Listen for realtime update
     return getPostsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<StrategyPost>>
-      ListenForStrategyPostsRealTimeUpdates() {
+  ListenForStrategyPostsRealTimeUpdates() {
     // Listen for realtime update
     return getStrategyPostsCollection()
         .orderBy("date_time", descending: true)
@@ -370,7 +405,7 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<StrategyPost>>
-      ListenForLevelStrategyPostsRealTimeUpdates(int level) {
+  ListenForLevelStrategyPostsRealTimeUpdates(int level) {
     // Listen for realtime update
     return getStrategyPostsCollection()
         .where('level', isEqualTo: level)
@@ -452,7 +487,7 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<MyUser>>
-      ListenForStudentsRealTimeUpdatesDependingOnLevel(int level) {
+  ListenForStudentsRealTimeUpdatesDependingOnLevel(int level) {
     // Listen for realtime update
     return getUsersCollection()
         .where('level', isEqualTo: level)
@@ -461,13 +496,13 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<Exam>>
-      ListenForExamsRealTimeUpdatesDependingOnLevel(int level) {
+  ListenForExamsRealTimeUpdatesDependingOnLevel(int level) {
     // Listen for realtime update
     return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<Exam>>
-      ListenForExamsRealTimeUpdatesDependingOnStudent(String studentId) {
+  ListenForExamsRealTimeUpdatesDependingOnStudent(String studentId) {
     // Listen for realtime update
     return getExamsCollection()
         .where('student_id', isEqualTo: studentId)

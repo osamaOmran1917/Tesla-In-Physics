@@ -11,6 +11,7 @@ import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/exams/exams_screen.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/user_profile_screen.dart';
+import 'package:omar_mostafa/screens/welcome/welcome_screen_i.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -506,7 +507,13 @@ class _ProfileTabState extends State<ProfileTab> {
               onTap: () async {
                 APIs.deleteUser();
                 await GoogleSignIn().disconnect();
-                logOut(context);
+                showMessage(context, 'هل أنت متأكد أنك تريد حذف الحساب؟',
+                    posAction: () async {
+                  await APIs.auth.signOut();
+                  await GoogleSignIn().signOut();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+                }, posActionName: 'نعم', negAction: () {}, negActionName: 'لا');
               },
               child: Container(
                   padding: EdgeInsets.all(width * .023),
