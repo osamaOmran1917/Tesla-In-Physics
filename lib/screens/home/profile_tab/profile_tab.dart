@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
@@ -502,7 +503,11 @@ class _ProfileTabState extends State<ProfileTab> {
               height: height * .025,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                APIs.deleteUser();
+                await GoogleSignIn().disconnect();
+                logOut(context);
+              },
               child: Container(
                   padding: EdgeInsets.all(width * .023),
                   height: height * .083,

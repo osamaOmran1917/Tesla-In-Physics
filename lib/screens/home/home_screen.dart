@@ -32,6 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int? level;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    APIs.getFirebaseMessagingToken();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;

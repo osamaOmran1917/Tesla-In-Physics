@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "53921266677-t1fa123fei18jj71mdb4cs2mbes4bl1i.apps.googleusercontent.com",
+          "client_id": "53921266677-tu36p9msemkvc3cub6rd3itjp4o624kq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.omar_mostafa",
-            "certificate_hash": "05ba79ef9e7477d0cb446a65ff02ca0360e4670a"
+            "certificate_hash": "0f6f13343bb8e3e4a4704ac80eb625e42c37076c"
           }
         },
         {

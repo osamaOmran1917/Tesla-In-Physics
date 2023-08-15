@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:omar_mostafa/models/exam.dart';
 import 'package:omar_mostafa/models/lessons.dart';
@@ -18,6 +19,18 @@ class APIs {
   static FirebaseStorage storage = FirebaseStorage.instance;
 
   static User get user => auth.currentUser!;
+
+  static FirebaseMessaging fMessaging = FirebaseMessaging.instance;
+
+  static Future<void> getFirebaseMessagingToken() async {
+    await fMessaging.requestPermission();
+    await fMessaging.getToken().then((t) {
+      if (t != null) {
+        setPushToken(user.uid, t);
+        log('Push Token: $t\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+      }
+    });
+  }
 
   static Future<bool> userExists() async {
     return (await firestore
@@ -477,5 +490,10 @@ class APIs {
   static updateLikes(String userId, List likes) async {
     CollectionReference omarMustafaRef = getUsersCollection();
     omarMustafaRef.doc(userId).update({'likes': likes});
+  }
+
+  static setPushToken(String userId, String token) async {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'pushToken': token});
   }
 }
