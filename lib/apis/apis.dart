@@ -55,9 +55,11 @@ class APIs {
     }
   }
 
-  static Future<List<dynamic>> getPushTokens() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('users').get();
+  static Future<List<dynamic>> getPushTokens(int level) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('level', isEqualTo: level)
+        .get();
 
     List<dynamic> fieldValues = [];
     for (QueryDocumentSnapshot document in snapshot.docs) {
@@ -69,9 +71,11 @@ class APIs {
     return fieldValues;
   }
 
-  static Future<List<dynamic>> getNames() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('users').get();
+  static Future<List<dynamic>> getNames(int level) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('level', isEqualTo: level)
+        .get();
 
     List<dynamic> fieldValues = [];
     for (QueryDocumentSnapshot document in snapshot.docs) {

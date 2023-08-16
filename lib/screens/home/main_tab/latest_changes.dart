@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
@@ -282,29 +283,36 @@ class _LatestChangesState extends State<LatestChanges> {
                                   style: ElevatedButton.styleFrom(
                                       primary: lightGreen),
                                   onPressed: () async {
-                                    Post post = new Post(
-                                        title: titleController.text.toString(),
-                                        details:
-                                            detailsController.text.toString(),
-                                        textDate:
-                                            dateController.text.toString(),
-                                        level: level);
-                                    APIs.addPost(post);
-                                    List pushTokens =
-                                        await APIs.getPushTokens();
-                                    List names = await APIs.getNames();
-                                    log(names[0]);
-                                    log(pushTokens[0]);
-                                    for (int i = 0;
-                                        i < pushTokens.length;
-                                        i++) {
-                                      APIs.sendPushNotification(
-                                          pushTokens[i],
-                                          names[i],
-                                          'قام مستر عمر بنشر تحديث جديد تابع..');
+                                    if (level != null) {
+                                      Post post = new Post(
+                                          title:
+                                              titleController.text.toString(),
+                                          details:
+                                              detailsController.text.toString(),
+                                          textDate:
+                                              dateController.text.toString(),
+                                          level: level);
+                                      APIs.addPost(post);
+                                      List pushTokens =
+                                          await APIs.getPushTokens(level!);
+                                      List names = await APIs.getNames(level!);
+                                      log(names[0]);
+                                      log(pushTokens[0]);
+                                      for (int i = 0;
+                                          i < pushTokens.length;
+                                          i++) {
+                                        APIs.sendPushNotification(
+                                            pushTokens[i],
+                                            names[i],
+                                            'قام مستر عمر بنشر تحديث جديد تابع..');
+                                      }
+                                      Navigator.pop(context);
+                                      print(dateController.text.toString());
+                                    } else {
+                                      Dialogs.showSnackbar(
+                                          context, 'يجب إدخال مرحلة دراسية!');
+                                      Navigator.pop(context);
                                     }
-                                    Navigator.pop(context);
-                                    print(dateController.text.toString());
                                   },
                             child: Text(
                               'نشر',

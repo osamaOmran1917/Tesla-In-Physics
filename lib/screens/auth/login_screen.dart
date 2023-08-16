@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
@@ -18,7 +19,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -27,6 +27,32 @@ class _LoginScreenState extends State<LoginScreen> {
   _handleGoogleButtonClick() {
     Dialogs.showProgressBar(context);
     _signInWithGoogle().then((user) async {
+      Navigator.pop(context);
+      if (user != null) {
+        log('\nUser: ${user.user}');
+        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+        if ((await APIs.userExists())) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+          SharedData.user = retrievedUser;
+        } else {
+          await APIs.createUser().then((value) async {
+            var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+            SharedData.user = retrievedUser;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => CompleteUserData(_isStudent)));
+          });
+        }
+      }
+    });
+  }
+
+  _handleFacebookButtonClick() {
+    Dialogs.showProgressBar(context);
+    signInWithFacebook().then((user) async {
       Navigator.pop(context);
       if (user != null) {
         log('\nUser: ${user.user}');
@@ -244,61 +270,57 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               child: Center(
-                  child: Text('متابعة التسجيل',
+                  child: Text('متابعة التسجيل بجوجل',
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))),
             ),
           ),
-        ])
-        /*Stack(
-          children: [
-            AnimatedPositioned(
-                top: height * .15,
-                right: _isAnimate ? width * .25 : width * .5,
-                width: width * .5,
-                duration: Duration(seconds: 1),
-                child: Image.asset(
-                  'assets/images/logo.jpg',
-                  height: height * .3,
-                )),
-            Positioned(
-                bottom: height * .15,
-                left: width * .05,
-                width: width * .9,
-                height: height * .05,
-                child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 219, 255, 178),
-                        shape: StadiumBorder(),
-                        elevation: 1),
-                    onPressed: () {
-                      _handleGoogleButtonClick();
-                    },
-                    icon: Image.asset(
-                      'assets/images/google.png',
-                      height: height * .03,
-                    ),
-                    label: RichText(
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: width * .05,
-                            fontFamily: 'MyArabicFont',
-                          ),
-                          children: [
-                            TextSpan(text: 'سجل دخول باستخدام '),
-                            TextSpan(
-                                text: 'جوجل',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'MyArabicFont',
-                                    fontSize: width * .05)),
-                          ]),
-                    )))
-          ],
-        )*/
-        ,
+          SizedBox(height: height * .059),
+          InkWell(
+            onTap: () async {
+              await _handleFacebookButtonClick();
+            },
+            child: Container(
+              height: height * .05,
+              width: width * .85,
+              decoration: BoxDecoration(
+                color: lightGreen,
+                borderRadius: BorderRadius.circular(width * .039),
+                boxShadow: [
+                  BoxShadow(
+                    color: lightGreen.withOpacity(0.17),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Center(
+                  child: Text('متابعة التسجيل بفيسبوك',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))),
+            ),
+          ),
+        ]),
       ),
     );
+  }
+
+  Future<UserCredential?> signInWithFacebook() async {
+    try {
+      // Trigger the sign-in flow
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+      // Once signed in, return the UserCredential
+      return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    } catch (e) {
+      log('\n_signInWithFacebook: $e');
+      Dialogs.showSnackbar(context, '!حدث خطأ ما');
+      return null;
+    }
   }
 }
