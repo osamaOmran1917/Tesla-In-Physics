@@ -34,11 +34,12 @@ class APIs {
     });
   }
 
-  static Future<void> sendPushNotification(MyUser myUser, String msg) async {
+  static Future<void> sendPushNotification(
+      String pushToken, String name, String msg) async {
     try {
       final body = {
-        "to": myUser.pushToken,
-        "notification": {"title": myUser.name, "body": msg}
+        "to": pushToken,
+        "notification": {"title": name, "body": msg}
       };
       var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
           headers: {
@@ -54,13 +55,27 @@ class APIs {
     }
   }
 
-  static Future<List<dynamic>> getFieldValues() async {
+  static Future<List<dynamic>> getPushTokens() async {
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('users').get();
 
     List<dynamic> fieldValues = [];
     for (QueryDocumentSnapshot document in snapshot.docs) {
-      dynamic fieldValue = document.get('push_token');
+      dynamic fieldValue = document.get('pushToken');
+
+      fieldValues.add(fieldValue);
+    }
+
+    return fieldValues;
+  }
+
+  static Future<List<dynamic>> getNames() async {
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+
+    List<dynamic> fieldValues = [];
+    for (QueryDocumentSnapshot document in snapshot.docs) {
+      dynamic fieldValue = document.get('name');
 
       fieldValues.add(fieldValue);
     }
