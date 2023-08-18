@@ -7,10 +7,12 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/date_utils.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/attendance_tab/attendance_tab.dart';
 import 'package:omar_mostafa/screens/home/main_tab/main_tab.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/profile_tab.dart';
 import 'package:omar_mostafa/screens/home/strategy_tab.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static int selectedIndex = 3;
@@ -31,10 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
   var detailsController = TextEditingController();
   int? level;
 
+  Future getData() async {
+    final sp = context.watch<SignInProvider>();
+    sp.getDataFromSharedPreferences();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getData();
     APIs.getFirebaseMessagingToken();
   }
 
@@ -46,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+    final sp = context.read<SignInProvider>();
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,

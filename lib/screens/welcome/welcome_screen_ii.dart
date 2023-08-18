@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/auth/login_screen.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreenII extends StatefulWidget {
   @override
@@ -8,11 +10,14 @@ class WelcomeScreenII extends StatefulWidget {
 }
 
 class _WelcomeScreenIIState extends State<WelcomeScreenII> {
+  @override
+  void initState() {
+    final sp = context.read<SignInProvider>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width,
-        height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

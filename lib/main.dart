@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/Screens/splash_screen.dart';
 import 'package:omar_mostafa/firebase_options.dart';
-main() {
+import 'package:omar_mostafa/provider/internet_provider.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
+import 'package:provider/provider.dart';
+
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setPreferredOrientations(
@@ -12,7 +16,7 @@ main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
-  _initializeFirebase();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -22,12 +26,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SplashScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => SignInProvider())),
+        ChangeNotifierProvider(create: ((context) => InternetProvider()))
+      ],
+      child: MaterialApp(
+        home: SplashScreen(),
+      ),
     );
   }
-}
-
-_initializeFirebase() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }

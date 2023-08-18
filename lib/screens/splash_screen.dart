@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
 import 'package:omar_mostafa/screens/welcome/welcome_screen_i.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    final sp = context.read<SignInProvider>();
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -23,14 +23,19 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white));
-      if (APIs.auth.currentUser != null) {
+      /*if (APIs.auth.currentUser != null) {
         log('\nUser: ${APIs.auth.currentUser}');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => HomeScreen()));
       } else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
-      }
+      }*/
+      sp.isSignedIn == false
+          ? Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => WelcomeScreenI()))
+          : Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => HomeScreen()));
     });
   }
 

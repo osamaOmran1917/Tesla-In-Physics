@@ -1,17 +1,14 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:omar_mostafa/apis/apis.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
-import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/provider/internet_provider.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -19,12 +16,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
+  final RoundedLoadingButtonController googleController =
+      RoundedLoadingButtonController();
+  final RoundedLoadingButtonController facebookController =
+      RoundedLoadingButtonController();
+
   @override
   void initState() {
     super.initState();
   }
 
-  _handleGoogleButtonClick() {
+  /*_handleGoogleButtonClick() {
     Dialogs.showProgressBar(context);
     _signInWithGoogle().then((user) async {
       Navigator.pop(context);
@@ -48,9 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     });
-  }
+  }*/
 
-  _handleFacebookButtonClick() {
+  /*_handleFacebookButtonClick() {
     Dialogs.showProgressBar(context);
     signInWithFacebook().then((user) async {
       Navigator.pop(context);
@@ -74,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     });
-  }
+  }*/
 
-  Future<UserCredential?> _signInWithGoogle() async {
+  /*Future<UserCredential?> _signInWithGoogle() async {
     try {
       await InternetAddress.lookup('google.com');
       // Trigger the authentication flow
@@ -99,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Dialogs.showSnackbar(context, '!حدث خطأ ما');
       return null;
     }
-  }
+  }*/
 
   bool _isStudent = false;
 
@@ -118,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fit: BoxFit.cover,
               image: AssetImage('assets/images/designed_background.jpg'))),
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.transparent,
         body: Column(children: [
           SizedBox(width: double.infinity, height: height * .11),
@@ -250,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           SizedBox(height: height * .11),
-          InkWell(
+          /*InkWell(
             onTap: () {
               _handleGoogleButtonClick();
             },
@@ -274,9 +278,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))),
             ),
-          ),
-          SizedBox(height: height * .059),
-          InkWell(
+          ),*/
+          RoundedLoadingButton(
+              borderRadius: width * .039,
+              height: height * .05,
+              width: width * .85,
+              color: lightGreen,
+              successColor: lightGreen,
+              controller: googleController,
+              onPressed: () {
+                handleGoogleSignIn();
+              },
+              child: Wrap(
+                children: [
+                  Icon(FontAwesomeIcons.google),
+                  SizedBox(
+                    width: width * .05,
+                  ),
+                  Text('متابعة التسجيل بجوجل',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))
+                ],
+              )),
+          SizedBox(height: height * .039),
+          /*InkWell(
             onTap: () async {
               await _handleFacebookButtonClick();
             },
@@ -300,13 +325,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))),
             ),
-          ),
+          ),*/
+          RoundedLoadingButton(
+              borderRadius: width * .039,
+              height: height * .05,
+              width: width * .85,
+              color: lightGreen,
+              successColor: lightGreen,
+              controller: facebookController,
+              onPressed: () {
+                handleFacebookAuth();
+              },
+              child: Wrap(
+                children: [
+                  Icon(FontAwesomeIcons.facebook),
+                  SizedBox(
+                    width: width * .05,
+                  ),
+                  Text('متابعة التسجيل بفيسبوك',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))
+                ],
+              )),
         ]),
       ),
     );
   }
 
-  Future<UserCredential?> signInWithFacebook() async {
+  /*Future<UserCredential?> signInWithFacebook() async {
     try {
       // Trigger the sign-in flow
       final LoginResult loginResult = await FacebookAuth.instance.login();
@@ -322,5 +368,85 @@ class _LoginScreenState extends State<LoginScreen> {
       Dialogs.showSnackbar(context, '!حدث خطأ ما');
       return null;
     }
+  }*/
+
+  Future handleGoogleSignIn() async {
+    final sp = context.read<SignInProvider>();
+    final ip = context.read<InternetProvider>();
+    await ip.checkInternetConnection();
+    if (ip.hasInternet == false) {
+      Dialogs.showSnackbar(context, "تأكد من الاتصال بالانترنت");
+      googleController.reset();
+    } else {
+      await sp.signInWithGoogle().then((value) {
+        if (sp.hasError == true) {
+          Dialogs.showSnackbar(context, sp.errorCode.toString());
+          googleController.reset();
+        } else {
+          sp.checkUserExists().then((value) async {
+            if (value == true) {
+              await sp.getUserDataFromFirestore(sp.uid).then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        googleController.success();
+                        handleAfterSignIn(false);
+                      })));
+            } else {
+              sp.saveDataToFireStore().then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        googleController.success();
+                        handleAfterSignIn(true);
+                      })));
+            }
+          });
+        }
+      });
+    }
+  }
+
+  Future handleFacebookAuth() async {
+    final sp = context.read<SignInProvider>();
+    final ip = context.read<InternetProvider>();
+    await ip.checkInternetConnection();
+    if (ip.hasInternet == false) {
+      Dialogs.showSnackbar(context, "تأكد من الاتصال بالانترنت");
+      facebookController.reset();
+    } else {
+      await sp.signInWithFacebook().then((value) {
+        if (sp.hasError == true) {
+          Dialogs.showSnackbar(context, sp.errorCode.toString());
+          facebookController.reset();
+        } else {
+          sp.checkUserExists().then((value) async {
+            if (value == true) {
+              await sp.getUserDataFromFirestore(sp.uid).then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        facebookController.success();
+                        handleAfterSignIn(false);
+                      })));
+            } else {
+              sp.saveDataToFireStore().then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        facebookController.success();
+                        handleAfterSignIn(true);
+                      })));
+            }
+          });
+        }
+      });
+    }
+  }
+
+  handleAfterSignIn(bool newUser) {
+    Future.delayed(Duration(milliseconds: 1000)).then((value) {
+      newUser == true
+          ? Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (_) => CompleteUserData(_isStudent)))
+          : Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    });
   }
 }
