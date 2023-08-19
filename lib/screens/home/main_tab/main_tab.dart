@@ -7,9 +7,11 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lessons.dart';
 import 'package:omar_mostafa/models/post.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/main_tab/latest_changes.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainTab extends StatefulWidget {
   @override
@@ -28,9 +30,10 @@ class _MainTabState extends State<MainTab> {
   }
 
   Future<void> _getFieldValue() async {
+    final sp = context.read<SignInProvider>();
     var documentSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(APIs.user.uid)
+        .doc(sp.uid ?? APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
     name = data!['name'];
@@ -55,6 +58,7 @@ class _MainTabState extends State<MainTab> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
+    final sp = context.read<SignInProvider>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * .05),
       child: SingleChildScrollView(
@@ -108,59 +112,14 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            Stack(
-              children: [
-                Image.asset(
-                  'assets/images/offer.png',
-                  height: height * .3,
-                ),
-                Positioned(
-                    top: height * .081,
-                    right: width * .07,
-                    child: omar
-                        ? Text(
-                            'تحكم في العروض',
-                            style: TextStyle(
-                                fontFamily: 'Cairo',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'أفضل عرض لك',
-                                style: TextStyle(
-                                    fontFamily: 'Cairo',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Container(
-                                width: width * .5,
-                          child: Text(
-                            'عرض خاص على الدورات الجديدة بنصف الثمن',
-                            style: TextStyle(
-                                fontFamily: 'Cairo',
-                                color: Colors.white,
-                                fontSize: width * .03),
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * .07, vertical: height * .01),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(width * .09),
-                          ),
-                          child: Text(
-                            'عرض',
-                            style: TextStyle(fontFamily: 'Cairo'),
-                          ),
-                        )
-                      ],
-                    ))
-              ],
+            GestureDetector(
+              onTap: () {
+                print(sp.uid);
+              },
+              child: Image.asset(
+                'assets/images/offer.png',
+                height: height * .3,
+              ),
             ),
             Row(
               children: [

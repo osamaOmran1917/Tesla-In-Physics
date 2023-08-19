@@ -195,7 +195,6 @@ class SignInProvider extends ChangeNotifier {
               _name = snapshot['name'],
               _email = snapshot['email'],
               _imageUrl = snapshot['image'],
-              // _provider = snapshot['provider'], //Return To This Line If You Faced An Error
             });
   }
 
@@ -217,7 +216,6 @@ class SignInProvider extends ChangeNotifier {
     await s.setString('email', _email!);
     await s.setString('uid', _uid!);
     await s.setString('image_url', _imageUrl!);
-    await s.setString('provider', _provider!);
     notifyListeners();
   }
 

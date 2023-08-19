@@ -4,7 +4,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class CompleteUserData extends StatefulWidget {
   bool is_student;
@@ -38,6 +40,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
+    final sp = context.read<SignInProvider>();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -305,33 +308,33 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset:
-                                  Offset(0, 3), // changes position of shadow
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(fontFamily: 'cairo'),
+                            keyboardType: TextInputType.number,
+                            maxLength: 11,
+                            controller: phoneController,
+                            validator: (text) {
+                              if (text == null || text.trim().isEmpty) {
+                                return 'يجب إدخال رقم هاتف';
+                              }
+                              return null;
+                            },
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              border: InputBorder.none,
+                              hintText: 'اكتب رقم هاتفك',
+                              hintStyle: TextStyle(
+                                  fontFamily: 'Cairo', color: Colors.grey),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: width * .03),
                             ),
-                          ],
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(fontFamily: 'cairo'),
-                          keyboardType: TextInputType.number,
-                          maxLength: 11,
-                          controller: phoneController,
-                          validator: (text) {
-                            if (text == null || text.trim().isEmpty) {
-                              return 'يجب إدخال رقم هاتف';
-                            }
-                            return null;
-                          },
-                          textAlign: TextAlign.right,
-                          decoration: InputDecoration(
-                            counterText: '',
-                            border: InputBorder.none,
-                            hintText: 'اكتب رقم هاتفك',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Cairo', color: Colors.grey),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: width * .03),
                           ),
                         ),
-                      ),
                       SizedBox(
                         height: height * .03,
                       ),
@@ -439,8 +442,8 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                           }
                           if (widget.is_student == true) {
                             APIs.updateLevel(APIs.user.uid, level!);
-                            APIs.updateName(
-                                APIs.user.uid, nameController.text.toString());
+                            APIs.updateName(sp.uid ?? APIs.user.uid,
+                                nameController.text.toString());
                             APIs.updatePhone(
                                 APIs.user.uid, phoneController.text.toString());
                             APIs.updateGender(APIs.user.uid, male!);
@@ -460,6 +463,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                               return;
                             }
                           }
+                          Navigator.pop(context);
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (_) => HomeScreen()));
                         },
@@ -485,7 +489,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                       fontFamily: 'cairo',
                                       color: Colors.white))),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
