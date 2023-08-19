@@ -6,6 +6,7 @@ import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/provider/internet_provider.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
+import 'package:omar_mostafa/screens/auth/phoneauth_screen.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -21,88 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
       RoundedLoadingButtonController();
   final RoundedLoadingButtonController facebookController =
       RoundedLoadingButtonController();
+  final RoundedLoadingButtonController twitterController =
+      RoundedLoadingButtonController();
+  final RoundedLoadingButtonController phoneController =
+      RoundedLoadingButtonController();
 
   @override
   void initState() {
     super.initState();
   }
-
-  /*_handleGoogleButtonClick() {
-    Dialogs.showProgressBar(context);
-    _signInWithGoogle().then((user) async {
-      Navigator.pop(context);
-      if (user != null) {
-        log('\nUser: ${user.user}');
-        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
-        if ((await APIs.userExists())) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
-          var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
-          SharedData.user = retrievedUser;
-        } else {
-          await APIs.createUser().then((value) async {
-            var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
-            SharedData.user = retrievedUser;
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => CompleteUserData(_isStudent)));
-          });
-        }
-      }
-    });
-  }*/
-
-  /*_handleFacebookButtonClick() {
-    Dialogs.showProgressBar(context);
-    signInWithFacebook().then((user) async {
-      Navigator.pop(context);
-      if (user != null) {
-        log('\nUser: ${user.user}');
-        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
-        if ((await APIs.userExists())) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
-          var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
-          SharedData.user = retrievedUser;
-        } else {
-          await APIs.createUser().then((value) async {
-            var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
-            SharedData.user = retrievedUser;
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => CompleteUserData(_isStudent)));
-          });
-        }
-      }
-    });
-  }*/
-
-  /*Future<UserCredential?> _signInWithGoogle() async {
-    try {
-      await InternetAddress.lookup('google.com');
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      // Once signed in, return the UserCredential
-      return await APIs.auth.signInWithCredential(credential);
-    } catch (e) {
-      log('\n_signInWithGoogle: $e');
-      Dialogs.showSnackbar(context, '!حدث خطأ ما');
-      return null;
-    }
-  }*/
 
   bool _isStudent = false;
 
@@ -253,32 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          SizedBox(height: height * .11),
-          /*InkWell(
-            onTap: () {
-              _handleGoogleButtonClick();
-            },
-            child: Container(
-              height: height * .05,
-              width: width * .85,
-              decoration: BoxDecoration(
-                color: lightGreen,
-                borderRadius: BorderRadius.circular(width * .039),
-                boxShadow: [
-                  BoxShadow(
-                    color: lightGreen.withOpacity(0.17),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text('متابعة التسجيل بجوجل',
-                      style:
-                          TextStyle(fontFamily: 'cairo', color: Colors.white))),
-            ),
-          ),*/
+          SizedBox(height: height * .081),
           RoundedLoadingButton(
               borderRadius: width * .039,
               height: height * .05,
@@ -301,31 +204,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               )),
           SizedBox(height: height * .039),
-          /*InkWell(
-            onTap: () async {
-              await _handleFacebookButtonClick();
-            },
-            child: Container(
-              height: height * .05,
-              width: width * .85,
-              decoration: BoxDecoration(
-                color: lightGreen,
-                borderRadius: BorderRadius.circular(width * .039),
-                boxShadow: [
-                  BoxShadow(
-                    color: lightGreen.withOpacity(0.17),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text('متابعة التسجيل بفيسبوك',
-                      style:
-                          TextStyle(fontFamily: 'cairo', color: Colors.white))),
-            ),
-          ),*/
           RoundedLoadingButton(
               borderRadius: width * .039,
               height: height * .05,
@@ -347,28 +225,58 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextStyle(fontFamily: 'cairo', color: Colors.white))
                 ],
               )),
+          SizedBox(height: height * .039),
+          RoundedLoadingButton(
+              borderRadius: width * .039,
+              height: height * .05,
+              width: width * .85,
+              color: lightGreen,
+              successColor: lightGreen,
+              controller: twitterController,
+              onPressed: () {
+                handleTwitterAuth();
+              },
+              child: Wrap(
+                children: [
+                  Icon(FontAwesomeIcons.twitter),
+                  SizedBox(
+                    width: width * .05,
+                  ),
+                  Text('متابعة التسجيل بتويتر',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))
+                ],
+              )),
+          SizedBox(height: height * .039),
+          RoundedLoadingButton(
+              borderRadius: width * .039,
+              height: height * .05,
+              width: width * .85,
+              color: lightGreen,
+              successColor: lightGreen,
+              controller: phoneController,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => PhoneAuthScreen(_isStudent)));
+                phoneController.reset();
+              },
+              child: Wrap(
+                children: [
+                  Icon(FontAwesomeIcons.phone),
+                  SizedBox(
+                    width: width * .05,
+                  ),
+                  Text('متابعة التسجيل برقم الموبايل',
+                      style:
+                          TextStyle(fontFamily: 'cairo', color: Colors.white))
+                ],
+              ))
         ]),
       ),
     );
   }
-
-  /*Future<UserCredential?> signInWithFacebook() async {
-    try {
-      // Trigger the sign-in flow
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-
-      // Create a credential from the access token
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-      // Once signed in, return the UserCredential
-      return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-    } catch (e) {
-      log('\n_signInWithFacebook: $e');
-      Dialogs.showSnackbar(context, '!حدث خطأ ما');
-      return null;
-    }
-  }*/
 
   Future handleGoogleSignIn() async {
     final sp = context.read<SignInProvider>();
@@ -440,11 +348,48 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future handleTwitterAuth() async {
+    final sp = context.read<SignInProvider>();
+    final ip = context.read<InternetProvider>();
+    await ip.checkInternetConnection();
+    if (ip.hasInternet == false) {
+      Dialogs.showSnackbar(context, "تأكد من الاتصال بالانترنت");
+      googleController.reset();
+    } else {
+      await sp.signInWithTwitter().then((value) {
+        if (sp.hasError == true) {
+          Dialogs.showSnackbar(context, sp.errorCode.toString());
+          twitterController.reset();
+        } else {
+          sp.checkUserExists().then((value) async {
+            if (value == true) {
+              await sp.getUserDataFromFirestore(sp.uid).then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        twitterController.success();
+                        handleAfterSignIn(false);
+                      })));
+            } else {
+              sp.saveDataToFireStore().then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        twitterController.success();
+                        handleAfterSignIn(true);
+                      })));
+            }
+          });
+        }
+      });
+    }
+  }
+
   handleAfterSignIn(bool newUser) {
     Future.delayed(Duration(milliseconds: 1000)).then((value) {
       newUser == true
-          ? Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (_) => CompleteUserData(_isStudent)))
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => CompleteUserData(_isStudent, false)))
           : Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomeScreen()));
     });

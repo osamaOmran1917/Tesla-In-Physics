@@ -34,7 +34,8 @@
             <array>
                 <!-- TODO Replace this value: -->
                 <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-                <string>1402032410360151</string>
+                <string>fb1402032410360151</string>
+                <string>socialauth</string>
                 <string>com.googleusercontent.apps.53921266677-bblir7l1v37dadc2m7pkhqv2dcr8qb9e</string>
             </array>
         </dict>

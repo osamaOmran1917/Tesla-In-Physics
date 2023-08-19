@@ -8,8 +8,9 @@ import 'package:omar_mostafa/screens/home/home_screen.dart';
 
 class CompleteUserData extends StatefulWidget {
   bool is_student;
+  bool is_phone;
 
-  CompleteUserData(this.is_student);
+  CompleteUserData(this.is_student, this.is_phone);
 
   @override
   State<CompleteUserData> createState() => _CompleteUserDataState();
@@ -273,33 +274,37 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: height * .03,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'الهاتف',
-                            style: TextStyle(fontFamily: 'Cairo'),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * .013,
-                      ),
-                      Container(
-                        height: height * .07,
-                        width: width * .85,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(width * .039),
-                          boxShadow: [
-                            BoxShadow(
-                              color: lightGreen.withOpacity(0.17),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
+                      if (widget.is_phone == false)
+                        SizedBox(
+                          height: height * .03,
+                        ),
+                      if (widget.is_phone == false)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'الهاتف',
+                              style: TextStyle(fontFamily: 'Cairo'),
+                            ),
+                          ],
+                        ),
+                      if (widget.is_phone == false)
+                        SizedBox(
+                          height: height * .013,
+                        ),
+                      if (widget.is_phone == false)
+                        Container(
+                          height: height * .07,
+                          width: width * .85,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(width * .039),
+                            boxShadow: [
+                              BoxShadow(
+                                color: lightGreen.withOpacity(0.17),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
                                   Offset(0, 3), // changes position of shadow
                             ),
                           ],
