@@ -161,6 +161,7 @@ class MyUser {
     required this.dec_11,
     required this.dec_12,
     required this.likes,
+    required this.paid,
   });
 
   late final String image;
@@ -324,6 +325,7 @@ class MyUser {
   late final dec_11;
   late final dec_12;
   late final likes;
+  late final paid;
 
   MyUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
@@ -487,6 +489,7 @@ class MyUser {
     dec_11 = json['dec_11'];
     dec_12 = json['dec_12'];
     likes = json['likes'];
+    paid = json['paid'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -652,6 +655,7 @@ class MyUser {
     data['dec_11'] = dec_11;
     data['dec_12'] = dec_12;
     data['likes'] = likes;
+    data['paid'] = paid;
     return data;
   }
 }

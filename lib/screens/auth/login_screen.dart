@@ -1,8 +1,15 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/provider/internet_provider.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
@@ -30,6 +37,57 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  _handleGoogleButtonClick() {
+    _signInWithGoogle().then((user) async {
+      if (user != null) {
+        googleController.success();
+        log('\nUser: ${user.user}');
+        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+        if ((await APIs.userExists())) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+          SharedData.user = retrievedUser;
+        } else {
+          await APIs.createUser().then((value) async {
+            var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
+            SharedData.user = retrievedUser;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => CompleteUserData(_isStudent, false)));
+          });
+        }
+      }
+      googleController.reset();
+    });
+  }
+
+  Future<UserCredential?> _signInWithGoogle() async {
+    try {
+      await InternetAddress.lookup('google.com');
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      return await APIs.auth.signInWithCredential(credential);
+    } catch (e) {
+      log('\n_signInWithGoogle: $e');
+      Dialogs.showSnackbar(context, 'حدث خطأ ما!');
+      return null;
+    }
   }
 
   bool _isStudent = false;
@@ -190,7 +248,8 @@ class _LoginScreenState extends State<LoginScreen> {
               successColor: lightGreen,
               controller: googleController,
               onPressed: () {
-                handleGoogleSignIn();
+                //handleGoogleSignIn();
+                _handleGoogleButtonClick();
               },
               child: Wrap(
                 children: [

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +14,7 @@ import 'package:omar_mostafa/screens/home/main_tab/latest_changes.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:twitter_login/entity/user.dart';
 
 class MainTab extends StatefulWidget {
   @override
@@ -23,35 +26,49 @@ class _MainTabState extends State<MainTab> {
   String image = '';
   int userLevel = 0;
 
+  String? nameSp;
+
   @override
   void initState() {
     super.initState();
+    getName();
     _getFieldValue();
   }
 
   Future<void> _getFieldValue() async {
     final sp = context.read<SignInProvider>();
+    final idSp = SherdHelper.getData(key: "id");
+    log(idSp.toString());
     var documentSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(sp.uid ?? APIs.user.uid)
+        .doc(idSp ?? APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    name = data!['name'];
-    image = data['image'];
-    if (data['is_student'] == true)
+    setState(() {
+      name = data!['name'];
+      image = data['image'];
+    });
+
+    if (data!['is_student'] == true)
       setState(() {
         userLevel = data['level'];
       });
-    else {
-      var documentSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(data['student_id'])
-          .get();
-      var newData = documentSnapshot.data();
-      setState(() {
-        userLevel = newData!['level'];
-      });
-    }
+    // else {
+    //   var documentSnapshot = await FirebaseFirestore.instance
+    //       .collection('users')
+    //       .doc(data['student_id'])
+    //       .get();
+    //   var newData = documentSnapshot.data();
+    //   setState(() {
+    //     userLevel = newData!['level'];
+    //   });
+    // }
+  }
+
+  Future<void> getName() async {
+    setState(() {
+      nameSp = SherdHelper.getData(key: "name");
+    });
   }
 
   @override
@@ -70,14 +87,21 @@ class _MainTabState extends State<MainTab> {
             ),
             Row(
               children: [
-                Container(
-                  padding: EdgeInsets.all(width * .039),
-                  decoration: BoxDecoration(
-                      color: lightGreen,
-                      borderRadius: BorderRadius.circular(width * .05)),
-                  child: Image.asset(
-                    'assets/images/Notification.png', width: width * .061,
-                    height: width * .061,),
+                GestureDetector(
+                  onTap: () {
+                    log(name);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(width * .039),
+                    decoration: BoxDecoration(
+                        color: lightGreen,
+                        borderRadius: BorderRadius.circular(width * .05)),
+                    child: Image.asset(
+                      'assets/images/Notification.png',
+                      width: width * .061,
+                      height: width * .061,
+                    ),
+                  ),
                 ),
                 Expanded(child: Container()),
                 Column(

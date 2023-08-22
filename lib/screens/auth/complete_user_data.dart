@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,7 +31,9 @@ class _CompleteUserDataState extends State<CompleteUserData> {
     // TODO: implement initState
     super.initState();
     if (widget.is_student == false) {
-      APIs.setAsParent(APIs.user.uid);
+      final idSp = SherdHelper.getData(key: "id");
+      log(idSp.toString());
+      APIs.setAsParent(idSp ?? APIs.user.uid);
     }
   }
 

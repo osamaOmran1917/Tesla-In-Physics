@@ -184,8 +184,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                 User user = (await FirebaseAuth.instance
                                         .signInWithCredential(authCredential))
                                     .user!;
-                                SharedData.user = user;
-                                sp.phoneNumberUser(user, '', '');
+                                sp.phoneNumberUser(
+                                    user, '', '', widget.is_student);
                                 sp.checkUserExists().then((value) async {
                                   if (value == true) {
                                     await sp
@@ -201,10 +201,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                                               HomeScreen()));
                                                 })));
                                   } else {
-                                    sp.saveDataToFireStore().then((value) => sp
-                                        .saveDataToSharedPreferences()
-                                        .then((value) =>
-                                            sp.setSignIn().then((value) {
+                                    sp.saveDataToFireStore().then(
+                                          (value) => sp.setSignIn().then(
+                                            (value) {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -212,7 +211,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                                           CompleteUserData(
                                                               widget.is_student,
                                                               true)));
-                                            })));
+                                            },
+                                          ),
+                                        );
                                   }
                                 });
                               },

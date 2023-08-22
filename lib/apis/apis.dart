@@ -259,6 +259,7 @@ class APIs {
       dec_11: 0,
       dec_12: 0,
       likes: [],
+      paid: false,
     );
     return await firestore
         .collection('users')
@@ -269,8 +270,8 @@ class APIs {
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
         fromFirestore: ((snapshot, options) {
-          return MyUser.fromJson(snapshot.data()!);
-        }), toFirestore: (user, options) {
+      return MyUser.fromJson(snapshot.data()!);
+    }), toFirestore: (user, options) {
       return user.toJson();
     });
   }
@@ -410,13 +411,14 @@ class APIs {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot<Post>> ListenForLevelPostsRealTimeUpdates(int level) {
+  static Stream<QuerySnapshot<Post>> ListenForLevelPostsRealTimeUpdates(
+      int level) {
     // Listen for realtime update
     return getPostsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<StrategyPost>>
-  ListenForStrategyPostsRealTimeUpdates() {
+      ListenForStrategyPostsRealTimeUpdates() {
     // Listen for realtime update
     return getStrategyPostsCollection()
         .orderBy("date_time", descending: true)
@@ -424,7 +426,7 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<StrategyPost>>
-  ListenForLevelStrategyPostsRealTimeUpdates(int level) {
+      ListenForLevelStrategyPostsRealTimeUpdates(int level) {
     // Listen for realtime update
     return getStrategyPostsCollection()
         .where('level', isEqualTo: level)
@@ -506,7 +508,7 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<MyUser>>
-  ListenForStudentsRealTimeUpdatesDependingOnLevel(int level) {
+      ListenForStudentsRealTimeUpdatesDependingOnLevel(int level) {
     // Listen for realtime update
     return getUsersCollection()
         .where('level', isEqualTo: level)
@@ -515,13 +517,13 @@ class APIs {
   }
 
   static Stream<QuerySnapshot<Exam>>
-  ListenForExamsRealTimeUpdatesDependingOnLevel(int level) {
+      ListenForExamsRealTimeUpdatesDependingOnLevel(int level) {
     // Listen for realtime update
     return getExamsCollection().where('level', isEqualTo: level).snapshots();
   }
 
   static Stream<QuerySnapshot<Exam>>
-  ListenForExamsRealTimeUpdatesDependingOnStudent(String studentId) {
+      ListenForExamsRealTimeUpdatesDependingOnStudent(String studentId) {
     // Listen for realtime update
     return getExamsCollection()
         .where('student_id', isEqualTo: studentId)
@@ -549,5 +551,10 @@ class APIs {
   static setPushToken(String userId, String token) async {
     CollectionReference omarMustafaRef = getUsersCollection();
     omarMustafaRef.doc(userId).update({'pushToken': token});
+  }
+
+  static updatePayment(String userId, bool payment) async {
+    CollectionReference omarMustafaRef = getUsersCollection();
+    omarMustafaRef.doc(userId).update({'paid': payment});
   }
 }

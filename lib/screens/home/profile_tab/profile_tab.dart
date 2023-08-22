@@ -9,7 +9,9 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/log_out.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/exams/exams_screen.dart';
+import 'package:omar_mostafa/screens/home/profile_tab/studens/students_levels.dart';
 import 'package:omar_mostafa/screens/home/profile_tab/user_profile_screen.dart';
 import 'package:omar_mostafa/screens/welcome/welcome_screen_i.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,15 +35,16 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   Future<void> _getFieldValue() async {
+    final idSp = SherdHelper.getData(key: "id");
     var documentSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(APIs.user.uid)
+        .doc(idSp ?? APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
     setState(() {
       name = data!['name'];
       image = data['image'];
-      student = data['is_student'];
+      student = data['is_student'] ?? true;
     });
   }
 
@@ -447,8 +450,64 @@ class _ProfileTabState extends State<ProfileTab> {
                     ])),
               ),
             ),
+            if (omar == true)
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StudensLevels()));
+                },
+                child: Container(
+                    padding: EdgeInsets.all(width * .023),
+                    height: height * .083,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width * .059),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: lightGreen.withOpacity(0.17),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(children: [
+                      Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        color: Colors.grey,
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'الطلبة',
+                            style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: width * .03,
+                      ),
+                      Container(
+                        width: height * .055,
+                        height: height * .055,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(height * .3),
+                            color: lightGreen),
+                        child: Icon(
+                          Icons.people_alt_outlined,
+                          color: Colors.white,
+                        ),
+                      )
+                    ])),
+              ),
             SizedBox(
-              height: height * .025,
+              height: height * .03,
             ),
             InkWell(
               onTap: () => logOut(context),
@@ -500,69 +559,77 @@ class _ProfileTabState extends State<ProfileTab> {
                     )
                   ])),
             ),
-            SizedBox(
-              height: height * .025,
-            ),
-            InkWell(
-              onTap: () async {
-                APIs.deleteUser();
-                await GoogleSignIn().disconnect();
-                showMessage(context, 'هل أنت متأكد أنك تريد حذف الحساب؟',
-                    posAction: () async {
-                  await APIs.auth.signOut();
-                  await GoogleSignIn().signOut();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => WelcomeScreenI()));
-                }, posActionName: 'نعم', negAction: () {}, negActionName: 'لا');
-              },
-              child: Container(
-                  padding: EdgeInsets.all(width * .023),
-                  height: height * .083,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(width * .059),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: lightGreen.withOpacity(0.17),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Row(children: [
-                    Icon(
-                      Icons.keyboard_arrow_left_rounded,
-                      color: Colors.grey,
-                    ),
-                    Spacer(),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'حذف الحساب',
-                          style: TextStyle(
-                              fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+            if (omar == false)
+              SizedBox(
+                height: height * .03,
+              ),
+            if (omar == false)
+              InkWell(
+                onTap: () async {
+                  showMessage(context, 'هل أنت متأكد أنك تريد حذف الحساب؟',
+                      posAction: () async {
+                    APIs.deleteUser();
+                    await GoogleSignIn().disconnect();
+                    await APIs.auth.signOut();
+                    await GoogleSignIn().signOut();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+                  },
+                      posActionName: 'نعم',
+                      negAction: () {},
+                      negActionName: 'لا');
+                },
+                child: Container(
+                    padding: EdgeInsets.all(width * .023),
+                    height: height * .083,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width * .059),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: lightGreen.withOpacity(0.17),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: width * .03,
-                    ),
-                    Container(
-                      width: height * .055,
-                      height: height * .055,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(height * .3),
-                          color: lightGreen),
-                      child: Icon(
-                        Icons.delete_forever_outlined, color: Colors.white,
-                        size: width * .079,),
-                    )
-                  ])),
-            )
+                    child: Row(children: [
+                      Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        color: Colors.grey,
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'حذف الحساب',
+                            style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: width * .03,
+                      ),
+                      Container(
+                        width: height * .055,
+                        height: height * .055,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(height * .3),
+                            color: lightGreen),
+                        child: Icon(
+                          Icons.delete_forever_outlined,
+                          color: Colors.white,
+                          size: width * .079,
+                        ),
+                      )
+                    ])),
+              )
           ],
         ),
       ),

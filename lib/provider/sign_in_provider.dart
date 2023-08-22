@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_login/twitter_login.dart';
@@ -44,6 +44,9 @@ class SignInProvider extends ChangeNotifier {
   String? _name;
 
   String? get name => _name;
+
+  bool? _is_student;
+  bool? get isStudent => _is_student;
 
   SignInProvider() {
     checkSignInUser();
@@ -190,12 +193,15 @@ class SignInProvider extends ChangeNotifier {
         .collection("users")
         .doc(uid)
         .get()
-        .then((DocumentSnapshot snapshot) => {
-              _uid = snapshot['id'],
-              _name = snapshot['name'],
-              _email = snapshot['email'],
-              _imageUrl = snapshot['image'],
-            });
+        .then((DocumentSnapshot snapshot) {
+      _uid = snapshot['id'];
+      _name = snapshot['name'];
+      _email = snapshot['email'];
+      _imageUrl = snapshot['image'];
+      _is_student = snapshot['is_student'];
+      SherdHelper.saveData(key: "name", value: _name);
+      SherdHelper.saveData(key: "id", value: _uid);
+    });
   }
 
   Future saveDataToFireStore() async {
@@ -206,7 +212,9 @@ class SignInProvider extends ChangeNotifier {
       "email": _email,
       "id": _uid,
       "image": _imageUrl,
+      "is_student": _is_student,
     });
+    SherdHelper.saveData(key: "id", value: _uid);
     notifyListeners();
   }
 
@@ -216,6 +224,7 @@ class SignInProvider extends ChangeNotifier {
     await s.setString('email', _email!);
     await s.setString('uid', _uid!);
     await s.setString('image_url', _imageUrl!);
+    await s.setBool('is_student', _is_student!);
     notifyListeners();
   }
 
@@ -225,6 +234,7 @@ class SignInProvider extends ChangeNotifier {
     _email = s.getString('email');
     _imageUrl = s.getString('image_url');
     _uid = s.getString('uid');
+    _is_student = s.getBool('is_student');
     notifyListeners();
   }
 
@@ -253,12 +263,37 @@ class SignInProvider extends ChangeNotifier {
     s.clear();
   }
 
-  void phoneNumberUser(User user, email, name) {
+  void phoneNumberUser(User user, email, name, bool isStudent) {
     _name = name;
     _email = email;
     _imageUrl = "null";
-    _uid = user.phoneNumber;
+    /* _uid = user.phoneNumber; */ _uid = APIs
+        .user.uid; //Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    _is_student = isStudent;
     _provider = "PHONE";
     notifyListeners();
+  }
+}
+
+class SherdHelper {
+  static SharedPreferences? sP;
+  static init() async {
+    sP = await SharedPreferences.getInstance();
+  }
+
+  static Future<bool> saveData(
+      {required String key, required dynamic value}) async {
+    if (value is String) return await sP!.setString(key, value);
+    if (value is int) return await sP!.setInt(key, value);
+    if (value is bool) return await sP!.setBool(key, value);
+    return await sP!.setDouble(key, value);
+  }
+
+  static dynamic getData({required String key}) {
+    return sP?.get(key);
+  }
+
+  static Future<bool> deletData({required String key}) async {
+    return await sP!.remove(key);
   }
 }
