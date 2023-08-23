@@ -73,7 +73,7 @@ class _ProfileTabState extends State<ProfileTab> {
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => UsereProfileScreen())),
               child: Container(
-                  padding: EdgeInsets.all(width * .023),
+                  padding: EdgeInsets.symmetric(horizontal: width * .03),
                   height: height * .083,
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -352,23 +352,26 @@ class _ProfileTabState extends State<ProfileTab> {
                           textAlign: TextAlign.center,
                         ),
                         content: Container(
-                          height: height * .13,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                APIs.user.uid,
-                                style: TextStyle(
-                                    fontFamily: 'cairo',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'أرسله لولي أمرك ولا تطلع عليه أشخاصاً غير موثوقين',
-                                style: TextStyle(fontFamily: 'cairo'),
-                                textAlign: TextAlign.center,
-                              )
-                            ],
+                          height: height * .19,
+                          child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  APIs.user.uid,
+                                  style: TextStyle(
+                                      fontFamily: 'cairo',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'أرسله لولي أمرك ولا تطلع عليه أشخاصاً غير موثوقين',
+                                  style: TextStyle(fontFamily: 'cairo'),
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         actions: <Widget>[

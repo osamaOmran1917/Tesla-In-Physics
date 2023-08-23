@@ -132,7 +132,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                   child: Icon(CupertinoIcons.person_alt),
                                 ),
                               ),
-                      ),
+                            ),
                       Positioned(
                         bottom: 0,
                         right: 0,
@@ -232,19 +232,19 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                           itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Text('1'),
-                              value: 1,
-                            ),
-                            PopupMenuItem(
-                              child: Text('2'),
-                              value: 2,
-                            ),
-                            PopupMenuItem(
-                              child: Text('3'),
-                              value: 3,
-                            ),
-                          ]),
+                                PopupMenuItem(
+                                  child: Text('1'),
+                                  value: 1,
+                                ),
+                                PopupMenuItem(
+                                  child: Text('2'),
+                                  value: 2,
+                                ),
+                                PopupMenuItem(
+                                  child: Text('3'),
+                                  value: 3,
+                                ),
+                              ]),
                     ),
                   ),
                   Row(
@@ -288,7 +288,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         border: InputBorder.none,
                         hintText: 'اكتب اسمك كامل',
                         hintStyle:
-                        TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -336,10 +336,11 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                       },
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
+                        counterText: '',
                         border: InputBorder.none,
                         hintText: 'اكتب رقم هاتفك',
                         hintStyle:
-                        TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -376,7 +377,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset:
-                                Offset(0, 3), // changes position of shadow
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -401,8 +402,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                     male == null
                                         ? 'اختر النوع'
                                         : male == true
-                                        ? 'ذكر'
-                                        : 'أنثى',
+                                            ? 'ذكر'
+                                            : 'أنثى',
                                     style: TextStyle(
                                         fontFamily: 'Cairo',
                                         color: Colors.grey),
@@ -412,15 +413,15 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                               shape: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text('ذكر'),
-                                  value: true,
-                                ),
-                                PopupMenuItem(
-                                  child: Text('أنثى'),
-                                  value: false,
-                                )
-                              ]),
+                                    PopupMenuItem(
+                                      child: Text('ذكر'),
+                                      value: true,
+                                    ),
+                                    PopupMenuItem(
+                                      child: Text('أنثى'),
+                                      value: false,
+                                    )
+                                  ]),
                         )
                       ],
                     ),

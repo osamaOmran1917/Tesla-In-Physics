@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
       }*/
-      sp.isSignedIn == false
+      APIs.auth.currentUser == null
           ? Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => WelcomeScreenI()))
           : Navigator.pushReplacement(

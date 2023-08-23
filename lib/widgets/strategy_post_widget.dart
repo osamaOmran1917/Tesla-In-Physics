@@ -62,21 +62,21 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
       child: Slidable(
         startActionPane: omar
             ? ActionPane(
-          motion: DrawerMotion(),
-          children: [
-            SlidableAction(
-              onPressed: (_) {
-                APIs.deleteStrategyPost(id: widget.strategy_post.id!);
+                motion: DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: (_) {
+                      APIs.deleteStrategyPost(id: widget.strategy_post.id!);
                     },
-              icon: CupertinoIcons.delete,
-              backgroundColor: Colors.red,
-              label: 'حذف',
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomLeft: Radius.circular(12)),
-            ),
-          ],
-        )
+                    icon: CupertinoIcons.delete,
+                    backgroundColor: Colors.red,
+                    label: 'حذف',
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12)),
+                  ),
+                ],
+              )
             : null,
         child: Column(
           children: [
@@ -104,15 +104,17 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
             SizedBox(
               height: height * .013,
             ),
-            Text(
-              widget.strategy_post.details ?? '',
-              maxLines: 2,
-              style: TextStyle(
-                  fontFamily: 'Cairo',
-                  color: Colors.grey,
-                  fontSize: width * .029),
-              textAlign: TextAlign.right,
-            ),
+            Flexible(
+                child: RichText(
+              overflow: TextOverflow.ellipsis,
+              strutStyle: StrutStyle(fontSize: 12.0),
+              text: TextSpan(
+                  style: TextStyle(
+                      fontFamily: 'Cairo',
+                      color: Colors.grey,
+                      fontSize: width * .029),
+                  text: widget.strategy_post.details ?? ''),
+            )),
             SizedBox(
               height: height * .01,
             ),

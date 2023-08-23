@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
-import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/provider/internet_provider.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/auth/complete_user_data.dart';
@@ -201,7 +200,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                                               HomeScreen()));
                                                 })));
                                   } else {
-                                    sp.saveDataToFireStore().then(
+                                    sp
+                                        .saveDataToFireStore(widget.is_student)
+                                        .then(
                                           (value) => sp.setSignIn().then(
                                             (value) {
                                               Navigator.push(

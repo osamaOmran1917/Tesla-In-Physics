@@ -359,7 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         handleAfterSignIn(false);
                       })));
             } else {
-              sp.saveDataToFireStore().then((value) => sp
+              sp.saveDataToFireStore(_isStudent).then((value) => sp
                   .saveDataToSharedPreferences()
                   .then((value) => sp.setSignIn().then((value) {
                         googleController.success();
@@ -394,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         handleAfterSignIn(false);
                       })));
             } else {
-              sp.saveDataToFireStore().then((value) => sp
+              sp.saveDataToFireStore(_isStudent).then((value) => sp
                   .saveDataToSharedPreferences()
                   .then((value) => sp.setSignIn().then((value) {
                         facebookController.success();
@@ -429,7 +429,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         handleAfterSignIn(false);
                       })));
             } else {
-              sp.saveDataToFireStore().then((value) => sp
+              sp.saveDataToFireStore(_isStudent).then((value) => sp
                   .saveDataToSharedPreferences()
                   .then((value) => sp.setSignIn().then((value) {
                         twitterController.success();
