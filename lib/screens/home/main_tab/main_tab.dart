@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
-import 'package:omar_mostafa/models/lessons.dart';
+import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/main_tab/latest_changes.dart';
+import 'package:omar_mostafa/screens/home/main_tab/lessons/lessons_screen.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_login/entity/user.dart';
 
 class MainTab extends StatefulWidget {
   @override
@@ -36,7 +36,6 @@ class _MainTabState extends State<MainTab> {
   }
 
   Future<void> _getFieldValue() async {
-    final sp = context.read<SignInProvider>();
     final idSp = SherdHelper.getData(key: "id");
     log(idSp.toString());
     var documentSnapshot = await FirebaseFirestore.instance
@@ -53,16 +52,16 @@ class _MainTabState extends State<MainTab> {
       setState(() {
         userLevel = data['level'];
       });
-    // else {
-    //   var documentSnapshot = await FirebaseFirestore.instance
-    //       .collection('users')
-    //       .doc(data['student_id'])
-    //       .get();
-    //   var newData = documentSnapshot.data();
-    //   setState(() {
-    //     userLevel = newData!['level'];
-    //   });
-    // }
+    else {
+      var documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(data['student_id'])
+          .get();
+      var newData = documentSnapshot.data();
+      setState(() {
+        userLevel = newData!['level'];
+      });
+    }
   }
 
   Future<void> getName() async {
@@ -147,9 +146,13 @@ class _MainTabState extends State<MainTab> {
             ),
             Row(
               children: [
-                Text(
-                  'عرض الكل',
-                  style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                TextButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => LessonsScreen())),
+                  child: Text(
+                    'عرض الكل',
+                    style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                  ),
                 ),
                 Expanded(child: Container()),
                 Text(
@@ -161,10 +164,8 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            LessonWidget(
-                Lesson(number: 'الدرس الأول', name: 'الفيزياء الكهربية')),
-            LessonWidget(
-                Lesson(number: 'الدرس الثاني', name: 'الفيزياء الحديثة')),
+            LessonWidget(Lesson(number: 1, name: 'الفيزياء الكهربية')),
+            LessonWidget(Lesson(number: 2, name: 'الفيزياء الحديثة')),
             Row(
               children: [
                 TextButton(

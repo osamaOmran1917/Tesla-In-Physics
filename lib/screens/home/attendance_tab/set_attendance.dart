@@ -89,7 +89,9 @@ class _SetAttendanceState extends State<SetAttendance> {
                         itemBuilder: (buildContext, index) {
                           return data.isEmpty
                               ? Center(
-                                  child: Text('لا يوجد تغييرات'),
+                                  child: Text(
+                                    'لا يوجد تغييرات',
+                                  ),
                                 )
                               : UserCard(data[index], widget.lec, widget.month);
                         },

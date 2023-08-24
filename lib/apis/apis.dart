@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
 import 'package:omar_mostafa/models/exam.dart';
-import 'package:omar_mostafa/models/lessons.dart';
+import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/models/my_user.dart';
 import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/models/strategy_post.dart';
@@ -270,6 +270,7 @@ class APIs {
   static CollectionReference<MyUser> getUsersCollection() {
     return firestore.collection('users').withConverter<MyUser>(
         fromFirestore: ((snapshot, options) {
+          print('########################${snapshot.data()}');
       return MyUser.fromJson(snapshot.data()!);
     }), toFirestore: (user, options) {
       return user.toJson();
@@ -417,6 +418,12 @@ class APIs {
     return getPostsCollection().where('level', isEqualTo: level).snapshots();
   }
 
+  static Stream<QuerySnapshot<Lesson>> ListenForLevelLessonsRealTimeUpdates(
+      int level) {
+    // Listen for realtime update
+    return getLessonsCollection().where('level', isEqualTo: level).snapshots();
+  }
+
   static Stream<QuerySnapshot<StrategyPost>>
       ListenForStrategyPostsRealTimeUpdates() {
     // Listen for realtime update
@@ -463,6 +470,13 @@ class APIs {
     post.id = doc.id;
     post.date_time = DateTime.now();
     return doc.set(post); // get doc -> then set //update
+  }
+
+  static Future<void> addLesson(Lesson lesson) {
+    var lessonsCollection = getLessonsCollection();
+    var doc = lessonsCollection.doc(); //create new doc
+    lesson.id = doc.id;
+    return doc.set(lesson); // get doc -> then set //update
   }
 
   static Future<void> addExam(Exam exam) async {

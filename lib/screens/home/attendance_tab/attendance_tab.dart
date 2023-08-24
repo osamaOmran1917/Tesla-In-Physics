@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
+import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/attendance_tab/months_screen.dart';
 
 class AttendanceTab extends StatefulWidget {
@@ -20,169 +21,315 @@ class _AttendanceTabState extends State<AttendanceTab> {
   }
 
   Future<void> _getFieldValue() async {
+    final idSp = SherdHelper.getData(key: "id");
     var documentSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(APIs.user.uid)
+        .doc(idSp ?? APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
     if (data!['is_student'] == true)
       setState(() {
-        if (DateTime.now().month == 1)
-          attendance = data['jan_1'] +
-              data['jan_2'] +
-              data['jan_3'] +
-              data['jan_4'] +
-              data['jan_5'] +
-              data['jan_6'] +
-              data['jan_7'] +
-              data['jan_8'] +
-              data['jan_9'] +
-              data['jan_10'] +
-              data['jan_11'] +
-              data['jan_12'];
-        else if (DateTime.now().month == 2)
-          attendance = data['feb_1'] +
-              data['feb_2'] +
-              data['feb_3'] +
-              data['feb_4'] +
-              data['feb_5'] +
-              data['feb_6'] +
-              data['feb_7'] +
-              data['feb_8'] +
-              data['feb_9'] +
-              data['feb_10'] +
-              data['feb_11'] +
-              data['feb_12'];
-        else if (DateTime.now().month == 3)
-          attendance = data['mar_1'] +
-              data['mar_2'] +
-              data['mar_3'] +
-              data['mar_4'] +
-              data['mar_5'] +
-              data['mar_6'] +
-              data['mar_7'] +
-              data['mar_8'] +
-              data['mar_9'] +
-              data['mar_10'] +
-              data['mar_11'] +
-              data['mar_12'];
-        else if (DateTime.now().month == 4)
-          attendance = data['apr_1'] +
-              data['apr_2'] +
-              data['apr_3'] +
-              data['apr_4'] +
-              data['apr_5'] +
-              data['apr_6'] +
-              data['apr_7'] +
-              data['apr_8'] +
-              data['apr_9'] +
-              data['apr_10'] +
-              data['apr_11'] +
-              data['apr_12'];
-        else if (DateTime.now().month == 5)
-          attendance = data['may_1'] +
-              data['may_2'] +
-              data['may_3'] +
-              data['may_4'] +
-              data['may_5'] +
-              data['may_6'] +
-              data['may_7'] +
-              data['may_8'] +
-              data['may_9'] +
-              data['may_10'] +
-              data['may_11'] +
-              data['may_12'];
-        else if (DateTime.now().month == 6)
-          attendance = data['jun_1'] +
-              data['jun_2'] +
-              data['jun_3'] +
-              data['jun_4'] +
-              data['jun_5'] +
-              data['jun_6'] +
-              data['jun_7'] +
-              data['jun_8'] +
-              data['jun_9'] +
-              data['jun_10'] +
-              data['jun_11'] +
-              data['jun_12'];
-        else if (DateTime.now().month == 7)
-          attendance = data['jul_1'] +
-              data['jul_2'] +
-              data['jul_3'] +
-              data['jul_4'] +
-              data['jul_5'] +
-              data['jul_6'] +
-              data['jul_7'] +
-              data['jul_8'] +
-              data['jul_9'] +
-              data['jul_10'] +
-              data['jul_11'] +
-              data['jul_12'];
-        else if (DateTime.now().month == 8)
-          attendance = data['aug_1'] +
-              data['aug_2'] +
-              data['aug_3'] +
-              data['aug_4'] +
-              data['aug_5'] +
-              data['aug_6'] +
-              data['aug_7'] +
-              data['aug_8'] +
-              data['aug_9'] +
-              data['aug_10'] +
-              data['aug_11'] +
-              data['aug_12'];
-        else if (DateTime.now().month == 9)
-          attendance = data['sep_1'] +
-              data['sep_2'] +
-              data['sep_3'] +
-              data['sep_4'] +
-              data['sep_5'] +
-              data['sep_6'] +
-              data['sep_7'] +
-              data['sep_8'] +
-              data['sep_9'] +
-              data['sep_10'] +
-              data['sep_11'] +
-              data['sep_12'];
-        else if (DateTime.now().month == 10)
-          attendance = data['oct_1'] +
-              data['oct_2'] +
-              data['oct_3'] +
-              data['oct_4'] +
-              data['oct_5'] +
-              data['oct_6'] +
-              data['oct_7'] +
-              data['oct_8'] +
-              data['oct_9'] +
-              data['oct_10'] +
-              data['oct_11'] +
-              data['oct_12'];
-        else if (DateTime.now().month == 11)
-          attendance = data['nov_1'] +
-              data['nov_2'] +
-              data['nov_3'] +
-              data['nov_4'] +
-              data['nov_5'] +
-              data['nov_6'] +
-              data['nov_7'] +
-              data['nov_8'] +
-              data['nov_9'] +
-              data['nov_10'] +
-              data['nov_11'] +
-              data['nov_12'];
-        else if (DateTime.now().month == 12)
-          attendance = data['dec_1'] +
-              data['dec_2'] +
-              data['dec_3'] +
-              data['dec_4'] +
-              data['dec_5'] +
-              data['dec_6'] +
-              data['dec_7'] +
-              data['dec_8'] +
-              data['dec_9'] +
-              data['dec_10'] +
-              data['dec_11'] +
-              data['dec_12'];
+        if (DateTime.now().month == 1) {
+          int att1 = data['jan_1'] ?? 0;
+          int att2 = data['jan_2'] ?? 0;
+          int att3 = data['jan_3'] ?? 0;
+          int att4 = data['jan_4'] ?? 0;
+          int att5 = data['jan_5'] ?? 0;
+          int att6 = data['jan_6'] ?? 0;
+          int att7 = data['jan_7'] ?? 0;
+          int att8 = data['jan_8'] ?? 0;
+          int att9 = data['jan_9'] ?? 0;
+          int att10 = data['jan_10'] ?? 0;
+          int att11 = data['jan_11'] ?? 0;
+          int att12 = data['jan_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 2) {
+          int att1 = data['feb_1'] ?? 0;
+          int att2 = data['feb_2'] ?? 0;
+          int att3 = data['feb_3'] ?? 0;
+          int att4 = data['feb_4'] ?? 0;
+          int att5 = data['feb_5'] ?? 0;
+          int att6 = data['feb_6'] ?? 0;
+          int att7 = data['feb_7'] ?? 0;
+          int att8 = data['feb_8'] ?? 0;
+          int att9 = data['feb_9'] ?? 0;
+          int att10 = data['feb_10'] ?? 0;
+          int att11 = data['feb_11'] ?? 0;
+          int att12 = data['feb_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 3) {
+          int att1 = data['mar_1'] ?? 0;
+          int att2 = data['mar_2'] ?? 0;
+          int att3 = data['mar_3'] ?? 0;
+          int att4 = data['mar_4'] ?? 0;
+          int att5 = data['mar_5'] ?? 0;
+          int att6 = data['mar_6'] ?? 0;
+          int att7 = data['mar_7'] ?? 0;
+          int att8 = data['mar_8'] ?? 0;
+          int att9 = data['mar_9'] ?? 0;
+          int att10 = data['mar_10'] ?? 0;
+          int att11 = data['mar_11'] ?? 0;
+          int att12 = data['mar_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 4) {
+          int att1 = data['apr_1'] ?? 0;
+          int att2 = data['apr_2'] ?? 0;
+          int att3 = data['apr_3'] ?? 0;
+          int att4 = data['apr_4'] ?? 0;
+          int att5 = data['apr_5'] ?? 0;
+          int att6 = data['apr_6'] ?? 0;
+          int att7 = data['apr_7'] ?? 0;
+          int att8 = data['apr_8'] ?? 0;
+          int att9 = data['apr_9'] ?? 0;
+          int att10 = data['apr_10'] ?? 0;
+          int att11 = data['apr_11'] ?? 0;
+          int att12 = data['apr_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 5) {
+          int att1 = data['may_1'] ?? 0;
+          int att2 = data['may_2'] ?? 0;
+          int att3 = data['may_3'] ?? 0;
+          int att4 = data['may_4'] ?? 0;
+          int att5 = data['may_5'] ?? 0;
+          int att6 = data['may_6'] ?? 0;
+          int att7 = data['may_7'] ?? 0;
+          int att8 = data['may_8'] ?? 0;
+          int att9 = data['may_9'] ?? 0;
+          int att10 = data['may_10'] ?? 0;
+          int att11 = data['may_11'] ?? 0;
+          int att12 = data['may_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 6) {
+          int att1 = data['jun_1'] ?? 0;
+          int att2 = data['jun_2'] ?? 0;
+          int att3 = data['jun_3'] ?? 0;
+          int att4 = data['jun_4'] ?? 0;
+          int att5 = data['jun_5'] ?? 0;
+          int att6 = data['jun_6'] ?? 0;
+          int att7 = data['jun_7'] ?? 0;
+          int att8 = data['jun_8'] ?? 0;
+          int att9 = data['jun_9'] ?? 0;
+          int att10 = data['jun_10'] ?? 0;
+          int att11 = data['jun_11'] ?? 0;
+          int att12 = data['jun_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 7) {
+          int att1 = data['jul_1'] ?? 0;
+          int att2 = data['jul_2'] ?? 0;
+          int att3 = data['jul_3'] ?? 0;
+          int att4 = data['jul_4'] ?? 0;
+          int att5 = data['jul_5'] ?? 0;
+          int att6 = data['jul_6'] ?? 0;
+          int att7 = data['jul_7'] ?? 0;
+          int att8 = data['jul_8'] ?? 0;
+          int att9 = data['jul_9'] ?? 0;
+          int att10 = data['jul_10'] ?? 0;
+          int att11 = data['jul_11'] ?? 0;
+          int att12 = data['jul_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 8) {
+          int att1 = data['aug_1'] ?? 0;
+          int att2 = data['aug_2'] ?? 0;
+          int att3 = data['aug_3'] ?? 0;
+          int att4 = data['aug_4'] ?? 0;
+          int att5 = data['aug_5'] ?? 0;
+          int att6 = data['aug_6'] ?? 0;
+          int att7 = data['aug_7'] ?? 0;
+          int att8 = data['aug_8'] ?? 0;
+          int att9 = data['aug_9'] ?? 0;
+          int att10 = data['aug_10'] ?? 0;
+          int att11 = data['aug_11'] ?? 0;
+          int att12 = data['aug_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 9) {
+          int att1 = data['sep_1'] ?? 0;
+          int att2 = data['sep_2'] ?? 0;
+          int att3 = data['sep_3'] ?? 0;
+          int att4 = data['sep_4'] ?? 0;
+          int att5 = data['sep_5'] ?? 0;
+          int att6 = data['sep_6'] ?? 0;
+          int att7 = data['sep_7'] ?? 0;
+          int att8 = data['sep_8'] ?? 0;
+          int att9 = data['sep_9'] ?? 0;
+          int att10 = data['sep_10'] ?? 0;
+          int att11 = data['sep_11'] ?? 0;
+          int att12 = data['sep_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 10) {
+          int att1 = data['oct_1'] ?? 0;
+          int att2 = data['oct_2'] ?? 0;
+          int att3 = data['oct_3'] ?? 0;
+          int att4 = data['oct_4'] ?? 0;
+          int att5 = data['oct_5'] ?? 0;
+          int att6 = data['oct_6'] ?? 0;
+          int att7 = data['oct_7'] ?? 0;
+          int att8 = data['oct_8'] ?? 0;
+          int att9 = data['oct_9'] ?? 0;
+          int att10 = data['oct_10'] ?? 0;
+          int att11 = data['oct_11'] ?? 0;
+          int att12 = data['oct_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 11) {
+          int att1 = data['nov_1'] ?? 0;
+          int att2 = data['nov_2'] ?? 0;
+          int att3 = data['nov_3'] ?? 0;
+          int att4 = data['nov_4'] ?? 0;
+          int att5 = data['nov_5'] ?? 0;
+          int att6 = data['nov_6'] ?? 0;
+          int att7 = data['nov_7'] ?? 0;
+          int att8 = data['nov_8'] ?? 0;
+          int att9 = data['nov_9'] ?? 0;
+          int att10 = data['nov_10'] ?? 0;
+          int att11 = data['nov_11'] ?? 0;
+          int att12 = data['nov_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        } else if (DateTime.now().month == 12) {
+          int att1 = data['dec_1'] ?? 0;
+          int att2 = data['dec_2'] ?? 0;
+          int att3 = data['dec_3'] ?? 0;
+          int att4 = data['dec_4'] ?? 0;
+          int att5 = data['dec_5'] ?? 0;
+          int att6 = data['dec_6'] ?? 0;
+          int att7 = data['dec_7'] ?? 0;
+          int att8 = data['dec_8'] ?? 0;
+          int att9 = data['dec_9'] ?? 0;
+          int att10 = data['dec_10'] ?? 0;
+          int att11 = data['dec_11'] ?? 0;
+          int att12 = data['dec_12'] ?? 0;
+          attendance = att1 +
+              att2 +
+              att3 +
+              att4 +
+              att5 +
+              att6 +
+              att7 +
+              att8 +
+              att9 +
+              att10 +
+              att11 +
+              att12;
+        }
       });
     else {
       var documentSnapshot = await FirebaseFirestore.instance

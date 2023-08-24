@@ -164,22 +164,22 @@ class MyUser {
     required this.paid,
   });
 
-  late final String image;
-  late final String address;
-  late final String name;
-  late final String about;
-  late final String createdAt;
-  late final String lastActive;
-  late final String id;
-  late final bool isOnline;
-  late final String email;
-  late final String pushToken;
-  late final String phone;
-  late final bool is_student;
-  late final int lessons_num;
-  late final String student_id;
-  late final int level;
-  late final bool male;
+  late final image;
+  late final address;
+  late final name;
+  late final about;
+  late final createdAt;
+  late final lastActive;
+  late final id;
+  late final isOnline;
+  late final email;
+  late final pushToken;
+  late final phone;
+  late final is_student;
+  late final lessons_num;
+  late final student_id;
+  late final level;
+  late final male;
   late final jan_1;
   late final jan_2;
   late final jan_3;

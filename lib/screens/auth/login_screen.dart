@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return await APIs.auth.signInWithCredential(credential);
     } catch (e) {
       log('\n_signInWithGoogle: $e');
-      Dialogs.showSnackbar(context, 'حدث خطأ ما!');
+      Dialogs.showSnackbar(context, '!حدث خطأ ما');
       return null;
     }
   }

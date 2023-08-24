@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
-import 'package:omar_mostafa/models/lessons.dart';
+import 'package:omar_mostafa/models/lesson.dart';
 
 class LessonWidget extends StatelessWidget {
   Lesson lesson;
@@ -44,7 +44,7 @@ class LessonWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                lesson.number ?? "",
+                lesson.number.toString() ?? "",
                 style:
                     TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
               ),

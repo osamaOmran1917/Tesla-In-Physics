@@ -6,7 +6,6 @@ import 'package:omar_mostafa/firebase_options.dart';
 import 'package:omar_mostafa/provider/internet_provider.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
