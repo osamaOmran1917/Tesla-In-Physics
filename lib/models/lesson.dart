@@ -2,10 +2,11 @@ class Lesson {
   static const String collectionName = 'lessons';
   String? id;
   String? name;
-  late var number;
+  late final level;
+  late final number;
   String? media;
   String? details;
-  String? content;
+  List? content;
 
   Lesson(
       {this.id,
@@ -13,7 +14,8 @@ class Lesson {
       this.number,
       this.media,
       this.details,
-      this.content});
+      this.content,
+      this.level});
 
   Lesson.fromFirestore(Map<String, dynamic> data)
       : this(
@@ -22,7 +24,8 @@ class Lesson {
             number: data['number'],
             details: data['details'],
             content: data['content'],
-            media: data['image']);
+            level: data['level'],
+            media: data['media']);
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -30,8 +33,9 @@ class Lesson {
       'name': name,
       'details': details,
       'number': number,
-      'image': media,
+      'media': media,
       'content': content,
+      'level': level
     };
   }
 }

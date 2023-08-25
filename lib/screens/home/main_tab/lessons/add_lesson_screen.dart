@@ -5,7 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/models/lesson.dart';
+import 'package:video_player/video_player.dart';
 
 class AddLessonScreen extends StatefulWidget {
   const AddLessonScreen({super.key});
@@ -21,7 +25,31 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
 
   var numController = TextEditingController();
   int? level;
-  String? _video;
+  VideoPlayerController? _controller;
+  String? video;
+  int contentLength = 0;
+  List<TextEditingController> contentControllers = [];
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickVideo() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _controller = VideoPlayerController.file(File(pickedFile.path))
+        ..initialize().then((_) {
+          setState(() {
+            _controller!.play();
+            video = pickedFile.path;
+          });
+        });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,16 +199,60 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 SizedBox(
                   height: height * .05,
                 ),
+                for (int i = 0; i < contentControllers.length; i++)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: height * .05),
+                    child: TextField(
+                      controller: contentControllers[i],
+                      decoration: InputDecoration(
+                          suffixIcon: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  contentControllers
+                                      .remove(contentControllers[i]);
+                                });
+                              },
+                              child: Icon(
+                                CupertinoIcons.minus,
+                                color: lightGreen,
+                              )),
+                          labelText: 'المحتوى',
+                          labelStyle: TextStyle(fontFamily: 'Cairo'),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(width * .05),
+                          ),
+                          fillColor: lightGreen,
+                          focusColor: lightGreen,
+                          hoverColor: lightGreen,
+                          iconColor: lightGreen,
+                          prefixIconColor: lightGreen,
+                          suffixIconColor: lightGreen,
+                          hintStyle: TextStyle(color: lightGreen)),
+                      style: TextStyle(color: lightGreen, fontFamily: 'cairo'),
+                      cursorColor: lightGreen,
+                    ),
+                  ),
+                TextButton(
+                    onPressed: () {
+                      setState(() {
+                        contentControllers.add(TextEditingController());
+                      });
+                    },
+                    child: Text(
+                      'أضف محتوى+',
+                      style: TextStyle(fontFamily: 'cairo', color: lightGreen),
+                    )),
+                SizedBox(
+                  height: height * .05,
+                ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    _showBottomSheet();
-                  },
+                  onPressed: _pickVideo,
                   icon: Icon(
                     CupertinoIcons.videocam_circle,
                     size: 25,
                   ),
                   label: Text(
-                    'أضف فيديو',
+                    _controller == null ? 'أضف فيديو' : 'تغيير الفيديو',
                     style: TextStyle(fontSize: 16, fontFamily: 'Arabic'),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -192,24 +264,10 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .03,
                 ),
-                _video != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            MediaQuery.of(context).size.height * .1),
-                        child: Image.file(
-                          File(_video!),
-                          width: MediaQuery.of(context).size.height * .2,
-                          height: MediaQuery.of(context).size.height * .2,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Container(
-                        height: 0,
-                        width: 0,
-                      ),
-                if (_video != null)
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .03,
+                if (_controller != null && _controller!.value.isInitialized)
+                  AspectRatio(
+                    aspectRatio: _controller!.value.aspectRatio,
+                    child: VideoPlayer(_controller!),
                   ),
               ],
             ),
@@ -217,36 +275,82 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
           bottomNavigationBar: ElevatedButton(
               style: ElevatedButton.styleFrom(primary: darkGreen),
               onPressed: () async {
-                /*if (level != null) {
-                    Post post = new Post(
-                        title:
-                        titleController.text.toString(),
-                        details:
-                        detailsController.text.toString(),
-                        textDate:
-                        numController.text.toString(),
-                        level: level);
-                    APIs.addPost(post);
-                    List pushTokens =
-                    await APIs.getPushTokens(level!);
-                    List names = await APIs.getNames(level!);
-                    log(names[0]);
-                    log(pushTokens[0]);
-                    for (int i = 0;
-                    i < pushTokens.length;
-                    i++) {
-                      APIs.sendPushNotification(
-                          pushTokens[i],
-                          names[i],
-                          'قام مستر عمر بنشر تحديث جديد تابع..');
-                    }
-                    Navigator.pop(context);
-                    print(numController.text.toString());
-                  } else {
-                    Dialogs.showSnackbar(
-                        context, 'يجب إدخال مرحلة دراسية!');
-                    Navigator.pop(context);
-                  }*/
+                List<String> content = contentControllers
+                    .map((controller) => controller.text)
+                    .toList();
+                if (level != null &&
+                    titleController.text.trim().isNotEmpty &&
+                    numController.text.trim().isNotEmpty) {
+                  Lesson lesson = new Lesson(
+                      name: titleController.text.toString() ?? '',
+                      details: detailsController.text.toString() ?? '',
+                      level: level ?? 0,
+                      content: content ?? [],
+                      number: numController.text == '1'
+                          ? 'الدرس الأول'
+                          : numController.text == '2'
+                              ? 'الدرس الثاني'
+                              : numController.text == '3'
+                                  ? 'الدرس الثالث'
+                                  : numController.text == '4'
+                                      ? 'الدرس الرابع'
+                                      : numController.text == '5'
+                                          ? 'الدرس الخامس'
+                                          : numController.text == '6'
+                                              ? 'الدرس السادس'
+                                              : numController.text == '7'
+                                                  ? 'الدرس السابع'
+                                                  : numController.text == '8'
+                                                      ? 'الدرس الثامن'
+                                                      : numController.text ==
+                                                              '9'
+                                                          ? 'الدرس التاسع'
+                                                          : numController
+                                                                      .text ==
+                                                                  '10'
+                                                              ? 'الدرس العاشر'
+                                                              : numController
+                                                                          .text ==
+                                                                      '11'
+                                                                  ? 'الدرس الحادي عشر'
+                                                                  : numController
+                                                                              .text ==
+                                                                          '12'
+                                                                      ? 'الدرس الثاني عشر'
+                                                                      : numController.text ==
+                                                                              '13'
+                                                                          ? 'الدرس الثالث عشر'
+                                                                          : numController.text == '14'
+                                                                              ? 'الدرس الرابع عشر'
+                                                                              : numController.text == '15'
+                                                                                  ? 'الدرس الخامس عشر'
+                                                                                  : numController.text == '6'
+                                                                                      ? 'الدرس السادس عشر'
+                                                                                      : numController.text == '17'
+                                                                                          ? 'الدرس السابع عشر'
+                                                                                          : numController.text == '18'
+                                                                                              ? 'الدرس الثامن عشر'
+                                                                                              : numController.text == '19'
+                                                                                                  ? 'الدرس التاسع عشر'
+                                                                                                  : 'الدرس العشرون');
+                  APIs.addLesson(lesson).then((value) =>
+                      APIs.addLessonVideo(lesson, File(video ?? '')));
+                  List pushTokens = await APIs.getPushTokens(level!);
+                  List names = await APIs.getNames(level!);
+                  log(names[0]);
+                  log(pushTokens[0]);
+                  for (int i = 0; i < pushTokens.length; i++) {
+                    APIs.sendPushNotification(pushTokens[i], names[i],
+                        'قام مستر عمر بنشر درس جديد تابع..');
+                  }
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Dialogs.showSnackbar(context, 'تم رفع الدرس بنجاح ✔');
+                  print(numController.text.toString());
+                } else {
+                  Dialogs.showSnackbar(
+                      context, 'يجب إدخال مرحلة دراسية و عنوان و رقم للدرس!');
+                }
               },
               child: Text(
                 'نشر',
@@ -255,54 +359,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         ));
   }
 
-  void _showBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * .02,
-                bottom: MediaQuery.of(context).size.height * .05),
-            children: [
-              Text(
-                'اختر مقطعاً',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Arabic'),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .02,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shape: CircleBorder(),
-                      fixedSize: Size(MediaQuery.of(context).size.width * .3,
-                          MediaQuery.of(context).size.height * .15)),
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    // Pick an image
-                    final XFile? image =
-                        await picker.pickVideo(source: ImageSource.gallery);
-                    if (image != null) {
-                      log('Video path: ${image.path} -- MimeType ${image.mimeType}');
-                      setState(() {
-                        _video = image.path;
-                        print(
-                            ' أهيييييييييييييييي  ************************** الفيديو$_video');
-                      });
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Image.asset('assets/images/video.png'))
-            ],
-          );
-        },
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20))));
+  Future pickVideo() async {
+    ImagePicker().pickVideo(source: ImageSource.gallery);
   }
 }

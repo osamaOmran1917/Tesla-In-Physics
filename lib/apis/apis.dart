@@ -499,6 +499,22 @@ class APIs {
     await firestore.collection('exams').doc(exam.id).update({'image': image});
   }
 
+  static Future<void> addLessonVideo(Lesson lesson, File file) async {
+    final ext = file.path.split('.').last;
+    log('Extensions: $ext');
+    final ref = storage.ref().child('lessons_vids/${lesson.id}.$ext');
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'video/$ext'))
+        .then((p0) {
+      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+    });
+    String video = await ref.getDownloadURL();
+    await firestore
+        .collection('lessons')
+        .doc(lesson.id)
+        .update({'media': video});
+  }
+
   static Future<void> updateProfilePicture(File file) async {
     final ext = file.path.split('.').last;
     log('Extensions: $ext');
