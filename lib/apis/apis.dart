@@ -370,8 +370,13 @@ class APIs {
 
   static Stream<QuerySnapshot<Lesson>> ListenForLessonsRealTimeUpdates() {
     // Listen for realtime update
-    return getLessonsCollection()
-        .snapshots();
+    return getLessonsCollection().snapshots();
+  }
+
+  static Stream<QuerySnapshot<Lesson>>
+      ListenForFirstTwoLessonsRealTimeUpdates() {
+    // Listen for realtime update
+    return getLessonsCollection().limit(2).snapshots();
   }
 
   static CollectionReference<Post> getPostsCollection() {
@@ -423,6 +428,15 @@ class APIs {
     return getLessonsCollection().where('level', isEqualTo: level).snapshots();
   }
 
+  static Stream<QuerySnapshot<Lesson>>
+      ListenForLevelFirstTwoLessonsRealTimeUpdates(int level) {
+    // Listen for realtime update
+    return getLessonsCollection()
+        .where('level', isEqualTo: level)
+        .limit(2)
+        .snapshots();
+  }
+
   static Stream<QuerySnapshot<StrategyPost>>
       ListenForStrategyPostsRealTimeUpdates() {
     // Listen for realtime update
@@ -457,6 +471,18 @@ class APIs {
 
   static Future<void> deletePost({required String id}) async {
     await firestore.collection('posts').doc(id).delete();
+  }
+
+  static Future<void> deleteLesson(
+      {required String id, required String videoPath}) async {
+    await firestore.collection('lessons').doc(id).delete();
+    /*try {
+      Reference ref = storage.ref(videoPath);
+      await ref.delete();
+      print('File deleted successfully.');
+    } catch (e) {
+      print('Error deleting file: $e');
+    }*/
   }
 
   static Future<void> deleteStrategyPost({required String id}) async {

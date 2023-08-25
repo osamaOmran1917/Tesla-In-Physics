@@ -1,5 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
+import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lesson.dart';
 
 class LessonWidget extends StatelessWidget {
@@ -26,49 +31,71 @@ class LessonWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: height * .05),
-            padding: EdgeInsets.all(width * .019),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width * .03),
-                color: lightGreen),
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
+      child: Slidable(
+        startActionPane: omar
+            ? ActionPane(
+                motion: DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: (_) {
+                      APIs.deleteLesson(
+                          id: lesson.id!, videoPath: lesson.media!);
+                      Dialogs.showSnackbar(context, 'تم حذف الدرس بنجاح');
+                    },
+                    icon: CupertinoIcons.delete,
+                    backgroundColor: Colors.red,
+                    label: 'حذف',
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12)),
+                  ),
+                ],
+              )
+            : null,
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: height * .05),
+              padding: EdgeInsets.all(width * .019),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(width * .03),
+                  color: lightGreen),
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
-          ),
-          Expanded(child: Container()),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                lesson.number.toString() ?? "",
-                style:
-                    TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
-              ),
-              Text(
-                lesson.name ?? '',
-                style: TextStyle(
-                    fontFamily: 'Cairo',
-                    color: Colors.grey,
-                    fontSize: width * .025),
-              ),
-              Text(
-                '200',
-                style: TextStyle(
-                    fontFamily: 'Cairo',
-                    color: lightGreen,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: width * .05,
-          ),
-          Image.asset('assets/images/lesson_image.png')
-        ],
+            Expanded(child: Container()),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  lesson.number.toString() ?? "",
+                  style: TextStyle(
+                      fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  lesson.name ?? '',
+                  style: TextStyle(
+                      fontFamily: 'Cairo',
+                      color: Colors.grey,
+                      fontSize: width * .025),
+                ),
+                Text(
+                  '200',
+                  style: TextStyle(
+                      fontFamily: 'Cairo',
+                      color: lightGreen,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: width * .05,
+            ),
+            Image.asset('assets/images/lesson_image.png')
+          ],
+        ),
       ),
     );
   }

@@ -165,15 +165,24 @@ class _LessonDetailsState extends State<LessonDetails> {
                         height: height * .015,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             _controller != null &&
                                     _controller!.value.isInitialized
                                 ? '${_controller!.value.duration.inMinutes}:${_controller!.value.duration.inSeconds.remainder(60).toString().padLeft(2, '0')}'
                                 : '',
-                            style: TextStyle(fontSize: 16),
+                            style: TextStyle(
+                                fontFamily: 'cairo', color: lightGreen),
                           ),
+                          SizedBox(
+                            width: width * .025,
+                          ),
+                          Image.asset(
+                            'assets/images/time.png',
+                            width: width * .045,
+                            height: width * .045,
+                          ),
+                          Spacer(),
                           Text(
                             'عمر مصطفى',
                             style: TextStyle(
@@ -199,7 +208,57 @@ class _LessonDetailsState extends State<LessonDetails> {
                       )
                     ],
                   ),
-                )
+                ),
+                SizedBox(
+                  height: height * .03,
+                ),
+                if (widget.lesson.content!.isNotEmpty)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'المحتوى',
+                        style: TextStyle(
+                            fontFamily: 'cairo',
+                            fontSize: width * .041,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                SizedBox(
+                  height: height * .03,
+                ),
+                for (int i = 0; i < widget.lesson.content!.length; i++)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: height * .021),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          widget.lesson.content?[i],
+                          style: TextStyle(
+                              fontFamily: 'cairo', fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: width * .03,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: height * .013,
+                              horizontal: width * .065),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: width * .0023, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(width * .03)),
+                          child: Text((i + 1).toString(),
+                              style: TextStyle(
+                                  fontFamily: 'cairo',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: width * .05)),
+                        )
+                      ],
+                    ),
+                  )
               ],
             ),
           ),

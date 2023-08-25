@@ -11,6 +11,7 @@ import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/main_tab/latest_changes.dart';
+import 'package:omar_mostafa/screens/home/main_tab/lessons/lesson_details.dart';
 import 'package:omar_mostafa/screens/home/main_tab/lessons/lessons_screen.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
@@ -164,8 +165,48 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            LessonWidget(Lesson(number: 1, name: 'الفيزياء الكهربية')),
-            LessonWidget(Lesson(number: 2, name: 'الفيزياء الحديثة')),
+            Container(
+              height: height * .3,
+              child: StreamBuilder<QuerySnapshot<Lesson>>(
+                builder: (buildContext, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('خطأ في تحميل البيانات حاول لاحقا'),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(color: lightGreen),
+                    );
+                  }
+                  var data = snapshot.data?.docs.map((e) => e.data()).toList();
+                  return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (buildContext, index) {
+                      return data.isEmpty
+                          ? Center(
+                              child: Text('لا يوجد دروس حتى الآن'),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            LessonDetails(data[index])));
+                              },
+                              child: LessonWidget(data[index]));
+                    },
+                    itemCount: data!.length,
+                  );
+                },
+                // future: MyDataBase.getAllMissingPersons(),
+                stream: omar
+                    ? APIs.ListenForFirstTwoLessonsRealTimeUpdates()
+                    : APIs.ListenForLevelFirstTwoLessonsRealTimeUpdates(
+                        userLevel),
+              ),
+            ),
             Row(
               children: [
                 TextButton(
