@@ -9,6 +9,7 @@ import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/models/lesson.dart';
+import 'package:omar_mostafa/screens/home/main_tab/lessons/lessons_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class AddLessonScreen extends StatefulWidget {
@@ -281,6 +282,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 if (level != null &&
                     titleController.text.trim().isNotEmpty &&
                     numController.text.trim().isNotEmpty) {
+                  Dialogs.showProgressBar(context);
                   Lesson lesson = new Lesson(
                       name: titleController.text.toString() ?? '',
                       details: detailsController.text.toString() ?? '',
@@ -292,47 +294,47 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                               ? 'الدرس الثاني'
                               : numController.text == '3'
                                   ? 'الدرس الثالث'
-                                  : numController.text == '4'
-                                      ? 'الدرس الرابع'
-                                      : numController.text == '5'
-                                          ? 'الدرس الخامس'
-                                          : numController.text == '6'
-                                              ? 'الدرس السادس'
-                                              : numController.text == '7'
-                                                  ? 'الدرس السابع'
-                                                  : numController.text == '8'
-                                                      ? 'الدرس الثامن'
-                                                      : numController.text ==
-                                                              '9'
-                                                          ? 'الدرس التاسع'
-                                                          : numController
-                                                                      .text ==
-                                                                  '10'
-                                                              ? 'الدرس العاشر'
-                                                              : numController
-                                                                          .text ==
-                                                                      '11'
-                                                                  ? 'الدرس الحادي عشر'
-                                                                  : numController
-                                                                              .text ==
-                                                                          '12'
-                                                                      ? 'الدرس الثاني عشر'
-                                                                      : numController.text ==
-                                                                              '13'
-                                                                          ? 'الدرس الثالث عشر'
-                                                                          : numController.text == '14'
-                                                                              ? 'الدرس الرابع عشر'
-                                                                              : numController.text == '15'
-                                                                                  ? 'الدرس الخامس عشر'
-                                                                                  : numController.text == '6'
-                                                                                      ? 'الدرس السادس عشر'
-                                                                                      : numController.text == '17'
-                                                                                          ? 'الدرس السابع عشر'
-                                                                                          : numController.text == '18'
-                                                                                              ? 'الدرس الثامن عشر'
-                                                                                              : numController.text == '19'
-                                                                                                  ? 'الدرس التاسع عشر'
-                                                                                                  : 'الدرس العشرون');
+                          : numController.text == '4'
+                          ? 'الدرس الرابع'
+                          : numController.text == '5'
+                          ? 'الدرس الخامس'
+                          : numController.text == '6'
+                          ? 'الدرس السادس'
+                          : numController.text == '7'
+                          ? 'الدرس السابع'
+                          : numController.text == '8'
+                          ? 'الدرس الثامن'
+                          : numController.text ==
+                          '9'
+                          ? 'الدرس التاسع'
+                          : numController
+                          .text ==
+                          '10'
+                          ? 'الدرس العاشر'
+                          : numController
+                          .text ==
+                          '11'
+                          ? 'الدرس الحادي عشر'
+                          : numController
+                          .text ==
+                          '12'
+                          ? 'الدرس الثاني عشر'
+                          : numController.text ==
+                          '13'
+                          ? 'الدرس الثالث عشر'
+                          : numController.text == '14'
+                          ? 'الدرس الرابع عشر'
+                          : numController.text == '15'
+                          ? 'الدرس الخامس عشر'
+                          : numController.text == '6'
+                          ? 'الدرس السادس عشر'
+                          : numController.text == '17'
+                          ? 'الدرس السابع عشر'
+                          : numController.text == '18'
+                          ? 'الدرس الثامن عشر'
+                          : numController.text == '19'
+                          ? 'الدرس التاسع عشر'
+                          : 'الدرس العشرون');
                   APIs.addLesson(lesson).then((value) =>
                       APIs.addLessonVideo(lesson, File(video ?? '')));
                   List pushTokens = await APIs.getPushTokens(level!);
@@ -345,6 +347,8 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   }
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => LessonsScreen()));
                   Dialogs.showSnackbar(context, 'تم رفع الدرس بنجاح ✔');
                   print(numController.text.toString());
                 } else {

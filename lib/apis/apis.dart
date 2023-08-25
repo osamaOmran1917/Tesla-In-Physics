@@ -371,7 +371,6 @@ class APIs {
   static Stream<QuerySnapshot<Lesson>> ListenForLessonsRealTimeUpdates() {
     // Listen for realtime update
     return getLessonsCollection()
-        .orderBy("index", descending: true)
         .snapshots();
   }
 

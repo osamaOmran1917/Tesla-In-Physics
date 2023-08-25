@@ -7,6 +7,7 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/screens/home/main_tab/lessons/add_lesson_screen.dart';
+import 'package:omar_mostafa/screens/home/main_tab/lessons/lesson_details.dart';
 import 'package:omar_mostafa/widgets/lesson_widget.dart';
 
 class LessonsScreen extends StatefulWidget {
@@ -112,7 +113,14 @@ class _LessonsScreenState extends State<LessonsScreen> {
                                 child: Text('لا يوجد دروس حتى الآن'),
                               )
                             : InkWell(
-                                onTap: () {}, child: LessonWidget(data[index]));
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              LessonDetails(data[index])));
+                                },
+                                child: LessonWidget(data[index]));
                       },
                       itemCount: data!.length,
                     );
