@@ -341,7 +341,6 @@ class APIs {
 
   static Future<void> deleteUser() async {
     await firestore.collection('users').doc(user.uid).delete();
-    // deleteMissingPersonPicture(missingPersonId);
   }
 
   static Future<bool> checkStudentExistence(String studentId) async {

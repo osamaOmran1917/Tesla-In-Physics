@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
@@ -5,7 +8,6 @@ import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/home_screen.dart';
 import 'package:omar_mostafa/screens/welcome/welcome_screen_i.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,10 +15,48 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String? name = '';
+  String image = '';
+  int userLevel = 0;
+  bool paid = false;
+  bool isStudent = true;
+
+  Future<void> _getFieldValue() async {
+    final idSp = SherdHelper.getData(key: "id");
+    log(idSp.toString());
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(idSp ?? APIs.user.uid)
+        .get();
+    var data = documentSnapshot.data();
+    setState(() {
+      name = data!['name'];
+      image = data['image'];
+      isStudent = data['is_student'];
+    });
+
+    if (data!['is_student'] == true)
+      setState(() {
+        userLevel = data['level'];
+        paid = data['paid'];
+      });
+    else {
+      var documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(data['student_id'])
+          .get();
+      var newData = documentSnapshot.data();
+      setState(() {
+        userLevel = newData!['level'];
+        paid = newData['paid'];
+      });
+    }
+  }
+
   @override
   void initState() {
-    final sp = context.read<SignInProvider>();
     super.initState();
+    _getFieldValue();
     Future.delayed(Duration(seconds: 3), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
@@ -24,19 +64,12 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white));
-      /*if (APIs.auth.currentUser != null) {
-        log('\nUser: ${APIs.auth.currentUser}');
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomeScreen()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
-      }*/
       APIs.auth.currentUser == null
           ? Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => WelcomeScreenI()))
-          : Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          : /*(name!.isEmpty || name == null)? Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CompleteUserData(isStudent, true))):*/ Navigator
+              .pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => HomeScreen()));
     });
   }
 

@@ -144,10 +144,12 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   }
 
   Future login(BuildContext context, String mobile) async {
+    Dialogs.showProgressBar(context);
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
     await ip.checkInternetConnection();
     if (ip.hasInternet == false) {
+      Navigator.pop(context);
       Dialogs.showSnackbar(context, 'تأكد من الاتصال بالانترنت');
     } else {
       if (formKey.currentState!.validate()) {
@@ -171,17 +173,17 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                           TextField(
                             controller: otpCodeController,
                             decoration:
-                                InputDecoration(prefixIcon: Icon(Icons.code)),
+                            InputDecoration(prefixIcon: Icon(Icons.code)),
                           ),
                           ElevatedButton(
                               onPressed: () async {
                                 final code = otpCodeController.text.trim();
                                 AuthCredential authCredential =
-                                    PhoneAuthProvider.credential(
-                                        verificationId: verificationId,
-                                        smsCode: code);
+                                PhoneAuthProvider.credential(
+                                    verificationId: verificationId,
+                                    smsCode: code);
                                 User user = (await FirebaseAuth.instance
-                                        .signInWithCredential(authCredential))
+                                    .signInWithCredential(authCredential))
                                     .user!;
                                 sp.phoneNumberUser(
                                     user, '', '', widget.is_student);
@@ -190,31 +192,31 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                     await sp
                                         .getUserDataFromFirestore(sp.uid)
                                         .then((value) => sp
-                                            .saveDataToSharedPreferences()
-                                            .then((value) =>
-                                                sp.setSignIn().then((value) {
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (_) =>
-                                                              HomeScreen()));
-                                                })));
+                                        .saveDataToSharedPreferences()
+                                        .then((value) =>
+                                        sp.setSignIn().then((value) {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      HomeScreen()));
+                                        })));
                                   } else {
                                     sp
                                         .saveDataToFireStore(widget.is_student)
                                         .then(
                                           (value) => sp.setSignIn().then(
                                             (value) {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (_) =>
-                                                          CompleteUserData(
-                                                              widget.is_student,
-                                                              true)));
-                                            },
-                                          ),
-                                        );
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      CompleteUserData(
+                                                          widget.is_student,
+                                                          true)));
+                                        },
+                                      ),
+                                    );
                                   }
                                 });
                               },
