@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/screens/home/main_tab/lessons/add_lesson_screen.dart';
@@ -17,6 +18,7 @@ class LessonsScreen extends StatefulWidget {
 
 class _LessonsScreenState extends State<LessonsScreen> {
   int userLevel = 0;
+  bool paid = false;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
     if (data!['is_student'] == true)
       setState(() {
         userLevel = data['level'];
+        paid = data['paid'];
       });
     else {
       var documentSnapshot = await FirebaseFirestore.instance
@@ -42,6 +45,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
       var newData = documentSnapshot.data();
       setState(() {
         userLevel = newData!['level'];
+        paid = newData['paid'];
       });
     }
   }
@@ -114,11 +118,15 @@ class _LessonsScreenState extends State<LessonsScreen> {
                               )
                             : InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              LessonDetails(data[index])));
+                                  _getFieldValue();
+                                  (paid == true || omar)
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  LessonDetails(data[index])))
+                                      : Dialogs.showSnackbar(context,
+                                          'غير مسموح لك بمشاهدة الدرس حتى تقوم بدفع الرسوم!');
                                 },
                                 child: LessonWidget(data[index]));
                       },

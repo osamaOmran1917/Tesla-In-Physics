@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
+import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 import 'package:omar_mostafa/models/lesson.dart';
 import 'package:omar_mostafa/models/post.dart';
@@ -26,6 +27,7 @@ class _MainTabState extends State<MainTab> {
   String name = '';
   String image = '';
   int userLevel = 0;
+  bool paid = false;
 
   String? nameSp;
 
@@ -52,6 +54,7 @@ class _MainTabState extends State<MainTab> {
     if (data!['is_student'] == true)
       setState(() {
         userLevel = data['level'];
+        paid = data['paid'];
       });
     else {
       var documentSnapshot = await FirebaseFirestore.instance
@@ -61,6 +64,7 @@ class _MainTabState extends State<MainTab> {
       var newData = documentSnapshot.data();
       setState(() {
         userLevel = newData!['level'];
+        paid = newData['paid'];
       });
     }
   }
@@ -185,15 +189,22 @@ class _MainTabState extends State<MainTab> {
                     itemBuilder: (buildContext, index) {
                       return data.isEmpty
                           ? Center(
-                              child: Text('لا يوجد دروس حتى الآن'),
+                        child: Text(
+                                'لا يوجد دروس حتى الآن',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             )
                           : InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            LessonDetails(data[index])));
+                                _getFieldValue();
+                                (paid == true || omar)
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                LessonDetails(data[index])))
+                                    : Dialogs.showSnackbar(context,
+                                        'غير مسموح لك بمشاهدة الدرس حتى تقوم بدفع الرسوم!');
                               },
                               child: LessonWidget(data[index]));
                     },

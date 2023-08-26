@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/models/lesson.dart';
 import 'package:video_player/video_player.dart';
@@ -36,6 +37,7 @@ class _LessonDetailsState extends State<LessonDetails> {
       // Additional options
     );
     _getOmarImage();
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   Future<void> _getOmarImage() async {
