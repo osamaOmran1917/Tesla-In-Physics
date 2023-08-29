@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tesla in physics</string>
-    <string name="facebook_app_id">1402032410360151</string>
-    <string name="fb_login_protocol_scheme">fbaecae87f9c0b25fc45c99f19c9bf5eee</string>
-    <string name="facebook_client_token">aecae87f9c0b25fc45c99f19c9bf5eee</string>
+
+    <string name="facebook_app_id">2903049413163596</string>
+    <string name="fb_login_protocol_scheme">fb097d1d8f53fc24b0c25545d2be7bbf5c</string>
+    <string name="facebook_client_token">097d1d8f53fc24b0c25545d2be7bbf5c</string>
+
 
 </resources>

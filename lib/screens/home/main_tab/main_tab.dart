@@ -43,7 +43,7 @@ class _MainTabState extends State<MainTab> {
     log(idSp.toString());
     var documentSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .doc(idSp ?? APIs.user.uid)
+        .doc(APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
     setState(() {

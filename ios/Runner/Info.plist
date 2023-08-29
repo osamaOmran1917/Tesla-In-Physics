@@ -39,16 +39,16 @@
             <array>
                 <!-- TODO Replace this value: -->
                 <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-                <string>fb1402032410360151</string>
-                <string>socialauth</string>
+                <string>fb2903049413163596</string>
+                <string>Tesla in physics</string>
                 <string>com.googleusercontent.apps.53921266677-bblir7l1v37dadc2m7pkhqv2dcr8qb9e</string>
             </array>
         </dict>
     </array>
     <key>FacebookAppID</key>
-    <string>1402032410360151</string>
+    <string>2903049413163596</string>
     <key>FacebookClientToken</key>
-    <string>aecae87f9c0b25fc45c99f19c9bf5eee</string>
+    <string>097d1d8f53fc24b0c25545d2be7bbf5c</string>
     <key>FacebookDisplayName</key>
     <string>APP-NAME</string>
 	<string>LaunchScreen</string>

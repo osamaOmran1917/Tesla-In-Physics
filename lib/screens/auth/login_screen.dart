@@ -405,6 +405,8 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       });
     }
+    Future.delayed(Duration(seconds: 3));
+    facebookController.reset();
   }
 
   Future handleTwitterAuth() async {

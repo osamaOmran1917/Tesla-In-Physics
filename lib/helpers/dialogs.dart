@@ -17,7 +17,10 @@ class Dialogs {
   static void showProgressBar(BuildContext context) {
     showDialog(
         context: context,
-        builder: (_) => Center(child: CircularProgressIndicator()));
+        builder: (_) => Center(
+                child: CircularProgressIndicator(
+              color: lightGreen,
+            )));
   }
 }
 
@@ -28,14 +31,12 @@ void showLoading(BuildContext context, String loadingMessage,
       builder: (BuildContext) {
         return AlertDialog(
           content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircularProgressIndicator(),
-              SizedBox(
-                width: 12,
-              ),
+              CircularProgressIndicator(color: lightGreen),
               Text(
                 loadingMessage,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(fontFamily: 'cairo'),
               )
             ],
           ),

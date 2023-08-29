@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class SignInProvider extends ChangeNotifier {
         _name = profile['name'];
         _email = profile['email'];
         _imageUrl = profile['picture']['data']['url'];
-        _uid = profile['id'];
+        _uid = APIs.user.uid;
         _hasError = false;
         _provider = "FACEBOOK";
         notifyListeners();
@@ -157,10 +158,10 @@ class SignInProvider extends ChangeNotifier {
             secret: authResult.authTokenSecret!);
         await firebaseAuth.signInWithCredential(credential);
         final userDetails = authResult.user;
-        _name = userDetails!.name;
+        _name = userDetails?.name;
         _email = firebaseAuth.currentUser!.email;
-        _imageUrl = userDetails.thumbnailImage;
-        _uid = userDetails.id.toString();
+        _imageUrl = userDetails?.thumbnailImage;
+        _uid = APIs.user.uid;
         _provider = "TWITTER";
         _hasError = false;
         notifyListeners();
@@ -220,11 +221,11 @@ class SignInProvider extends ChangeNotifier {
 
   Future saveDataToSharedPreferences() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
-    await s.setString('name', _name!);
-    await s.setString('email', _email!);
-    await s.setString('uid', _uid!);
-    await s.setString('image_url', _imageUrl!);
-    await s.setBool('is_student', _is_student!);
+    await s.setString('name', _name ?? '');
+    await s.setString('email', _email ?? '');
+    await s.setString('uid', _uid ?? '');
+    await s.setString('image_url', _imageUrl ?? '');
+    await s.setBool('is_student', _is_student ?? true);
     notifyListeners();
   }
 
@@ -267,8 +268,7 @@ class SignInProvider extends ChangeNotifier {
     _name = name;
     _email = email;
     _imageUrl = "null";
-    /* _uid = user.phoneNumber; */ _uid = APIs
-        .user.uid; //Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    _uid = APIs.user.uid;
     _is_student = isStudent;
     _provider = "PHONE";
     notifyListeners();

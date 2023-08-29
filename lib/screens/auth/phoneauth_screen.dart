@@ -102,7 +102,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
-                          hintText: '+201234567890',
                           hintStyle: TextStyle(
                               fontFamily: 'Cairo', color: Colors.grey),
                           contentPadding: EdgeInsets.symmetric(
@@ -129,7 +128,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                               height * .05)), // Set custom button size
                         ),
                         onPressed: () {
-                          login(context, phoneController.text.trim());
+                          if (phoneController.text.trim().startsWith('+2') ||
+                              phoneController.text.trim().startsWith('02'))
+                            login(context, phoneController.text.trim());
+                          else
+                            login(context, '+2' + phoneController.text.trim());
                         },
                         child: Text(
                           'متابعة',
@@ -144,7 +147,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   }
 
   Future login(BuildContext context, String mobile) async {
-    Dialogs.showProgressBar(context);
+    showLoading(context, 'انتظر من فضلك', isCancelable: false);
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
     await ip.checkInternetConnection();
@@ -159,6 +162,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
               await FirebaseAuth.instance.signInWithCredential(credential);
             },
             verificationFailed: (FirebaseAuthException e) {
+              Navigator.pop(context);
               Dialogs.showSnackbar(context, e.toString());
             },
             codeSent: (String verificationId, int? forceResendingToken) {
@@ -171,19 +175,22 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextField(
+                            keyboardType: TextInputType.number,
                             controller: otpCodeController,
                             decoration:
-                            InputDecoration(prefixIcon: Icon(Icons.code)),
+                                InputDecoration(prefixIcon: Icon(Icons.code)),
                           ),
                           ElevatedButton(
+                              style:
+                                  ElevatedButton.styleFrom(primary: lightGreen),
                               onPressed: () async {
                                 final code = otpCodeController.text.trim();
                                 AuthCredential authCredential =
-                                PhoneAuthProvider.credential(
-                                    verificationId: verificationId,
-                                    smsCode: code);
+                                    PhoneAuthProvider.credential(
+                                        verificationId: verificationId,
+                                        smsCode: code);
                                 User user = (await FirebaseAuth.instance
-                                    .signInWithCredential(authCredential))
+                                        .signInWithCredential(authCredential))
                                     .user!;
                                 sp.phoneNumberUser(
                                     user, '', '', widget.is_student);

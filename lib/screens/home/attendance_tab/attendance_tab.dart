@@ -205,7 +205,7 @@ class _AttendanceTabState extends State<AttendanceTab> {
               att11 +
               att12;
         } else if (DateTime.now().month == 8) {
-          int att1 = data['aug_1'] ?? 0;
+          int att1 = data['z'] ?? 0;
           int att2 = data['aug_2'] ?? 0;
           int att3 = data['aug_3'] ?? 0;
           int att4 = data['aug_4'] ?? 0;

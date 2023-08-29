@@ -282,7 +282,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 if (level != null &&
                     titleController.text.trim().isNotEmpty &&
                     numController.text.trim().isNotEmpty) {
-                  Dialogs.showProgressBar(context);
+                  showLoading(context, 'جار رفع المقطع.');
                   Lesson lesson = new Lesson(
                       name: titleController.text.toString() ?? '',
                       details: detailsController.text.toString() ?? '',
@@ -324,17 +324,37 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                           ? 'الدرس الثالث عشر'
                           : numController.text == '14'
                           ? 'الدرس الرابع عشر'
-                          : numController.text == '15'
-                          ? 'الدرس الخامس عشر'
-                          : numController.text == '6'
-                          ? 'الدرس السادس عشر'
-                          : numController.text == '17'
-                          ? 'الدرس السابع عشر'
-                          : numController.text == '18'
-                          ? 'الدرس الثامن عشر'
-                          : numController.text == '19'
-                          ? 'الدرس التاسع عشر'
-                          : 'الدرس العشرون');
+                                                                              : numController.text == '15'
+                                                                                  ? 'الدرس الخامس عشر'
+                                                                                  : numController.text == '6'
+                                                                                      ? 'الدرس السادس عشر'
+                                                                                      : numController.text == '17'
+                                                                                          ? 'الدرس السابع عشر'
+                                                                                          : numController.text == '18'
+                                                                                              ? 'الدرس الثامن عشر'
+                                                                                              : numController.text == '19'
+                                                                                                  ? 'الدرس التاسع عشر'
+                                                                                                  : numController.text == '20'
+                                                                                                      ? 'الدرس العشرون'
+                                                                                                      : numController.text == '21'
+                                                                                                          ? 'الدرس الحادي و العشرون'
+                                                                                                          : numController.text == '22'
+                                                                                                              ? 'الدرس الثاني و العشرون'
+                                                                                                              : numController.text == '23'
+                                                                                                                  ? 'الدرس الثالث و العشرون'
+                                                                                                                  : numController.text == '24'
+                                                                                                                      ? 'الدرس الرابع و العشرون'
+                                                                                                                      : numController.text == '25'
+                                                                                                                          ? 'الدرس الخامس و العشرون'
+                                                                                                                          : numController.text == '26'
+                                                                                                                              ? 'الدرس السادس و العشرون'
+                                                                                                                              : numController.text == '27'
+                                                                                                                                  ? 'الدرس السابع و العشرون'
+                                                                                                                                  : numController.text == '28'
+                                                                                                                                      ? 'الدرس الثامن و العشرون'
+                                                                                                                                      : numController.text == '29'
+                                                                                                                                          ? 'الدرس التاسع و العشرون'
+                                                                                                                                          : 'الدرس الثلاثون');
                   APIs.addLesson(lesson).then((value) =>
                       APIs.addLessonVideo(lesson, File(video ?? '')));
                   List pushTokens = await APIs.getPushTokens(level!);
@@ -345,7 +365,6 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                     APIs.sendPushNotification(pushTokens[i], names[i],
                         'قام مستر عمر بنشر درس جديد تابع..');
                   }
-                  Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (_) => LessonsScreen()));
