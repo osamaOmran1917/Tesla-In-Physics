@@ -91,8 +91,12 @@
 	    </dict>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App requires access to the photo library for picking pictures.</string>
+	<string>App requires access to the media library for picking Media.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App requires access to the camera for taking pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access to the Camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to access to the microphone to record audio file</string>
 </dict>
 </plist>

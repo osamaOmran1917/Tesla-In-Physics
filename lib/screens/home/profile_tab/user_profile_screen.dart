@@ -158,7 +158,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                     ],
                   ),
                   Text(
-                    email,
+                    email.trim().isEmpty ? name : email,
                     style: TextStyle(
                         fontFamily: 'Cairo',
                         fontSize: width * .041,

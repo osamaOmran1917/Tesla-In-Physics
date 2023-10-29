@@ -13,7 +13,6 @@ import 'package:omar_mostafa/screens/home/main_tab/lessons/lessons_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class AddLessonScreen extends StatefulWidget {
-  const AddLessonScreen({super.key});
 
   @override
   State<AddLessonScreen> createState() => _AddLessonScreenState();
