@@ -17,16 +17,18 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatefulWidget {
   static int selectedIndex = 3;
 
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
-    ProfileTab(),
-    StrategyTab(),
-    AttendanceTab(),
-    MainTab(),
+    const ProfileTab(),
+    const StrategyTab(),
+    const AttendanceTab(),
+    const MainTab(),
   ];
 
   var titleController = TextEditingController();
@@ -51,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     final sp = context.read<SignInProvider>();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -70,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() => HomeScreen.selectedIndex = index),
           items: [
             BottomNavyBarItem(
-                icon: ImageIcon(AssetImage('assets/images/Profile.png')),
-                title: Text(
+                icon: const ImageIcon(AssetImage('assets/images/Profile.png')),
+                title: const Text(
                   'البروفايل',
                   style: TextStyle(fontFamily: 'Cairo'),
                 ),
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.grey),
             BottomNavyBarItem(
-                icon: ImageIcon(AssetImage('assets/images/Document.png')),
+                icon: const ImageIcon(AssetImage('assets/images/Document.png')),
                 title: Text(
                   'الخطة التعليمية',
                   style:
@@ -89,8 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.grey),
             BottomNavyBarItem(
-                icon: ImageIcon(AssetImage('assets/images/attendance.png')),
-                title: Text(
+                icon:
+                    const ImageIcon(AssetImage('assets/images/attendance.png')),
+                title: const Text(
                   'الحضور',
                   style: TextStyle(fontFamily: 'Cairo'),
                 ),
@@ -98,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 inactiveColor: Colors.grey),
             BottomNavyBarItem(
-                icon: ImageIcon(AssetImage('assets/images/Home.png')),
-                title: Text(
+                icon: const ImageIcon(AssetImage('assets/images/Home.png')),
+                title: const Text(
                   'الرئيسية',
                   style: TextStyle(fontFamily: 'Cairo'),
                 ),
@@ -126,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 controller: titleController,
                                 decoration: InputDecoration(
                                   labelText: 'العنوان',
-                                  labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                  labelStyle:
+                                      const TextStyle(fontFamily: 'Cairo'),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.circular(width * .05),
@@ -140,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 controller: detailsController,
                                 decoration: InputDecoration(
                                   labelText: 'التفاصيل',
-                                  labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                  labelStyle:
+                                      const TextStyle(fontFamily: 'Cairo'),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.circular(width * .05),
@@ -177,14 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     icon: Row(
                                       children: [
-                                        ImageIcon(AssetImage(
+                                        const ImageIcon(AssetImage(
                                             'assets/images/down.png')),
                                         Expanded(child: Container()),
                                         Text(
                                           level == null
                                               ? 'اختر مرحلة دراسية'
                                               : level.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Cairo',
                                               color: Colors.grey),
                                         )
@@ -193,18 +198,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     shape: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            child: Text('1'),
+                                    itemBuilder: (context) =>
+                                    [
+                                          const PopupMenuItem(
                                             value: 1,
+                                            child: Text('1'),
                                           ),
-                                          PopupMenuItem(
-                                            child: Text('2'),
+                                          const PopupMenuItem(
                                             value: 2,
+                                            child: Text('2'),
                                           ),
-                                          PopupMenuItem(
-                                            child: Text('3'),
+                                          const PopupMenuItem(
                                             value: 3,
+                                            child: Text('3'),
                                           ),
                                         ]),
                               ),
@@ -212,14 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ElevatedButton(
                                   onPressed: () {
                                     StrategyPost strategyPost =
-                                        new StrategyPost(
-                                            title:
-                                                titleController.text.toString(),
-                                            details: detailsController.text
-                                                .toString(),
-                                            level: level,
-                                            date_time:
-                                                dateOnly(DateTime.now()));
+                                    StrategyPost(
+                                        title: titleController.text.toString(),
+                                        details:
+                                            detailsController.text.toString(),
+                                        level: level,
+                                        date_time: dateOnly(DateTime.now()));
                                     APIs.addStrategyPost(strategyPost);
                                     Navigator.pop(context);
                                   },
@@ -239,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               topLeft: Radius.circular(width * .1))));
                 },
                 backgroundColor: lightGreen,
-                child: Icon(CupertinoIcons.add),
+                child: const Icon(CupertinoIcons.add),
               )
             : null,
       ),

@@ -9,7 +9,7 @@ class UserCard extends StatefulWidget {
   int month;
   late Color color;
 
-  UserCard(this.user, this.lec, this.month);
+  UserCard(this.user, this.lec, this.month, {super.key});
 
   @override
   State<UserCard> createState() => _UserCardState();
@@ -21,7 +21,7 @@ class _UserCardState extends State<UserCard> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     late var att;
-    late var lecture;
+    late String lecture;
     if (widget.month == 1 && widget.lec == 1) {
       att = widget.user.jan_1;
       lecture = 'jan_1';
@@ -626,7 +626,7 @@ class _UserCardState extends State<UserCard> {
                 color: lightGreen.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),

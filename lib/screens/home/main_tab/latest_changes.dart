@@ -12,6 +12,8 @@ import 'package:omar_mostafa/models/post.dart';
 import 'package:omar_mostafa/widgets/post_widget.dart';
 
 class LatestChanges extends StatefulWidget {
+  const LatestChanges({super.key});
+
   @override
   State<LatestChanges> createState() => _LatestChangesState();
 }
@@ -39,11 +41,11 @@ class _LatestChangesState extends State<LatestChanges> {
         .doc(APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    if (data!['is_student'] == true)
+    if (data!['is_student'] == true) {
       setState(() {
         userLevel = data['level'];
       });
-    else {
+    } else {
       var documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(data['student_id'])
@@ -60,11 +62,11 @@ class _LatestChangesState extends State<LatestChanges> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -103,26 +105,26 @@ class _LatestChangesState extends State<LatestChanges> {
                 child: StreamBuilder<QuerySnapshot<Post>>(
                   builder: (buildContext, snapshot) {
                     if (snapshot.hasError) {
-                      return Center(
+                      return const Center(
                         child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                       );
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(color: lightGreen),
                       );
                     }
                     var data =
                     snapshot.data?.docs.map((e) => e.data()).toList();
                     return ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (buildContext, index) {
                         return data.isEmpty
-                            ? Center(
-                          child: Text('لا يوجد تغييرات'),
-                        )
+                            ? const Center(
+                                child: Text('لا يوجد تغييرات'),
+                              )
                             : InkWell(
-                            onTap: () {}, child: PostWidget(data[index]));
+                                onTap: () {}, child: PostWidget(data[index]));
                       },
                       itemCount: data!.length,
                     );
@@ -155,7 +157,8 @@ class _LatestChangesState extends State<LatestChanges> {
                           controller: titleController,
                           decoration: InputDecoration(
                               labelText: 'العنوان',
-                                    labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                    labelStyle:
+                                        const TextStyle(fontFamily: 'Cairo'),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(width * .05),
@@ -166,8 +169,9 @@ class _LatestChangesState extends State<LatestChanges> {
                                     iconColor: lightGreen,
                                     prefixIconColor: lightGreen,
                                     suffixIconColor: lightGreen,
-                                    hintStyle: TextStyle(color: lightGreen)),
-                                style: TextStyle(
+                                    hintStyle:
+                                        const TextStyle(color: lightGreen)),
+                                style: const TextStyle(
                                     color: lightGreen, fontFamily: 'cairo'),
                                 cursorColor: lightGreen,
                               ),
@@ -178,7 +182,8 @@ class _LatestChangesState extends State<LatestChanges> {
                           controller: detailsController,
                           decoration: InputDecoration(
                               labelText: 'التفاصيل',
-                                    labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                    labelStyle:
+                                        const TextStyle(fontFamily: 'Cairo'),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(width * .05),
@@ -189,8 +194,9 @@ class _LatestChangesState extends State<LatestChanges> {
                                     iconColor: lightGreen,
                                     prefixIconColor: lightGreen,
                                     suffixIconColor: lightGreen,
-                                    hintStyle: TextStyle(color: lightGreen)),
-                                style: TextStyle(
+                                    hintStyle:
+                                        const TextStyle(color: lightGreen)),
+                                style: const TextStyle(
                                     color: lightGreen, fontFamily: 'cairo'),
                                 cursorColor: lightGreen,
                               ),
@@ -224,16 +230,16 @@ class _LatestChangesState extends State<LatestChanges> {
                               },
                               icon: Row(
                                 children: [
-                                  ImageIcon(AssetImage(
-                                      'assets/images/down.png')),
+                                  const ImageIcon(AssetImage(
+                                            'assets/images/down.png')),
                                   Expanded(child: Container()),
                                   Text(
                                     level == null
                                         ? 'اختر مرحلة دراسية'
                                         : level.toString(),
-                                    style: TextStyle(
-                                        fontFamily: 'Cairo',
-                                        color: Colors.grey),
+                                    style: const TextStyle(
+                                              fontFamily: 'Cairo',
+                                              color: Colors.grey),
                                   )
                                 ],
                               ),
@@ -241,18 +247,18 @@ class _LatestChangesState extends State<LatestChanges> {
                                   borderRadius:
                                   BorderRadius.circular(10)),
                               itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text('1'),
-                                  value: 1,
-                                ),
-                                PopupMenuItem(
-                                  child: Text('2'),
-                                  value: 2,
-                                ),
-                                PopupMenuItem(
-                                  child: Text('3'),
-                                  value: 3,
-                                ),
+                                const PopupMenuItem(
+                                            value: 1,
+                                            child: Text('1'),
+                                          ),
+                                const PopupMenuItem(
+                                            value: 2,
+                                            child: Text('2'),
+                                          ),
+                                const PopupMenuItem(
+                                            value: 3,
+                                            child: Text('3'),
+                                          ),
                               ]),
                         ),
                         SizedBox(
@@ -262,7 +268,8 @@ class _LatestChangesState extends State<LatestChanges> {
                           controller: dateController,
                           decoration: InputDecoration(
                               labelText: 'يمكنك إضافة موعد',
-                                    labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                    labelStyle:
+                                        const TextStyle(fontFamily: 'Cairo'),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(width * .05),
@@ -273,18 +280,19 @@ class _LatestChangesState extends State<LatestChanges> {
                                     iconColor: lightGreen,
                                     prefixIconColor: lightGreen,
                                     suffixIconColor: lightGreen,
-                                    hintStyle: TextStyle(color: lightGreen)),
-                                style: TextStyle(
+                                    hintStyle:
+                                        const TextStyle(color: lightGreen)),
+                                style: const TextStyle(
                                     color: lightGreen, fontFamily: 'cairo'),
                                 cursorColor: lightGreen,
                               ),
-                              Spacer(),
+                              const Spacer(),
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      primary: lightGreen),
+                                      backgroundColor: lightGreen),
                                   onPressed: () async {
                                     if (level != null) {
-                                      Post post = new Post(
+                                      Post post = Post(
                                           title:
                                               titleController.text.toString(),
                                           details:
@@ -329,10 +337,10 @@ class _LatestChangesState extends State<LatestChanges> {
                         topRight: Radius.circular(width * .1),
                         topLeft: Radius.circular(width * .1))));
           },
-          child: Icon(
-            CupertinoIcons.add,
-            color: Colors.white,
-          ),
+          child: const Icon(
+                  CupertinoIcons.add,
+                  color: Colors.white,
+                ),
         )
             : null,
       ),

@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
     projectId: 'omar-mustafa',
     storageBucket: 'omar-mustafa.appspot.com',
     androidClientId:
-        '53921266677-tu36p9msemkvc3cub6rd3itjp4o624kq.apps.googleusercontent.com',
+        '53921266677-b721nktjstj45k4nu1i6p2r8hd6d7i4m.apps.googleusercontent.com',
     iosClientId:
         '53921266677-bblir7l1v37dadc2m7pkhqv2dcr8qb9e.apps.googleusercontent.com',
     iosBundleId: 'com.example.omarMostafa',

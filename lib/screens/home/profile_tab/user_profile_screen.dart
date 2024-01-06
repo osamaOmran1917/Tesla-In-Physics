@@ -13,6 +13,8 @@ import 'package:omar_mostafa/helpers/dialogs.dart';
 import 'package:omar_mostafa/helpers/shared_data.dart';
 
 class UsereProfileScreen extends StatefulWidget {
+  const UsereProfileScreen({super.key});
+
   @override
   State<UsereProfileScreen> createState() => _UsereProfileScreenState();
 }
@@ -54,11 +56,11 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -70,7 +72,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: width * .061),
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   SizedBox(
@@ -86,7 +88,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           decoration: BoxDecoration(
                               color: lightGreen,
                               borderRadius: BorderRadius.circular(width * .05)),
-                          child: Icon(
+                          child: const Icon(
                             Icons.keyboard_arrow_left_sharp,
                             color: Colors.white,
                           ),
@@ -128,7 +130,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                 imageUrl: image,
                                 fit: BoxFit.cover,
                                 errorWidget: (context, url, error) =>
-                                    CircleAvatar(
+                                const CircleAvatar(
                                   child: Icon(CupertinoIcons.person_alt),
                                 ),
                               ),
@@ -148,11 +150,11 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           onPressed: () {
                             _showBottomSheet(context);
                           },
-                          child: Icon(
+                          color: lightGreen,
+                          child: const Icon(
                             CupertinoIcons.pen,
                             color: Colors.white,
                           ),
-                          color: lightGreen,
                         ),
                       )
                     ],
@@ -166,7 +168,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   ),
                   Visibility(
                     visible: (!omar) && _is_student,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
@@ -196,7 +198,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                             color: lightGreen.withOpacity(0.17),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),
@@ -218,36 +221,38 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           },
                           icon: Row(
                             children: [
-                              ImageIcon(AssetImage('assets/images/down.png')),
+                              const ImageIcon(
+                                  AssetImage('assets/images/down.png')),
                               Expanded(child: Container()),
                               Text(
                                 level == null
                                     ? 'اختر مرحلتك الدراسية'
                                     : level.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'Cairo', color: Colors.grey),
                               )
                             ],
                           ),
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text('1'),
+                          itemBuilder: (context) =>
+                          [
+                                const PopupMenuItem(
                                   value: 1,
+                                  child: Text('1'),
                                 ),
-                                PopupMenuItem(
-                                  child: Text('2'),
+                                const PopupMenuItem(
                                   value: 2,
+                                  child: Text('2'),
                                 ),
-                                PopupMenuItem(
-                                  child: Text('3'),
+                                const PopupMenuItem(
                                   value: 3,
+                                  child: Text('3'),
                                 ),
                               ]),
                     ),
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -271,7 +276,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           color: lightGreen.withOpacity(0.17),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -287,8 +293,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'اكتب اسمك كامل',
-                        hintStyle:
-                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                        hintStyle: const TextStyle(
+                            fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -297,7 +303,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   SizedBox(
                     height: height * .03,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -320,7 +326,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                           color: lightGreen.withOpacity(0.17),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -339,8 +346,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         counterText: '',
                         border: InputBorder.none,
                         hintText: 'اكتب رقم هاتفك',
-                        hintStyle:
-                            TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                        hintStyle: const TextStyle(
+                            fontFamily: 'Cairo', color: Colors.grey),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10, horizontal: width * .03),
                       ),
@@ -353,7 +360,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         SizedBox(
                           height: height * .03,
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
@@ -376,8 +383,8 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                 color: lightGreen.withOpacity(0.17),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -395,7 +402,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                               },
                               icon: Row(
                                 children: [
-                                  ImageIcon(
+                                  const ImageIcon(
                                       AssetImage('assets/images/down.png')),
                                   Expanded(child: Container()),
                                   Text(
@@ -404,7 +411,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                                         : male == true
                                             ? 'ذكر'
                                             : 'أنثى',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: 'Cairo',
                                         color: Colors.grey),
                                   )
@@ -412,14 +419,15 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                               ),
                               shape: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      child: Text('ذكر'),
+                              itemBuilder: (context) =>
+                              [
+                                    const PopupMenuItem(
                                       value: true,
+                                      child: Text('ذكر'),
                                     ),
-                                    PopupMenuItem(
-                                      child: Text('أنثى'),
+                                    const PopupMenuItem(
                                       value: false,
+                                      child: Text('أنثى'),
                                     )
                                   ]),
                         )
@@ -432,17 +440,19 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   InkWell(
                     onTap: () {
                       if ((!omar) && _is_student) {
-                        if (level != null)
+                        if (level != null) {
                           APIs.updateLevel(APIs.user.uid, level!);
-                        if (male != null)
+                        }
+                        if (male != null) {
                           APIs.updateGender(APIs.user.uid, male!);
+                        }
                       }
-                      if (nameController.text.isNotEmpty &&
-                          nameController.text != null)
+                      if (nameController.text.isNotEmpty) {
                         APIs.updateName(APIs.user.uid, nameController.text);
-                      if (phoneController.text.isNotEmpty &&
-                          phoneController.text != null)
+                      }
+                      if (phoneController.text.isNotEmpty) {
                         APIs.updatePhone(APIs.user.uid, phoneController.text);
+                      }
                       if (level == null &&
                           male == null &&
                           nameController.text.isEmpty &&
@@ -459,7 +469,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                         decoration: BoxDecoration(
                             color: lightGreen,
                             borderRadius: BorderRadius.circular(width * .03)),
-                        child: Text(
+                        child: const Text(
                           'حفظ التغييرات',
                           style: TextStyle(
                               color: Colors.white, fontFamily: 'Cairo'),
@@ -488,7 +498,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
             shrinkWrap: true,
             padding: EdgeInsets.only(top: height * .03, bottom: height * .05),
             children: [
-              Text(
+              const Text(
                 'اختر صورة شخصية',
                 style: TextStyle(fontFamily: 'Cairo'),
                 textAlign: TextAlign.center,
@@ -502,7 +512,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(width * .3, height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
@@ -521,7 +531,7 @@ class _UsereProfileScreenState extends State<UsereProfileScreen> {
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(width * .3, height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();

@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:omar_mostafa/apis/apis.dart';
 import 'package:omar_mostafa/helpers/colors.dart';
 import 'package:omar_mostafa/models/my_user.dart';
-import 'package:omar_mostafa/widgets/user_card.dart';
 import 'package:omar_mostafa/widgets/user_card_for_payment.dart';
 
 class Students extends StatefulWidget {
   int level;
-  Students(this.level);
+  Students(this.level, {super.key});
 
   @override
   State<Students> createState() => _StudentsState();
@@ -26,11 +25,11 @@ class _StudentsState extends State<Students> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
                 fit: BoxFit.cover,
@@ -52,7 +51,7 @@ class _StudentsState extends State<Students> {
                     decoration: BoxDecoration(
                         color: lightGreen,
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Icon(
+                    child: const Icon(
                       Icons.keyboard_arrow_left_sharp,
                       color: Colors.white,
                     ),
@@ -73,22 +72,22 @@ class _StudentsState extends State<Students> {
                   child: StreamBuilder<QuerySnapshot<MyUser>>(
                     builder: (buildContext, snapshot) {
                       if (snapshot.hasError) {
-                        return Center(
+                        return const Center(
                           child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                         );
                       } else if (snapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(color: lightGreen),
                         );
                       }
                       var data =
                           snapshot.data?.docs.map((e) => e.data()).toList();
                       return ListView.builder(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (buildContext, index) {
                           return data.isEmpty
-                              ? Center(
+                              ? const Center(
                                   child: Text('لا يوجد تغييرات'),
                                 )
                               : UserCardForPayment(data[index]);

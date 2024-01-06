@@ -53,7 +53,7 @@ class _ProfileTabState extends State<ProfileTab> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: width * .07),
         child: Column(
@@ -70,8 +70,10 @@ class _ProfileTabState extends State<ProfileTab> {
             ]),
             SizedBox(height: height * .05),
             InkWell(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => UsereProfileScreen())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const UsereProfileScreen())),
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: width * .03),
                   height: height * .083,
@@ -84,12 +86,13 @@ class _ProfileTabState extends State<ProfileTab> {
                         color: lightGreen.withOpacity(0.17),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
                   child: Row(children: [
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_left_rounded,
                       color: Colors.grey,
                     ),
@@ -100,7 +103,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       children: [
                         Text(
                           name ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                         ),
                         Text('تعديل البيانات الشخصية',
@@ -119,8 +122,9 @@ class _ProfileTabState extends State<ProfileTab> {
                         width: height * .055,
                         height: height * .055,
                         imageUrl: image,
-                        errorWidget: (context, url, error) => CircleAvatar(
-                            child: Icon(CupertinoIcons.person_alt)),
+                        errorWidget: (context, url, error) =>
+                            const CircleAvatar(
+                                child: Icon(CupertinoIcons.person_alt)),
                       ),
                     )
                   ])),
@@ -128,7 +132,7 @@ class _ProfileTabState extends State<ProfileTab> {
             SizedBox(
               height: height * .025,
             ),
-            Container(
+            /*Container(
                 padding: EdgeInsets.all(width * .023),
                 height: height * .083,
                 width: double.infinity,
@@ -140,12 +144,12 @@ class _ProfileTabState extends State<ProfileTab> {
                       color: lightGreen.withOpacity(0.17),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
                 child: Row(children: [
-                  Icon(
+                  const Icon(
                     Icons.keyboard_arrow_left_rounded,
                     color: Colors.grey,
                   ),
@@ -156,7 +160,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     children: [
                       Text(
                         omar ? 'الاشتراكات' : 'اشترك',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -190,17 +194,17 @@ class _ProfileTabState extends State<ProfileTab> {
                       color: lightGreen.withOpacity(0.17),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
                 child: Row(children: [
-                  Icon(
+                  const Icon(
                     Icons.keyboard_arrow_left_rounded,
                     color: Colors.grey,
                   ),
                   Expanded(child: Container()),
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -225,7 +229,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 ])),
             SizedBox(
               height: height * .025,
-            ),
+            ),*/
             InkWell(
               onTap: () {
                 _launchInBrowser(Uri.parse(
@@ -243,12 +247,13 @@ class _ProfileTabState extends State<ProfileTab> {
                         color: lightGreen.withOpacity(0.17),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
                   child: Row(children: [
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_left_rounded,
                       color: Colors.grey,
                     ),
@@ -259,7 +264,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       children: [
                         Text(
                           omar ? 'التواصل' : 'تواصل معنا',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -282,8 +287,8 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => ExamsScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ExamsScreen()));
               },
               child: Container(
                   padding: EdgeInsets.all(width * .023),
@@ -297,17 +302,18 @@ class _ProfileTabState extends State<ProfileTab> {
                         color: lightGreen.withOpacity(0.17),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
                   child: Row(children: [
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_left_rounded,
                       color: Colors.grey,
                     ),
                     Expanded(child: Container()),
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -346,26 +352,26 @@ class _ProfileTabState extends State<ProfileTab> {
                       return AlertDialog(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(width * .07)),
-                        title: Text(
+                        title: const Text(
                           ':رمز حسابك هو',
                           style: TextStyle(fontFamily: 'cairo'),
                           textAlign: TextAlign.center,
                         ),
-                        content: Container(
+                        content: SizedBox(
                           height: height * .19,
                           child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   APIs.user.uid,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'cairo',
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   'أرسله لولي أمرك ولا تطلع عليه أشخاصاً غير موثوقين',
                                   style: TextStyle(fontFamily: 'cairo'),
                                   textAlign: TextAlign.center,
@@ -376,7 +382,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: Text(
+                            child: const Text(
                               'نسخ الرمز',
                               style: TextStyle(
                                   fontFamily: 'cairo', color: lightGreen),
@@ -389,7 +395,7 @@ class _ProfileTabState extends State<ProfileTab> {
                             },
                           ),
                           TextButton(
-                            child: Text('رجوع',
+                            child: const Text('رجوع',
                                 style: TextStyle(
                                     fontFamily: 'cairo', color: lightGreen)),
                             onPressed: () {
@@ -414,17 +420,18 @@ class _ProfileTabState extends State<ProfileTab> {
                           color: lightGreen.withOpacity(0.17),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
                     child: Row(children: [
-                      Icon(
+                      const Icon(
                         Icons.keyboard_arrow_left_rounded,
                         color: Colors.grey,
                       ),
-                      Spacer(),
-                      Column(
+                      const Spacer(),
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -445,7 +452,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(height * .3),
                             color: lightGreen),
-                        child: Icon(
+                        child: const Icon(
                           Icons.key,
                           color: Colors.white,
                         ),
@@ -457,7 +464,7 @@ class _ProfileTabState extends State<ProfileTab> {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StudensLevels()));
+                      MaterialPageRoute(builder: (_) => const StudensLevels()));
                 },
                 child: Container(
                     padding: EdgeInsets.all(width * .023),
@@ -471,17 +478,18 @@ class _ProfileTabState extends State<ProfileTab> {
                           color: lightGreen.withOpacity(0.17),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
                     child: Row(children: [
-                      Icon(
+                      const Icon(
                         Icons.keyboard_arrow_left_rounded,
                         color: Colors.grey,
                       ),
-                      Spacer(),
-                      Column(
+                      const Spacer(),
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -502,7 +510,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(height * .3),
                             color: lightGreen),
-                        child: Icon(
+                        child: const Icon(
                           Icons.people_alt_outlined,
                           color: Colors.white,
                         ),
@@ -526,17 +534,18 @@ class _ProfileTabState extends State<ProfileTab> {
                         color: lightGreen.withOpacity(0.17),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
                   child: Row(children: [
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_left_rounded,
                       color: Colors.grey,
                     ),
-                    Spacer(),
-                    Column(
+                    const Spacer(),
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -571,12 +580,14 @@ class _ProfileTabState extends State<ProfileTab> {
                 onTap: () async {
                   showMessage(context, 'هل أنت متأكد أنك تريد حذف الحساب؟',
                       posAction: () async {
-                    APIs.deleteUser();
+                        APIs.deleteUser();
                     await GoogleSignIn().disconnect();
                     await APIs.auth.signOut();
                     await GoogleSignIn().signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const WelcomeScreenI()));
                   },
                       posActionName: 'نعم',
                       negAction: () {},
@@ -594,17 +605,18 @@ class _ProfileTabState extends State<ProfileTab> {
                           color: lightGreen.withOpacity(0.17),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
                     child: Row(children: [
-                      Icon(
+                      const Icon(
                         Icons.keyboard_arrow_left_rounded,
                         color: Colors.grey,
                       ),
-                      Spacer(),
-                      Column(
+                      const Spacer(),
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

@@ -14,9 +14,9 @@ void logOut(BuildContext context) {
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+        context, MaterialPageRoute(builder: (_) => const WelcomeScreenI()));
     sp.userSignOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => WelcomeScreenI()));
+        context, MaterialPageRoute(builder: (_) => const WelcomeScreenI()));
   }, posActionName: 'نعم', negAction: () {}, negActionName: 'لا');
 }

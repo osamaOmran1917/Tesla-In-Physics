@@ -12,7 +12,7 @@ import 'package:omar_mostafa/models/my_user.dart';
 class UserCardForExam extends StatelessWidget {
   MyUser usre;
 
-  UserCardForExam(this.usre);
+  UserCardForExam(this.usre, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class UserCardForExam extends StatelessWidget {
                 color: lightGreen.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
@@ -64,7 +64,7 @@ class UserCardForExam extends StatelessWidget {
             shrinkWrap: true,
             padding: EdgeInsets.only(top: height * .03, bottom: height * .05),
             children: [
-              Text(
+              const Text(
                 'أضف درجة امتحان',
                 style: TextStyle(fontFamily: 'Cairo'),
                 textAlign: TextAlign.center,
@@ -78,7 +78,7 @@ class UserCardForExam extends StatelessWidget {
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(width * .3, height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
@@ -99,7 +99,7 @@ class UserCardForExam extends StatelessWidget {
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(width * .3, height * .15)),
                       onPressed: () async {
                         /*final ImagePicker picker = ImagePicker();

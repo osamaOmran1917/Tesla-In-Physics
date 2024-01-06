@@ -14,7 +14,7 @@ class CompleteUserData extends StatefulWidget {
   bool is_student;
   bool is_phone;
 
-  CompleteUserData(this.is_student, this.is_phone);
+  CompleteUserData(this.is_student, this.is_phone, {super.key});
 
   @override
   State<CompleteUserData> createState() => _CompleteUserDataState();
@@ -46,7 +46,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
         height = MediaQuery.of(context).size.height;
     final sp = context.read<SignInProvider>();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return WillPopScope(
@@ -58,7 +58,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
         return true;
       },
       child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
                   fit: BoxFit.cover,
@@ -86,12 +86,12 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                               child: Image.asset('assets/images/back.png')),
                         ],
                       ),
-                      Text(
+                      const Text(
                         'أكمل بياناتك',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontFamily: 'Cairo'),
                       ),
-                      Text(
+                      const Text(
                         'الرجاء تكملة البيانات كاملة لنبدأ التعلم',
                         style:
                             TextStyle(fontFamily: 'Cairo', color: Colors.grey),
@@ -106,7 +106,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                             widget.is_student == true
                                 ? 'المرحلة الدراسية'
                                 : 'الاسم',
-                            style: TextStyle(fontFamily: 'Cairo'),
+                            style: const TextStyle(fontFamily: 'Cairo'),
                           ),
                         ],
                       ),
@@ -126,7 +126,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                     color: lightGreen.withOpacity(0.17),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
@@ -149,42 +149,44 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                   },
                                   icon: Row(
                                     children: [
-                                      ImageIcon(
+                                      const ImageIcon(
                                           AssetImage('assets/images/down.png')),
                                       Expanded(child: Container()),
                                       Text(
                                         level == null
                                             ? 'اختر مرحلة دراسية'
                                             : level.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: 'Cairo',
                                             color: Colors.grey),
                                       )
                                     ],
                                   ),
                                   shape: OutlineInputBorder(
-                                      borderSide: BorderSide(color: lightGreen),
+                                      borderSide:
+                                          const BorderSide(color: lightGreen),
                                       borderRadius: BorderRadius.circular(10)),
-                                  itemBuilder: (context) => [
-                                        PopupMenuItem(
+                                  itemBuilder: (context) =>
+                                  [
+                                        const PopupMenuItem(
+                                          value: 1,
                                           child: Text(
                                             '1',
                                             style:
                                                 TextStyle(fontFamily: 'cairo'),
                                           ),
-                                          value: 1,
                                         ),
-                                        PopupMenuItem(
+                                        const PopupMenuItem(
+                                          value: 2,
                                           child: Text('2',
                                               style: TextStyle(
                                                   fontFamily: 'cairo')),
-                                          value: 2,
                                         ),
-                                        PopupMenuItem(
+                                        const PopupMenuItem(
+                                          value: 3,
                                           child: Text('3',
                                               style: TextStyle(
                                                   fontFamily: 'cairo')),
-                                          value: 3,
                                         ),
                                       ]),
                             )
@@ -200,13 +202,13 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                     color: lightGreen.withOpacity(0.17),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: TextFormField(
-                                style: TextStyle(fontFamily: 'cairo'),
+                                style: const TextStyle(fontFamily: 'cairo'),
                                 controller: nameController,
                                 validator: (text) {
                                   if (text == null || text.trim().isEmpty) {
@@ -218,7 +220,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'اكتب اسمك كامل',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       fontFamily: 'Cairo', color: Colors.grey),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 10, horizontal: width * .03),
@@ -233,7 +235,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                         children: [
                           Text(
                             widget.is_student == true ? 'الاسم' : 'رمز الطالب',
-                            style: TextStyle(fontFamily: 'Cairo'),
+                            style: const TextStyle(fontFamily: 'Cairo'),
                           ),
                         ],
                       ),
@@ -251,13 +253,13 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                               color: lightGreen.withOpacity(0.17),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ],
                         ),
                         child: TextFormField(
-                          style: TextStyle(fontFamily: 'cairo'),
+                          style: const TextStyle(fontFamily: 'cairo'),
                           controller:
                               widget.is_student ? nameController : idController,
                           validator: (text) {
@@ -274,7 +276,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                             hintText: widget.is_student
                                 ? 'اكتب اسمك كامل'
                                 : 'اكتب رمز الطالب',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 fontFamily: 'Cairo', color: Colors.grey),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: width * .03),
@@ -286,7 +288,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                           height: height * .03,
                         ),
                       if (widget.is_phone == false)
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
@@ -311,13 +313,13 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                 color: lightGreen.withOpacity(0.17),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
                           child: TextFormField(
-                            style: TextStyle(fontFamily: 'cairo'),
+                            style: const TextStyle(fontFamily: 'cairo'),
                             keyboardType: TextInputType.number,
                             maxLength: 11,
                             controller: phoneController,
@@ -332,7 +334,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                               counterText: '',
                               border: InputBorder.none,
                               hintText: 'اكتب رقم هاتفك',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontFamily: 'Cairo', color: Colors.grey),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: width * .03),
@@ -346,7 +348,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                         visible: widget.is_student,
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
@@ -370,7 +372,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                     color: lightGreen.withOpacity(0.17),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
@@ -389,7 +391,7 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                   },
                                   icon: Row(
                                     children: [
-                                      ImageIcon(
+                                      const ImageIcon(
                                           AssetImage('assets/images/down.png')),
                                       Expanded(child: Container()),
                                       Text(
@@ -398,27 +400,29 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                             : male == true
                                                 ? 'ذكر'
                                                 : 'أنثى',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: 'Cairo',
                                             color: Colors.grey),
                                       )
                                     ],
                                   ),
                                   shape: OutlineInputBorder(
-                                      borderSide: BorderSide(color: lightGreen),
+                                      borderSide:
+                                          const BorderSide(color: lightGreen),
                                       borderRadius: BorderRadius.circular(10)),
-                                  itemBuilder: (context) => [
-                                        PopupMenuItem(
+                                  itemBuilder: (context) =>
+                                  [
+                                        const PopupMenuItem(
+                                          value: true,
                                           child: Text('ذكر',
                                               style: TextStyle(
                                                   fontFamily: 'cairo')),
-                                          value: true,
                                         ),
-                                        PopupMenuItem(
+                                        const PopupMenuItem(
+                                          value: false,
                                           child: Text('أنثى',
                                               style: TextStyle(
                                                   fontFamily: 'cairo')),
-                                          value: false,
                                         )
                                       ]),
                             )
@@ -468,8 +472,10 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                             }
                           }
                           Navigator.pop(context);
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => HomeScreen()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()));
                         },
                         child: Container(
                           height: height * .05,
@@ -482,12 +488,12 @@ class _CompleteUserDataState extends State<CompleteUserData> {
                                 color: lightGreen.withOpacity(0.17),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text('متابعة',
                                   style: TextStyle(
                                       fontFamily: 'cairo',

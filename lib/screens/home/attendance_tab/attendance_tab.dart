@@ -7,6 +7,8 @@ import 'package:omar_mostafa/provider/sign_in_provider.dart';
 import 'package:omar_mostafa/screens/home/attendance_tab/months_screen.dart';
 
 class AttendanceTab extends StatefulWidget {
+  const AttendanceTab({super.key});
+
   @override
   State<AttendanceTab> createState() => _AttendanceTabState();
 }
@@ -27,7 +29,7 @@ class _AttendanceTabState extends State<AttendanceTab> {
         .doc(idSp ?? APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    if (data!['is_student'] == true)
+    if (data!['is_student'] == true) {
       setState(() {
         if (DateTime.now().month == 1) {
           int att1 = data['jan_1'] ?? 0;
@@ -331,14 +333,14 @@ class _AttendanceTabState extends State<AttendanceTab> {
               att12;
         }
       });
-    else {
+    } else {
       var documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(data['student_id'])
           .get();
       var newData = documentSnapshot.data();
       setState(() {
-        if (DateTime.now().month == 1)
+        if (DateTime.now().month == 1) {
           attendance = newData!['jan_1'] +
               newData['jan_2'] +
               newData['jan_3'] +
@@ -351,7 +353,7 @@ class _AttendanceTabState extends State<AttendanceTab> {
               newData['jan_10'] +
               newData['jan_11'] +
               newData['jan_12'];
-        else if (DateTime.now().month == 2)
+        } else if (DateTime.now().month == 2)
           attendance = data['feb_1'] +
               newData!['feb_2'] +
               newData['feb_3'] +
@@ -532,12 +534,13 @@ class _AttendanceTabState extends State<AttendanceTab> {
                             color: Colors.grey.withOpacity(0.1),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(
@@ -569,12 +572,13 @@ class _AttendanceTabState extends State<AttendanceTab> {
                             color: Colors.grey.withOpacity(0.1),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(
@@ -606,12 +610,13 @@ class _AttendanceTabState extends State<AttendanceTab> {
                             color: Colors.grey.withOpacity(0.1),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(
@@ -664,7 +669,7 @@ class _AttendanceTabState extends State<AttendanceTab> {
                   children: [
                     Column(
                       children: [
-                        Text(
+                        const Text(
                           'عدد مرات الحضور',
                           style: TextStyle(
                               fontFamily: 'Cairo', color: Colors.grey),
@@ -715,7 +720,7 @@ class _AttendanceTabState extends State<AttendanceTab> {
                                     width: width * .001, color: Colors.white)),
                             child: Text(
                               '${((attendance / 12) * 100).toStringAsFixed(2)} %',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'cairo', color: Colors.white),
                             ),
                           )

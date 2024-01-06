@@ -19,6 +19,8 @@ import 'package:omar_mostafa/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
 class MainTab extends StatefulWidget {
+  const MainTab({super.key});
+
   @override
   State<MainTab> createState() => _MainTabState();
 }
@@ -51,12 +53,12 @@ class _MainTabState extends State<MainTab> {
       image = data['image'];
     });
 
-    if (data!['is_student'] == true)
+    if (data!['is_student'] == true) {
       setState(() {
         userLevel = data['level'];
         paid = data['paid'];
       });
-    else {
+    } else {
       var documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(data['student_id'])
@@ -83,7 +85,7 @@ class _MainTabState extends State<MainTab> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * .05),
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             SizedBox(
@@ -112,15 +114,15 @@ class _MainTabState extends State<MainTab> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'مرحبا ${name}',
-                      style: TextStyle(
+                      'مرحبا $name',
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, fontFamily: 'Cairo'),
                     ),
                     Text(
                       omar
                           ? 'تحكم في كل شيء يخص تطبيقك'
                           : '🤝🏻 !لنبدأ رحلة التعلم',
-                      style: TextStyle(fontFamily: 'Cairo'),
+                      style: const TextStyle(fontFamily: 'Cairo'),
                     )
                   ],
                 ),
@@ -133,7 +135,8 @@ class _MainTabState extends State<MainTab> {
                     width: height * .055,
                     height: height * .055,
                     imageUrl: image ?? '',
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                     errorWidget: (context, url, error) => const CircleAvatar(
                         child: Icon(CupertinoIcons.person_alt)),
                   ),
@@ -153,8 +156,8 @@ class _MainTabState extends State<MainTab> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => LessonsScreen())),
-                  child: Text(
+                      MaterialPageRoute(builder: (_) => const LessonsScreen())),
+                  child: const Text(
                     'عرض الكل',
                     style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                   ),
@@ -169,27 +172,27 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            Container(
+            SizedBox(
               height: height * .3,
               child: StreamBuilder<QuerySnapshot<Lesson>>(
                 builder: (buildContext, snapshot) {
                   if (snapshot.hasError) {
-                    return Center(
+                    return const Center(
                       child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                     );
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(color: lightGreen),
                     );
                   }
                   var data = snapshot.data?.docs.map((e) => e.data()).toList();
                   return ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (buildContext, index) {
                       return data.isEmpty
-                          ? Center(
-                        child: Text(
+                          ? const Center(
+                              child: Text(
                                 'لا يوجد دروس حتى الآن',
                                 style: TextStyle(color: Colors.black),
                               ),
@@ -222,8 +225,8 @@ class _MainTabState extends State<MainTab> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => LatestChanges())),
-                  child: Text(
+                      MaterialPageRoute(builder: (_) => const LatestChanges())),
+                  child: const Text(
                     'عرض الكل',
                     style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                   ),
@@ -238,26 +241,26 @@ class _MainTabState extends State<MainTab> {
                 )
               ],
             ),
-            Container(
+            SizedBox(
               height: height * .3,
               child: StreamBuilder<QuerySnapshot<Post>>(
                 builder: (buildContext, snapshot) {
                   if (snapshot.hasError) {
-                    return Center(
+                    return const Center(
                       child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                     );
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(color: lightGreen),
                     );
                   }
                   var data = snapshot.data?.docs.map((e) => e.data()).toList();
                   return ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (buildContext, index) {
                       return data.isEmpty
-                          ? Center(
+                          ? const Center(
                               child: Text('لا يوجد تغيرات'),
                             )
                           : PostWidget(data[index]);

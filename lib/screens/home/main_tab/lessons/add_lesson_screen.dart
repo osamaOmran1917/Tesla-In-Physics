@@ -13,6 +13,7 @@ import 'package:omar_mostafa/screens/home/main_tab/lessons/lessons_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class AddLessonScreen extends StatefulWidget {
+  const AddLessonScreen({super.key});
 
   @override
   State<AddLessonScreen> createState() => _AddLessonScreenState();
@@ -56,12 +57,12 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
         padding: EdgeInsets.all(width * .05),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
                 fit: BoxFit.cover,
@@ -69,7 +70,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -80,7 +81,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   controller: titleController,
                   decoration: InputDecoration(
                       labelText: 'العنوان',
-                      labelStyle: TextStyle(fontFamily: 'Cairo'),
+                      labelStyle: const TextStyle(fontFamily: 'Cairo'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(width * .05),
                       ),
@@ -90,8 +91,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                       iconColor: lightGreen,
                       prefixIconColor: lightGreen,
                       suffixIconColor: lightGreen,
-                      hintStyle: TextStyle(color: lightGreen)),
-                  style: TextStyle(color: lightGreen, fontFamily: 'cairo'),
+                      hintStyle: const TextStyle(color: lightGreen)),
+                  style:
+                      const TextStyle(color: lightGreen, fontFamily: 'cairo'),
                   cursorColor: lightGreen,
                 ),
                 SizedBox(
@@ -101,7 +103,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   controller: detailsController,
                   decoration: InputDecoration(
                       labelText: 'التفاصيل',
-                      labelStyle: TextStyle(fontFamily: 'Cairo'),
+                      labelStyle: const TextStyle(fontFamily: 'Cairo'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(width * .05),
                       ),
@@ -111,8 +113,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                       iconColor: lightGreen,
                       prefixIconColor: lightGreen,
                       suffixIconColor: lightGreen,
-                      hintStyle: TextStyle(color: lightGreen)),
-                  style: TextStyle(color: lightGreen, fontFamily: 'cairo'),
+                      hintStyle: const TextStyle(color: lightGreen)),
+                  style:
+                      const TextStyle(color: lightGreen, fontFamily: 'cairo'),
                   cursorColor: lightGreen,
                 ),
                 SizedBox(
@@ -144,31 +147,32 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                       },
                       icon: Row(
                         children: [
-                          ImageIcon(AssetImage('assets/images/down.png')),
+                          const ImageIcon(AssetImage('assets/images/down.png')),
                           Expanded(child: Container()),
                           Text(
                             level == null
                                 ? 'اختر مرحلة دراسية'
                                 : level.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'Cairo', color: Colors.grey),
                           )
                         ],
                       ),
                       shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Text('1'),
+                      itemBuilder: (context) =>
+                      [
+                            const PopupMenuItem(
                               value: 1,
+                              child: Text('1'),
                             ),
-                            PopupMenuItem(
-                              child: Text('2'),
+                            const PopupMenuItem(
                               value: 2,
+                              child: Text('2'),
                             ),
-                            PopupMenuItem(
-                              child: Text('3'),
+                            const PopupMenuItem(
                               value: 3,
+                              child: Text('3'),
                             ),
                           ]),
                 ),
@@ -182,7 +186,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   decoration: InputDecoration(
                       counterText: '',
                       labelText: 'رقم الدرس',
-                      labelStyle: TextStyle(fontFamily: 'Cairo'),
+                      labelStyle: const TextStyle(fontFamily: 'Cairo'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(width * .05),
                       ),
@@ -192,8 +196,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                       iconColor: lightGreen,
                       prefixIconColor: lightGreen,
                       suffixIconColor: lightGreen,
-                      hintStyle: TextStyle(color: lightGreen)),
-                  style: TextStyle(color: lightGreen, fontFamily: 'cairo'),
+                      hintStyle: const TextStyle(color: lightGreen)),
+                  style:
+                      const TextStyle(color: lightGreen, fontFamily: 'cairo'),
                   cursorColor: lightGreen,
                 ),
                 SizedBox(
@@ -212,12 +217,12 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                                       .remove(contentControllers[i]);
                                 });
                               },
-                              child: Icon(
+                              child: const Icon(
                                 CupertinoIcons.minus,
                                 color: lightGreen,
                               )),
                           labelText: 'المحتوى',
-                          labelStyle: TextStyle(fontFamily: 'Cairo'),
+                          labelStyle: const TextStyle(fontFamily: 'Cairo'),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(width * .05),
                           ),
@@ -227,8 +232,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                           iconColor: lightGreen,
                           prefixIconColor: lightGreen,
                           suffixIconColor: lightGreen,
-                          hintStyle: TextStyle(color: lightGreen)),
-                      style: TextStyle(color: lightGreen, fontFamily: 'cairo'),
+                          hintStyle: const TextStyle(color: lightGreen)),
+                      style: const TextStyle(
+                          color: lightGreen, fontFamily: 'cairo'),
                       cursorColor: lightGreen,
                     ),
                   ),
@@ -238,7 +244,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                         contentControllers.add(TextEditingController());
                       });
                     },
-                    child: Text(
+                    child: const Text(
                       'أضف محتوى+',
                       style: TextStyle(fontFamily: 'cairo', color: lightGreen),
                     )),
@@ -247,17 +253,17 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 ),
                 ElevatedButton.icon(
                   onPressed: _pickVideo,
-                  icon: Icon(
+                  icon: const Icon(
                     CupertinoIcons.videocam_circle,
                     size: 25,
                   ),
                   label: Text(
                     _controller == null ? 'أضف فيديو' : 'تغيير الفيديو',
-                    style: TextStyle(fontSize: 16, fontFamily: 'Arabic'),
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Arabic'),
                   ),
                   style: ElevatedButton.styleFrom(
-                      primary: lightGreen,
-                      shape: StadiumBorder(),
+                      backgroundColor: lightGreen,
+                      shape: const StadiumBorder(),
                       minimumSize: Size(MediaQuery.of(context).size.width * .5,
                           MediaQuery.of(context).size.height * .06)),
                 ),
@@ -273,7 +279,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
             ),
           ),
           bottomNavigationBar: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: darkGreen),
+              style: ElevatedButton.styleFrom(backgroundColor: darkGreen),
               onPressed: () async {
                 List<String> content = contentControllers
                     .map((controller) => controller.text)
@@ -282,7 +288,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                     titleController.text.trim().isNotEmpty &&
                     numController.text.trim().isNotEmpty) {
                   showLoading(context, 'جار رفع المقطع.');
-                  Lesson lesson = new Lesson(
+                  Lesson lesson = Lesson(
                       name: titleController.text.toString() ?? '',
                       details: detailsController.text.toString() ?? '',
                       level: level ?? 0,
@@ -293,7 +299,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                               ? 'الدرس الثاني'
                               : numController.text == '3'
                                   ? 'الدرس الثالث'
-                          : numController.text == '4'
+                                  : numController.text == '4'
                           ? 'الدرس الرابع'
                           : numController.text == '5'
                           ? 'الدرس الخامس'
@@ -366,7 +372,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   }
                   Navigator.pop(context);
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => LessonsScreen()));
+                      MaterialPageRoute(builder: (_) => const LessonsScreen()));
                   Dialogs.showSnackbar(context, 'تم رفع الدرس بنجاح ✔');
                   print(numController.text.toString());
                 } else {

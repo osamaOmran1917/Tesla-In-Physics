@@ -7,6 +7,8 @@ import 'package:omar_mostafa/models/strategy_post.dart';
 import 'package:omar_mostafa/widgets/strategy_post_widget.dart';
 
 class StrategyTab extends StatefulWidget {
+  const StrategyTab({super.key});
+
   @override
   State<StrategyTab> createState() => _StrategyTabState();
 }
@@ -26,11 +28,11 @@ class _StrategyTabState extends State<StrategyTab> {
         .doc(APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    if (data!['is_student'] == true)
+    if (data!['is_student'] == true) {
       setState(() {
         userLevel = data['level'];
       });
-    else {
+    } else {
       var documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(data['student_id'])
@@ -67,21 +69,21 @@ class _StrategyTabState extends State<StrategyTab> {
             child: StreamBuilder<QuerySnapshot<StrategyPost>>(
               builder: (buildContext, snapshot) {
                 if (snapshot.hasError) {
-                  return Center(
+                  return const Center(
                     child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                   );
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(color: lightGreen),
                   );
                 }
                 var data = snapshot.data?.docs.map((e) => e.data()).toList();
                 return ListView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (buildContext, index) {
                     return data.isEmpty
-                        ? Center(
+                        ? const Center(
                             child: Text('لا يوجد خطط حتى الآن'),
                           )
                         : GestureDetector(

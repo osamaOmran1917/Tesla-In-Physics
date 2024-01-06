@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class PhoneAuthScreen extends StatefulWidget {
   bool is_student;
 
-  PhoneAuthScreen(this.is_student);
+  PhoneAuthScreen(this.is_student, {super.key});
 
   @override
   State<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
@@ -28,11 +28,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
                 fit: BoxFit.cover,
@@ -56,12 +56,12 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                             child: Image.asset('assets/images/back.png')),
                       ],
                     ),
-                    Text(
+                    const Text(
                       'أدخل رقم هاتفك',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontFamily: 'Cairo'),
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
@@ -84,12 +84,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                             color: lightGreen.withOpacity(0.17),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),
                       child: TextFormField(
-                        style: TextStyle(fontFamily: 'cairo'),
+                        style: const TextStyle(fontFamily: 'cairo'),
                         keyboardType: TextInputType.phone,
                         controller: phoneController,
                         validator: (value) {
@@ -102,7 +103,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontFamily: 'Cairo', color: Colors.grey),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: width * .03),
@@ -129,12 +130,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                         ),
                         onPressed: () {
                           if (phoneController.text.trim().startsWith('+2') ||
-                              phoneController.text.trim().startsWith('02'))
+                              phoneController.text.trim().startsWith('02')) {
                             login(context, phoneController.text.trim());
-                          else
-                            login(context, '+2' + phoneController.text.trim());
+                          } else {
+                            login(context, '+2${phoneController.text.trim()}');
+                          }
                         },
-                        child: Text(
+                        child: const Text(
                           'متابعة',
                           style: TextStyle(fontFamily: 'cairo'),
                         ))
@@ -170,19 +172,19 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text('ادخل الرمز'),
+                      title: const Text('ادخل الرمز'),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextField(
                             keyboardType: TextInputType.number,
                             controller: otpCodeController,
-                            decoration:
-                                InputDecoration(prefixIcon: Icon(Icons.code)),
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.code)),
                           ),
                           ElevatedButton(
-                              style:
-                                  ElevatedButton.styleFrom(primary: lightGreen),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: lightGreen),
                               onPressed: () async {
                                 final code = otpCodeController.text.trim();
                                 AuthCredential authCredential =
@@ -203,11 +205,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                         .then((value) =>
                                         sp.setSignIn().then((value) {
                                           Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      HomeScreen()));
-                                        })));
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (_) =>
+                                                              const HomeScreen()));
+                                                })));
                                   } else {
                                     sp
                                         .saveDataToFireStore(widget.is_student)
@@ -217,17 +219,17 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      CompleteUserData(
-                                                          widget.is_student,
-                                                          true)));
-                                        },
-                                      ),
-                                    );
+                                                      builder: (_) =>
+                                                          CompleteUserData(
+                                                              widget.is_student,
+                                                              true)));
+                                            },
+                                          ),
+                                        );
                                   }
                                 });
                               },
-                              child: Text('تأكيد'))
+                              child: const Text('تأكيد'))
                         ],
                       ),
                     );

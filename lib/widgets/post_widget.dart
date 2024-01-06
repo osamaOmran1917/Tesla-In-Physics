@@ -9,7 +9,7 @@ import 'package:omar_mostafa/models/post.dart';
 class PostWidget extends StatelessWidget {
   Post post;
 
-  PostWidget(this.post);
+  PostWidget(this.post, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,14 @@ class PostWidget extends StatelessWidget {
             color: lightGreen.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
       child: Slidable(
         startActionPane: omar
             ? ActionPane(
-                motion: DrawerMotion(),
+          motion: const DrawerMotion(),
                 children: [
                   SlidableAction(
                     onPressed: (_) {
@@ -43,7 +43,7 @@ class PostWidget extends StatelessWidget {
                     icon: CupertinoIcons.delete,
                     backgroundColor: Colors.red,
                     label: 'حذف',
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         bottomLeft: Radius.circular(12)),
                   ),
@@ -57,10 +57,10 @@ class PostWidget extends StatelessWidget {
                   horizontal: width * .03, vertical: height * .005),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(width * .025),
-                  color: Color(0xffebf6ed)),
+                  color: const Color(0xffebf6ed)),
               child: Text(
                 post.textDate ?? '',
-                style: TextStyle(fontFamily: 'Cairo', color: lightGreen),
+                style: const TextStyle(fontFamily: 'Cairo', color: lightGreen),
               ),
             ),
             Expanded(child: Container()),
@@ -69,7 +69,7 @@ class PostWidget extends StatelessWidget {
               children: [
                 Text(
                   post.title ?? '',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -85,7 +85,7 @@ class PostWidget extends StatelessWidget {
               width: width * .05,
             ),
             CircleAvatar(
-              backgroundColor: Color(0xffebf6ed),
+              backgroundColor: const Color(0xffebf6ed),
               child: Image.asset(
                 'assets/images/Notification.png',
                 color: lightGreen,

@@ -11,18 +11,18 @@ import 'package:omar_mostafa/widgets/exam_widget.dart';
 class ShowExamsMarks extends StatelessWidget {
   int level;
 
-  ShowExamsMarks(this.level);
+  ShowExamsMarks(this.level, {super.key});
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -44,7 +44,7 @@ class ShowExamsMarks extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: lightGreen,
                       borderRadius: BorderRadius.circular(width * .05)),
-                  child: Icon(
+                  child: const Icon(
                     Icons.keyboard_arrow_left_sharp,
                     color: Colors.white,
                   ),
@@ -72,22 +72,22 @@ class ShowExamsMarks extends StatelessWidget {
                 child: StreamBuilder<QuerySnapshot<Exam>>(
                   builder: (buildContext, snapshot) {
                     if (snapshot.hasError) {
-                      return Center(
+                      return const Center(
                         child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                       );
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(color: lightGreen),
                       );
                     }
                     var data =
                         snapshot.data?.docs.map((e) => e.data()).toList();
                     return ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (buildContext, index) {
                         return data.isEmpty
-                            ? Center(
+                            ? const Center(
                                 child: Text('لم يتم رفع أي امتحانات حتى الآن.'),
                               )
                             : ExamWidget(data[index]);
@@ -108,7 +108,7 @@ class ShowExamsMarks extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (_) => AddExamsMarks(level)));
           },
-          child: Icon(CupertinoIcons.add),
+          child: const Icon(CupertinoIcons.add),
         ),
       ),
     );

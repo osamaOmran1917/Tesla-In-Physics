@@ -9,6 +9,8 @@ import 'package:omar_mostafa/screens/home/profile_tab/exams/show_exams_marks.dar
 import 'package:omar_mostafa/widgets/exam_widget.dart';
 
 class ExamsScreen extends StatefulWidget {
+  const ExamsScreen({super.key});
+
   @override
   State<ExamsScreen> createState() => _ExamsScreenState();
 }
@@ -28,11 +30,11 @@ class _ExamsScreenState extends State<ExamsScreen> {
         .doc(APIs.user.uid)
         .get();
     var data = documentSnapshot.data();
-    if (data!['is_student'] == true)
+    if (data!['is_student'] == true) {
       setState(() {
         _id = data['id'];
       });
-    else {
+    } else {
       var documentSnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(data['student_id'])
@@ -49,11 +51,11 @@ class _ExamsScreenState extends State<ExamsScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -76,7 +78,7 @@ class _ExamsScreenState extends State<ExamsScreen> {
                         decoration: BoxDecoration(
                             color: lightGreen,
                             borderRadius: BorderRadius.circular(width * .05)),
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_left_sharp,
                           color: Colors.white,
                         ),
@@ -111,13 +113,13 @@ class _ExamsScreenState extends State<ExamsScreen> {
                                 color: Colors.grey.withOpacity(0.1),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(width * .05)),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(
@@ -152,13 +154,13 @@ class _ExamsScreenState extends State<ExamsScreen> {
                                 color: Colors.grey.withOpacity(0.1),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(width * .05)),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(
@@ -193,13 +195,13 @@ class _ExamsScreenState extends State<ExamsScreen> {
                                 color: Colors.grey.withOpacity(0.1),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(width * .05)),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(
@@ -232,7 +234,7 @@ class _ExamsScreenState extends State<ExamsScreen> {
                         decoration: BoxDecoration(
                             color: lightGreen,
                             borderRadius: BorderRadius.circular(width * .05)),
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_left_sharp,
                           color: Colors.white,
                         ),
@@ -256,12 +258,12 @@ class _ExamsScreenState extends State<ExamsScreen> {
                       child: StreamBuilder<QuerySnapshot<Exam>>(
                         builder: (buildContext, snapshot) {
                           if (snapshot.hasError) {
-                            return Center(
+                            return const Center(
                               child: Text('خطأ في تحميل البيانات حاول لاحقا'),
                             );
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child:
                                   CircularProgressIndicator(color: lightGreen),
                             );
@@ -269,10 +271,10 @@ class _ExamsScreenState extends State<ExamsScreen> {
                           var data =
                               snapshot.data?.docs.map((e) => e.data()).toList();
                           return ListView.builder(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemBuilder: (buildContext, index) {
                               return data.isEmpty
-                                  ? Center(
+                                  ? const Center(
                                       child: Text(
                                           'لم يتم رفع أي امتحانات حتى الآن.'),
                                     )

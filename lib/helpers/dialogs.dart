@@ -6,7 +6,7 @@ class Dialogs {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         msg,
-        style: TextStyle(fontFamily: 'cairo', color: Colors.black),
+        style: const TextStyle(fontFamily: 'cairo', color: Colors.black),
         textAlign: TextAlign.center,
       ),
       backgroundColor: omarYellow,
@@ -17,7 +17,7 @@ class Dialogs {
   static void showProgressBar(BuildContext context) {
     showDialog(
         context: context,
-        builder: (_) => Center(
+        builder: (_) => const Center(
                 child: CircularProgressIndicator(
               color: lightGreen,
             )));
@@ -33,10 +33,10 @@ void showLoading(BuildContext context, String loadingMessage,
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircularProgressIndicator(color: lightGreen),
+              const CircularProgressIndicator(color: lightGreen),
               Text(
                 loadingMessage,
-                style: TextStyle(fontFamily: 'cairo'),
+                style: const TextStyle(fontFamily: 'cairo'),
               )
             ],
           ),

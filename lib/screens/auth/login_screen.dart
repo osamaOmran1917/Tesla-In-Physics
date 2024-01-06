@@ -19,6 +19,8 @@ import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -47,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
         if ((await APIs.userExists())) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
           var retrievedUser = await APIs.getFutureOfUserById(APIs.user.uid);
           SharedData.user = retrievedUser;
         } else {
@@ -97,11 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -125,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: lightGreen.withOpacity(0.17),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
             ),
@@ -189,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: lightGreen.withOpacity(0.1),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
@@ -253,11 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Wrap(
                 children: [
-                  Icon(FontAwesomeIcons.google),
+                  const Icon(FontAwesomeIcons.google),
                   SizedBox(
                     width: width * .05,
                   ),
-                  Text('متابعة التسجيل بجوجل',
+                  const Text('متابعة التسجيل بجوجل',
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))
                 ],
@@ -275,11 +277,11 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Wrap(
                 children: [
-                  Icon(FontAwesomeIcons.facebook),
+                  const Icon(FontAwesomeIcons.facebook),
                   SizedBox(
                     width: width * .05,
                   ),
-                  Text('متابعة التسجيل بفيسبوك',
+                  const Text('متابعة التسجيل بفيسبوك',
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))
                 ],
@@ -297,11 +299,11 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Wrap(
                 children: [
-                  Icon(FontAwesomeIcons.twitter),
+                  const Icon(FontAwesomeIcons.twitter),
                   SizedBox(
                     width: width * .05,
                   ),
-                  Text('متابعة التسجيل بتويتر',
+                  const Text('متابعة التسجيل بتويتر',
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))
                 ],
@@ -323,11 +325,11 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Wrap(
                 children: [
-                  Icon(FontAwesomeIcons.phone),
+                  const Icon(FontAwesomeIcons.phone),
                   SizedBox(
                     width: width * .05,
                   ),
-                  Text('متابعة التسجيل برقم الموبايل',
+                  const Text('متابعة التسجيل برقم الموبايل',
                       style:
                           TextStyle(fontFamily: 'cairo', color: Colors.white))
                 ],
@@ -405,7 +407,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       });
     }
-    Future.delayed(Duration(seconds: 3));
+    Future.delayed(const Duration(seconds: 3));
     facebookController.reset();
   }
 
@@ -445,14 +447,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   handleAfterSignIn(bool newUser) {
-    Future.delayed(Duration(milliseconds: 1000)).then((value) {
+    Future.delayed(const Duration(milliseconds: 1000)).then((value) {
       newUser == true
           ? Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (_) => CompleteUserData(_isStudent, false)))
           : Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
     });
   }
 }

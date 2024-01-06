@@ -6,18 +6,18 @@ import 'package:omar_mostafa/screens/home/attendance_tab/set_attendance.dart';
 class LecturesScreen extends StatelessWidget {
   int level, month;
 
-  LecturesScreen(this.level, this.month);
+  LecturesScreen(this.level, this.month, {super.key});
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width,
         height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
                 fit: BoxFit.cover,
@@ -39,7 +39,7 @@ class LecturesScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: lightGreen,
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Icon(
+                    child: const Icon(
                       Icons.keyboard_arrow_left_sharp,
                       color: Colors.white,
                     ),
@@ -61,8 +61,8 @@ class LecturesScreen extends StatelessWidget {
                 ),
                 Expanded(
                     child: GridView.count(
-                  padding: EdgeInsets.symmetric(horizontal: width * .021),
-                  physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: width * .021),
+                  physics: const BouncingScrollPhysics(),
                   crossAxisCount: 2,
                   mainAxisSpacing: height * .03,
                   crossAxisSpacing: width * .03,
@@ -187,7 +187,7 @@ class LecturesScreen extends StatelessWidget {
 class LecCell extends StatelessWidget {
   int lec;
 
-  LecCell(this.lec);
+  LecCell(this.lec, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +202,7 @@ class LecCell extends StatelessWidget {
             color: lightGreen.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),

@@ -205,7 +205,7 @@ class SignInProvider extends ChangeNotifier {
     });
   }
 
-  Future saveDataToFireStore(bool is_student) async {
+  Future saveDataToFireStore(bool isStudent) async {
     final DocumentReference r =
         FirebaseFirestore.instance.collection("users").doc(uid);
     await r.set({
@@ -213,7 +213,7 @@ class SignInProvider extends ChangeNotifier {
       "email": _email,
       "id": _uid,
       "image": _imageUrl,
-      "is_student": is_student,
+      "is_student": isStudent,
     });
     SherdHelper.saveData(key: "id", value: _uid);
     notifyListeners();

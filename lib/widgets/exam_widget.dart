@@ -10,7 +10,7 @@ import 'package:omar_mostafa/models/exam.dart';
 class ExamWidget extends StatefulWidget {
   Exam exam;
 
-  ExamWidget(this.exam);
+  ExamWidget(this.exam, {super.key});
 
   bool _showOptions = false;
 
@@ -39,7 +39,7 @@ class _ExamWidgetState extends State<ExamWidget> {
                 height: height * .25,
                 imageUrl: widget.exam.image ?? '',
                 fit: BoxFit.fill,
-                errorWidget: (context, url, error) => CircleAvatar(
+                errorWidget: (context, url, error) => const CircleAvatar(
                   child: Icon(CupertinoIcons.doc_chart_fill),
                 ),
               ),
@@ -56,14 +56,14 @@ class _ExamWidgetState extends State<ExamWidget> {
                         return AlertDialog(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(width * .07)),
-                          title: Text(
+                          title: const Text(
                             'هل تريد حذف هذا الاختبار؟',
                             style: TextStyle(fontFamily: 'cairo'),
                             textAlign: TextAlign.center,
                           ),
                           actions: <Widget>[
                             TextButton(
-                              child: Text(
+                              child: const Text(
                                 'نعم',
                                 style: TextStyle(
                                     fontFamily: 'cairo', color: lightGreen),
@@ -77,7 +77,7 @@ class _ExamWidgetState extends State<ExamWidget> {
                               },
                             ),
                             TextButton(
-                              child: Text('رجوع',
+                              child: const Text('رجوع',
                                   style: TextStyle(
                                       fontFamily: 'cairo', color: lightGreen)),
                               onPressed: () {
@@ -97,7 +97,7 @@ class _ExamWidgetState extends State<ExamWidget> {
                         border:
                             Border.all(width: width * .001, color: Colors.red),
                         borderRadius: BorderRadius.circular(width * .05)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(

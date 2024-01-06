@@ -10,7 +10,7 @@ import 'package:omar_mostafa/models/lesson.dart';
 class LessonWidget extends StatelessWidget {
   Lesson lesson;
 
-  LessonWidget(this.lesson);
+  LessonWidget(this.lesson, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,14 @@ class LessonWidget extends StatelessWidget {
             color: lightGreen.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
       child: Slidable(
         startActionPane: omar
             ? ActionPane(
-                motion: DrawerMotion(),
+          motion: const DrawerMotion(),
                 children: [
                   SlidableAction(
                     onPressed: (_) {
@@ -45,7 +45,7 @@ class LessonWidget extends StatelessWidget {
                     icon: CupertinoIcons.delete,
                     backgroundColor: Colors.red,
                     label: 'حذف',
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         bottomLeft: Radius.circular(12)),
                   ),
@@ -60,7 +60,7 @@ class LessonWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(width * .03),
                   color: lightGreen),
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
@@ -71,7 +71,7 @@ class LessonWidget extends StatelessWidget {
               children: [
                 Text(
                   lesson.number.toString() ?? "",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -81,7 +81,7 @@ class LessonWidget extends StatelessWidget {
                       color: Colors.grey,
                       fontSize: width * .025),
                 ),
-                Text(
+                const Text(
                   '200',
                   style: TextStyle(
                       fontFamily: 'Cairo',

@@ -12,7 +12,7 @@ import 'package:video_player/video_player.dart';
 class LessonDetails extends StatefulWidget {
   final Lesson lesson;
 
-  LessonDetails(this.lesson);
+  const LessonDetails(this.lesson, {super.key});
 
   @override
   _LessonDetailsState createState() => _LessonDetailsState();
@@ -67,12 +67,12 @@ class _LessonDetailsState extends State<LessonDetails> {
       overlays: [],
     );
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
     );
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         image: DecorationImage(
           fit: BoxFit.cover,
@@ -84,7 +84,7 @@ class _LessonDetailsState extends State<LessonDetails> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * .061),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -126,7 +126,7 @@ class _LessonDetailsState extends State<LessonDetails> {
                         ),
                       );
                     } else {
-                      return Row(
+                      return const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircularProgressIndicator(
@@ -143,7 +143,7 @@ class _LessonDetailsState extends State<LessonDetails> {
                 Container(
                   padding: EdgeInsets.all(width * .05),
                   decoration: BoxDecoration(
-                      color: Color(0xFFD8EDDC),
+                      color: const Color(0xFFD8EDDC),
                       borderRadius: BorderRadius.circular(width * .05)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -158,8 +158,8 @@ class _LessonDetailsState extends State<LessonDetails> {
                       ),
                       Text(
                         widget.lesson.details ?? '',
-                        style:
-                            TextStyle(fontFamily: 'cairo', color: lightGreen),
+                        style: const TextStyle(
+                            fontFamily: 'cairo', color: lightGreen),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -173,7 +173,7 @@ class _LessonDetailsState extends State<LessonDetails> {
                                     _controller!.value.isInitialized
                                 ? '${_controller!.value.duration.inMinutes}:${_controller!.value.duration.inSeconds.remainder(60).toString().padLeft(2, '0')}'
                                 : '',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'cairo', color: lightGreen),
                           ),
                           SizedBox(
@@ -184,8 +184,8 @@ class _LessonDetailsState extends State<LessonDetails> {
                             width: width * .045,
                             height: width * .045,
                           ),
-                          Spacer(),
-                          Text(
+                          const Spacer(),
+                          const Text(
                             'عمر مصطفى',
                             style: TextStyle(
                                 fontFamily: 'cairo', color: lightGreen),
@@ -201,7 +201,7 @@ class _LessonDetailsState extends State<LessonDetails> {
                               imageUrl: omarImage,
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) =>
-                                  CircleAvatar(
+                              const CircleAvatar(
                                 child: Icon(CupertinoIcons.person_alt),
                               ),
                             ),
@@ -238,7 +238,7 @@ class _LessonDetailsState extends State<LessonDetails> {
                       children: [
                         Text(
                           widget.lesson.content?[i],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: 'cairo', fontWeight: FontWeight.bold),
                         ),
                         SizedBox(

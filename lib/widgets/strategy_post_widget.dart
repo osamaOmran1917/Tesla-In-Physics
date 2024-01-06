@@ -11,7 +11,7 @@ import 'package:omar_mostafa/models/strategy_post.dart';
 class StrategyPostWidget extends StatefulWidget {
   StrategyPost strategy_post;
 
-  StrategyPostWidget(this.strategy_post);
+  StrategyPostWidget(this.strategy_post, {super.key});
 
   @override
   State<StrategyPostWidget> createState() => _StrategyPostWidgetState();
@@ -55,14 +55,14 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
             color: lightGreen.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
       child: Slidable(
         startActionPane: omar
             ? ActionPane(
-                motion: DrawerMotion(),
+          motion: const DrawerMotion(),
                 children: [
                   SlidableAction(
                     onPressed: (_) {
@@ -71,7 +71,7 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
                     icon: CupertinoIcons.delete,
                     backgroundColor: Colors.red,
                     label: 'حذف',
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         bottomLeft: Radius.circular(12)),
                   ),
@@ -79,6 +79,7 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
               )
             : null,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,8 +88,8 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
                   padding: EdgeInsets.symmetric(horizontal: width * .037),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(width * .015),
-                      color: Color(0xffd9f2ee)),
-                  child: Text(
+                      color: const Color(0xffd9f2ee)),
+                  child: const Text(
                     'جديد',
                     style: TextStyle(
                         fontFamily: 'Cairo', color: Color(0xff79c6b3)),
@@ -96,7 +97,7 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
                 ),
                 Text(
                   widget.strategy_post.title ?? '',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Cairo', fontWeight: FontWeight.bold),
                 )
               ],
@@ -106,8 +107,8 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
             ),
             Flexible(
                 child: RichText(
-              overflow: TextOverflow.ellipsis,
-              strutStyle: StrutStyle(fontSize: 12.0),
+                  overflow: TextOverflow.ellipsis,
+              strutStyle: const StrutStyle(fontSize: 12.0),
               text: TextSpan(
                   style: TextStyle(
                       fontFamily: 'Cairo',
@@ -122,24 +123,26 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
               children: [
                 Text(
                     '${widget.strategy_post.date_time?.year.toString()}/${widget.strategy_post.date_time?.month.toString()}/${widget.strategy_post.date_time?.day.toString()}',
-                    style: TextStyle(fontFamily: 'Cairo', color: Colors.grey)),
+                    style: const TextStyle(
+                        fontFamily: 'Cairo', color: Colors.grey)),
                 SizedBox(
                   width: width * .021,
                 ),
-                Icon(
+                const Icon(
                   Icons.calendar_month_outlined,
                   color: lightGreen,
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   getFormattedTime(
                       context: context, time: widget.strategy_post.time!),
-                  style: TextStyle(fontFamily: 'Cairo', color: Colors.grey),
+                  style:
+                      const TextStyle(fontFamily: 'Cairo', color: Colors.grey),
                 ),
                 SizedBox(
                   width: width * .021,
                 ),
-                Icon(
+                const Icon(
                   Icons.access_time_rounded,
                   color: lightGreen,
                 )
@@ -161,15 +164,14 @@ class _StrategyPostWidgetState extends State<StrategyPostWidget> {
                   });
                 },
                 child: likes.contains(widget.strategy_post.id)
-                    ? Icon(
+                    ? const Icon(
                         CupertinoIcons.heart_fill,
                         color: lightGreen,
                       )
-                    : Icon(
+                    : const Icon(
                         CupertinoIcons.heart,
                       ))
           ],
-          crossAxisAlignment: CrossAxisAlignment.start,
         ),
       ),
     );

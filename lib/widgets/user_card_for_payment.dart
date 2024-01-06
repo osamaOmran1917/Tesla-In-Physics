@@ -7,7 +7,7 @@ class UserCardForPayment extends StatefulWidget {
   MyUser user;
   late Color color;
 
-  UserCardForPayment(this.user);
+  UserCardForPayment(this.user, {super.key});
 
   @override
   State<UserCardForPayment> createState() => _UserCardForPaymentState();
@@ -48,7 +48,7 @@ class _UserCardForPaymentState extends State<UserCardForPayment> {
                 color: lightGreen.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
